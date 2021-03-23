@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs21.service;
 import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs21.entity.User;
 import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs21.rest.mapper.DTOMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,16 @@ public class UserService {
 
     public User createUser(User newUser) {
         newUser.setToken(UUID.randomUUID().toString());
-        newUser.setStatus(UserStatus.OFFLINE);
+        newUser.setStatus(UserStatus.ONLINE);
 
-        checkIfUserExists(newUser);
+        User userByUsername = userRepository.findByUsername(newUser.getUsername());
+        User userByEmail = userRepository.findByEmail(newUser.getEmail());
+        if (userByUsername != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This username already exists");
+        }
+        else if (userByEmail != null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This email is already used");
+        }
 
         // saves the given entity but data is only persisted in the database once flush() is called
         newUser = userRepository.save(newUser);
@@ -51,27 +59,25 @@ public class UserService {
         return newUser;
     }
 
-    /**
-     * This is a helper method that will check the uniqueness criteria of the username and the name
-     * defined in the User entity. The method will do nothing if the input is unique and throw an error otherwise.
-     *
-     * @param userToBeCreated
-     * @throws org.springframework.web.server.ResponseStatusException
-     * @see User
-     */
-    private void checkIfUserExists(User userToBeCreated) {
-        User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
-        User userByName = userRepository.findByName(userToBeCreated.getName());
+    public User checkUser(User checkUser){
+        User userByUsername = userRepository.findByUsername(checkUser.getUsername());
+        User userByEmail = userRepository.findByEmail((checkUser.getUsername()));
 
-        String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
-        if (userByUsername != null && userByName != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "username and the name", "are"));
+        if (userByUsername == null && userByEmail==null){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username or email is wrong");
         }
-        else if (userByUsername != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "username", "is"));
+        else if (userByUsername != null && userByUsername.getPassword().equals(checkUser.getPassword())){
+            userByUsername.setStatus(UserStatus.ONLINE);
+            return userByUsername;
         }
-        else if (userByName != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
+        else if (userByEmail != null && userByEmail.getPassword().equals(checkUser.getPassword())){
+            userByEmail.setStatus(UserStatus.ONLINE);
+            return userByEmail;
         }
+        else{
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This password is wrong");
+        }
+
     }
+
 }
