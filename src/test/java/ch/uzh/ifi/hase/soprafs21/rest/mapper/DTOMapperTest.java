@@ -1,9 +1,9 @@
-package ch.uzh.ifi.hase.soprafs21.rest.mapper;
+package sopra.rest.mapper;
 
-import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserGetDTO;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
+import sopra.constant.AppUserStatus;
+import sopra.appAppUser.AppUser;
+import sopra.rest.dto.AppUserGetDTO;
+import sopra.rest.dto.AppUserPostDTO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,36 +14,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class DTOMapperTest {
     @Test
-    public void testCreateUser_fromUserPostDTO_toUser_success() {
-        // create UserPostDTO
-        UserPostDTO userPostDTO = new UserPostDTO();
-        userPostDTO.setName("name");
-        userPostDTO.setUsername("username");
+    public void testCreateAppUser_fromAppUserPostDTO_toAppUser_success() {
+        // create AppUserPostDTO
+        AppUserPostDTO AppUserPostDTO = new AppUserPostDTO();
+        AppUserPostDTO.setName("name");
+        AppUserPostDTO.setAppUsername("AppUsername");
 
-        // MAP -> Create user
-        User user = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+        // MAP -> Create AppUser
+        AppUser AppUser = DTOMapper.INSTANCE.convertAppUserPostDTOtoEntity(AppUserPostDTO);
 
         // check content
-        assertEquals(userPostDTO.getName(), user.getPassword());
-        assertEquals(userPostDTO.getUsername(), user.getUsername());
+        assertEquals(AppUserPostDTO.getName(), AppUser.getPassword());
+        assertEquals(AppUserPostDTO.getAppUsername(), AppUser.getAppUsername());
     }
 
     @Test
-    public void testGetUser_fromUser_toUserGetDTO_success() {
-        // create User
-        User user = new User();
-        user.setPassword("Firstname Lastname");
-        user.setUsername("firstname@lastname");
-        user.setStatus(UserStatus.OFFLINE);
-        user.setToken("1");
+    public void testGetAppUser_fromAppUser_toAppUserGetDTO_success() {
+        // create AppUser
+        AppUser AppUser = new AppUser();
+        AppUser.setPassword("Firstname Lastname");
+        AppUser.setAppUsername("firstname@lastname");
+        AppUser.setStatus(AppUserStatus.OFFLINE);
+        AppUser.setToken("1");
 
-        // MAP -> Create UserGetDTO
-        UserGetDTO userGetDTO = DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
+        // MAP -> Create AppUserGetDTO
+        AppUserGetDTO AppUserGetDTO = DTOMapper.INSTANCE.convertEntityToAppUserGetDTO(AppUser);
 
         // check content
-        assertEquals(user.getId(), userGetDTO.getId());
-        assertEquals(user.getPassword(), userGetDTO.getPassword());
-        assertEquals(user.getUsername(), userGetDTO.getUsername());
-        assertEquals(user.getStatus(), userGetDTO.getStatus());
+        assertEquals(AppUser.getId(), AppUserGetDTO.getId());
+        assertEquals(AppUser.getPassword(), AppUserGetDTO.getPassword());
+        assertEquals(AppUser.getAppUsername(), AppUserGetDTO.getAppUsername());
+        assertEquals(AppUser.getStatus(), AppUserGetDTO.getStatus());
     }
 }

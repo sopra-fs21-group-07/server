@@ -1,13 +1,13 @@
-package ch.uzh.ifi.hase.soprafs21.rest.dto;
+package sopra.rest.dto;
 
-import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
+import sopra.appuser.AppUserStatus;
 
-public class UserGetDTO {
+public class AppUserGetDTO {
 
     private Long id;
-    private String username;
+    private String AppUsername;
     private String email;
-    private UserStatus status;
+    private AppUserStatus status;
     private String token;
 
     public Long getId() {
@@ -18,12 +18,12 @@ public class UserGetDTO {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getAppUsername() {
+        return AppUsername;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAppUsername(String AppUsername) {
+        this.AppUsername = AppUsername;
     }
 
     public String getEmail() {
@@ -34,11 +34,11 @@ public class UserGetDTO {
         this.email = email;
     }
 
-    public UserStatus getStatus() {
+    public AppUserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(UserStatus status) {
+    public void setStatus(AppUserStatus status) {
         this.status = status;
     }
 

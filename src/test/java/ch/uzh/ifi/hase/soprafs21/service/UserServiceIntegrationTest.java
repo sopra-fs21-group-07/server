@@ -1,8 +1,9 @@
-package ch.uzh.ifi.hase.soprafs21.service;
+package sopra.service;
 
-import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
-import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
+import sopra.appAppUser.AppUserService;
+import sopra.constant.AppUserStatus;
+import sopra.appAppUser.AppUser;
+import sopra.appAppUser.AppUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,63 +15,63 @@ import org.springframework.web.server.ResponseStatusException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test class for the UserResource REST resource.
+ * Test class for the AppUserResource REST resource.
  *
- * @see UserService
+ * @see AppUserService
  */
 @WebAppConfiguration
 @SpringBootTest
-public class UserServiceIntegrationTest {
+public class AppUserServiceIntegrationTest {
 
-    @Qualifier("userRepository")
+    @Qualifier("AppUserRepository")
     @Autowired
-    private UserRepository userRepository;
+    private AppUserRepository AppUserRepository;
 
     @Autowired
-    private UserService userService;
+    private AppUserService AppUserService;
 
     @BeforeEach
     public void setup() {
-        userRepository.deleteAll();
+        AppUserRepository.deleteAll();
     }
 
     @Test
-    public void createUser_validInputs_success() {
+    public void createAppUser_validInputs_success() {
         // given
-        assertNull(userRepository.findByUsername("testUsername"));
+        assertNull(AppUserRepository.findByAppUsername("testAppUsername"));
 
-        User testUser = new User();
-        testUser.setName("testName");
-        testUser.setUsername("testUsername");
+        AppUser testAppUser = new AppUser();
+        testAppUser.setName("testName");
+        testAppUser.setAppUsername("testAppUsername");
 
         // when
-        User createdUser = userService.createUser(testUser);
+        AppUser createdAppUser = AppUserService.createAppUser(testAppUser);
 
         // then
-        assertEquals(testUser.getId(), createdUser.getId());
-        assertEquals(testUser.getName(), createdUser.getName());
-        assertEquals(testUser.getUsername(), createdUser.getUsername());
-        assertNotNull(createdUser.getToken());
-        assertEquals(UserStatus.OFFLINE, createdUser.getStatus());
+        assertEquals(testAppUser.getId(), createdAppUser.getId());
+        assertEquals(testAppUser.getName(), createdAppUser.getName());
+        assertEquals(testAppUser.getAppUsername(), createdAppUser.getAppUsername());
+        assertNotNull(createdAppUser.getToken());
+        assertEquals(AppUserStatus.OFFLINE, createdAppUser.getStatus());
     }
 
     @Test
-    public void createUser_duplicateUsername_throwsException() {
-        assertNull(userRepository.findByUsername("testUsername"));
+    public void createAppUser_duplicateAppUsername_throwsException() {
+        assertNull(AppUserRepository.findByAppUsername("testAppUsername"));
 
-        User testUser = new User();
-        testUser.setName("testName");
-        testUser.setUsername("testUsername");
-        User createdUser = userService.createUser(testUser);
+        AppUser testAppUser = new AppUser();
+        testAppUser.setName("testName");
+        testAppUser.setAppUsername("testAppUsername");
+        AppUser createdAppUser = AppUserService.createAppUser(testAppUser);
 
-        // attempt to create second user with same username
-        User testUser2 = new User();
+        // attempt to create second AppUser with same AppUsername
+        AppUser testAppUser2 = new AppUser();
 
-        // change the name but forget about the username
-        testUser2.setName("testName2");
-        testUser2.setUsername("testUsername");
+        // change the name but forget about the AppUsername
+        testAppUser2.setName("testName2");
+        testAppUser2.setAppUsername("testAppUsername");
 
         // check that an error is thrown
-        assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser2));
+        assertThrows(ResponseStatusException.class, () -> AppUserService.createAppUser(testAppUser2));
     }
 }

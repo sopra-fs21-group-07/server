@@ -1,9 +1,9 @@
-package ch.uzh.ifi.hase.soprafs21.rest.dto;
+package sopra.rest.dto;
 
-public class UserPostDTO {
+public class AppUserPostDTO {
 
     private String password;
-    private String username;
+    private String AppUsername;
     private String email;
 
     public String getPassword() {
@@ -14,12 +14,12 @@ public class UserPostDTO {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getAppUsername() {
+        return AppUsername;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAppUsername(String AppUsername) {
+        this.AppUsername = AppUsername;
     }
 
     public String getEmail() {
