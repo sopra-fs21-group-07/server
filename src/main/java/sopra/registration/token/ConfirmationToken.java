@@ -27,7 +27,7 @@ public class ConfirmationToken {
     private Long id;
 
     @Column(nullable = false)
-    public String token;
+    private String token;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
