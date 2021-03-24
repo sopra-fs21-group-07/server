@@ -1,4 +1,15 @@
-# SoPra RESTful Service Template FS21
+# SoPra RESTful Service Group 07 FS21
+## Information about the Project: 
+
+https://dashboard.heroku.com/apps/sopra-fs21-group-07-server
+
+
+
+
+
+
+
+
 
 ## Getting started with Spring Boot
 
