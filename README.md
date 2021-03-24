@@ -3,13 +3,21 @@
 
 https://sopra-fs21-group-07-server.herokuapp.com/
 
-
-
-
-
-
-
-
+## Current project status
+(Heroku batch not available)
+<p align="left">
+  <a href="https://github.com/sopra-fs21-group-07/server/actions">
+    <img src="https://github.com/sopra-fs21-group-07/server/workflows/Deploy%20Project/badge.svg">
+  </a>
+  <br></br>
+  <a href="https://sonarcloud.io/dashboard?id=sopra-fs21-group-07_server">
+      <img src="https://sonarcloud.io/api/project_badges/measure?project=sopra-fs21-group-07_server&metric=coverage">
+  </a>
+  <br></br>
+  <a href="https://sonarcloud.io/dashboard?id=sopra-fs21-group-07_server">
+        <img src="https://sonarcloud.io/api/project_badges/measure?project=sopra-fs21-group-07_server&metric=alert_status">
+    </a>
+</p>
 
 ## Getting started with Spring Boot
 
