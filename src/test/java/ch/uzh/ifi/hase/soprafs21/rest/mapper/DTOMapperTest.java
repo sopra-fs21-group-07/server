@@ -2,7 +2,6 @@ package sopra.rest.mapper;
 
 import sopra.constant.AppUserStatus;
 import sopra.appAppUser.AppUser;
-import sopra.rest.dto.AppUserGetDTO;
 import sopra.rest.dto.AppUserPostDTO;
 import org.junit.jupiter.api.Test;
 

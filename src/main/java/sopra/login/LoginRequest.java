@@ -1,15 +1,13 @@
 package sopra.login;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
+import sopra.appuser.AppUser;
 
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class LoginRequest {
-    private final String email;
-    private final String password;
+    private String email;
+    private String password;
 }

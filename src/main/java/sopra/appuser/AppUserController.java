@@ -1,9 +1,5 @@
 package sopra.appuser;
 
-import sopra.rest.dto.AppUserGetDTO;
-import sopra.rest.dto.AppUserPostDTO;
-import sopra.rest.dto.AppUserPutDTO;
-import sopra.rest.mapper.DTOMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +20,7 @@ public class AppUserController {
         this.AppUserService = AppUserService;
     }
 
-    /**@GetMapping("/AppUsers")
+    @GetMapping(path = "/appUsers")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<AppUserGetDTO> getAllAppUsers() {
@@ -34,10 +30,10 @@ public class AppUserController {
 
         // convert each AppUser to the API representation
         for (AppUser AppUser : AppUsers) {
-            AppUserGetDTOs.add(DTOMapper.INSTANCE.convertEntityToAppUserGetDTO(AppUser));
+            AppUserGetDTOs.add(AppUserMapper.INSTANCE.convertAppUsertoAppUserGetDTO(AppUser));
         }
         return AppUserGetDTOs;
-    }*/
+    }
 
     /**@PostMapping("/AppUsers")
     @ResponseStatus(HttpStatus.CREATED)
