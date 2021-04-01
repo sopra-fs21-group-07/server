@@ -1,8 +1,11 @@
 package sopra.registration;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import sopra.appuser.AppUser;
 import sopra.appuser.AppUserRole;
 import sopra.appuser.AppUserService;
+import sopra.appuser.AppUserStatus;
 import sopra.email.EmailSender;
 import sopra.registration.token.ConfirmationToken;
 import sopra.registration.token.ConfirmationTokenService;
@@ -26,7 +29,7 @@ public class RegistrationService {
                 test(request.getEmail());
 
         if (!isValidEmail) {
-            throw new IllegalStateException("email not valid");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This email is not valid");
         }
 
         String token = appUserService.signUpAppUser(
@@ -34,8 +37,12 @@ public class RegistrationService {
                         request.getFirstName(),
                         request.getLastName(),
                         request.getEmail(),
+                        request.getUsername(),
                         request.getPassword(),
-                        AppUserRole.AppUser
+                        request.getAge(),
+                        request.getRegion(),
+                        AppUserRole.AppUser,
+                        AppUserStatus.OFFLINE
 
                 )
         );

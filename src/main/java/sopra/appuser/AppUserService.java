@@ -1,5 +1,7 @@
 package sopra.appuser;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import sopra.appuser.AppUserRepository;
 import sopra.registration.token.ConfirmationToken;
 import sopra.registration.token.ConfirmationTokenService;
@@ -38,12 +40,15 @@ public class AppUserService implements UserDetailsService {
         boolean userExists = appUserRepository
                 .findByEmail(appUser.getEmail())
                 .isPresent();
+        boolean usernameExists = appUserRepository.findByUsername(appUser.getUsername()).isPresent();
 
         if (userExists) {
             // TODO check of attributes are the same and
             // TODO if email not confirmed send confirmation email.
-
-            throw new IllegalStateException("email already taken");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This email is already taken");
+        }
+        else if (usernameExists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username is already taken");
         }
 
         String encodedPassword = bCryptPasswordEncoder

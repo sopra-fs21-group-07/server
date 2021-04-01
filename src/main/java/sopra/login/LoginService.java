@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import sopra.appuser.AppUser;
 import sopra.appuser.AppUserRepository;
 import sopra.appuser.AppUserService;
+import sopra.appuser.AppUserStatus;
 import sopra.registration.token.ConfirmationToken;
 import sopra.registration.token.ConfirmationTokenRepository;
 
@@ -33,6 +34,8 @@ public class LoginService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "This Password is wrong");
         }
         else {
+            user.get().setAppUserStatus(AppUserStatus.ONLINE);
+            appUserRepository.save(user.get());
             return token.get().getToken();
         }
     }
