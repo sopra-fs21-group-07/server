@@ -1,9 +1,10 @@
-package ch.uzh.ifi.hase.soprafs21.controller;
+package sopra.controller;
 
-import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
-import ch.uzh.ifi.hase.soprafs21.rest.dto.UserPostDTO;
-import ch.uzh.ifi.hase.soprafs21.service.UserService;
+import sopra.appAppUser.AppUserController;
+import sopra.constant.AppUserStatus;
+import sopra.appAppUser.AppUser;
+import sopra.rest.dto.AppUserPostDTO;
+import sopra.appAppUser.AppUserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -29,76 +30,76 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * UserControllerTest
- * This is a WebMvcTest which allows to test the UserController i.e. GET/POST request without actually sending them over the network.
- * This tests if the UserController works.
+ * AppUserControllerTest
+ * This is a WebMvcTest which allows to test the AppUserController i.e. GET/POST request without actually sending them over the network.
+ * This tests if the AppUserController works.
  */
-@WebMvcTest(UserController.class)
-public class UserControllerTest {
+@WebMvcTest(AppUserController.class)
+public class AppUserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
+    private AppUserService AppUserService;
 
     @Test
-    public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
+    public void givenAppUsers_whenGetAppUsers_thenReturnJsonArray() throws Exception {
         // given
-        User user = new User();
-        user.setName("Firstname Lastname");
-        user.setUsername("firstname@lastname");
-        user.setStatus(UserStatus.OFFLINE);
+        AppUser AppUser = new AppUser();
+        AppUser.setName("Firstname Lastname");
+        AppUser.setAppUsername("firstname@lastname");
+        AppUser.setStatus(AppUserStatus.OFFLINE);
 
-        List<User> allUsers = Collections.singletonList(user);
+        List<AppUser> allAppUsers = Collections.singletonList(AppUser);
 
-        // this mocks the UserService -> we define above what the userService should return when getUsers() is called
-        given(userService.getUsers()).willReturn(allUsers);
+        // this mocks the AppUserService -> we define above what the AppUserService should return when getAppUsers() is called
+        given(AppUserService.getAppUsers()).willReturn(allAppUsers);
 
         // when
-        MockHttpServletRequestBuilder getRequest = get("/users").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder getRequest = get("/AppUsers").contentType(MediaType.APPLICATION_JSON);
 
         // then
         mockMvc.perform(getRequest).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(user.getName())))
-                .andExpect(jsonPath("$[0].username", is(user.getUsername())))
-                .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())));
+                .andExpect(jsonPath("$[0].name", is(AppUser.getName())))
+                .andExpect(jsonPath("$[0].AppUsername", is(AppUser.getAppUsername())))
+                .andExpect(jsonPath("$[0].status", is(AppUser.getStatus().toString())));
     }
 
     @Test
-    public void createUser_validInput_userCreated() throws Exception {
+    public void createAppUser_validInput_AppUserCreated() throws Exception {
         // given
-        User user = new User();
-        user.setId(1L);
-        user.setName("Test User");
-        user.setUsername("testUsername");
-        user.setToken("1");
-        user.setStatus(UserStatus.ONLINE);
+        AppUser AppUser = new AppUser();
+        AppUser.setId(1L);
+        AppUser.setName("Test AppUser");
+        AppUser.setAppUsername("testAppUsername");
+        AppUser.setToken("1");
+        AppUser.setStatus(AppUserStatus.ONLINE);
 
-        UserPostDTO userPostDTO = new UserPostDTO();
-        userPostDTO.setName("Test User");
-        userPostDTO.setUsername("testUsername");
+        AppUserPostDTO AppUserPostDTO = new AppUserPostDTO();
+        AppUserPostDTO.setName("Test AppUser");
+        AppUserPostDTO.setAppUsername("testAppUsername");
 
-        given(userService.createUser(Mockito.any())).willReturn(user);
+        given(AppUserService.createAppUser(Mockito.any())).willReturn(AppUser);
 
         // when/then -> do the request + validate the result
-        MockHttpServletRequestBuilder postRequest = post("/users")
+        MockHttpServletRequestBuilder postRequest = post("/AppUsers")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(userPostDTO));
+                .content(asJsonString(AppUserPostDTO));
 
         // then
         mockMvc.perform(postRequest)
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", is(user.getId().intValue())))
-                .andExpect(jsonPath("$.name", is(user.getName())))
-                .andExpect(jsonPath("$.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+                .andExpect(jsonPath("$.id", is(AppUser.getId().intValue())))
+                .andExpect(jsonPath("$.name", is(AppUser.getName())))
+                .andExpect(jsonPath("$.AppUsername", is(AppUser.getAppUsername())))
+                .andExpect(jsonPath("$.status", is(AppUser.getStatus().toString())));
     }
 
     /**
-     * Helper Method to convert userPostDTO into a JSON string such that the input can be processed
-     * Input will look like this: {"name": "Test User", "username": "testUsername"}
+     * Helper Method to convert AppUserPostDTO into a JSON string such that the input can be processed
+     * Input will look like this: {"name": "Test AppUser", "AppUsername": "testAppUsername"}
      * @param object
      * @return string
      */
