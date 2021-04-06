@@ -1,7 +1,8 @@
-package ch.uzh.ifi.hase.soprafs21.repository;
+package sopra.repository;
 
-import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
+import sopra.appAppUser.AppUserRepository;
+import sopra.constant.AppUserStatus;
+import sopra.appAppUser.AppUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,34 +12,34 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
-public class UserRepositoryIntegrationTest {
+public class AppUserRepositoryIntegrationTest {
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private UserRepository userRepository;
+    private AppUserRepository AppUserRepository;
 
     @Test
     public void findByName_success() {
         // given
-        User user = new User();
-        user.setName("Firstname Lastname");
-        user.setUsername("firstname@lastname");
-        user.setStatus(UserStatus.OFFLINE);
-        user.setToken("1");
+        AppUser AppUser = new AppUser();
+        AppUser.setName("Firstname Lastname");
+        AppUser.setAppUsername("firstname@lastname");
+        AppUser.setStatus(AppUserStatus.OFFLINE);
+        AppUser.setToken("1");
 
-        entityManager.persist(user);
+        entityManager.persist(AppUser);
         entityManager.flush();
 
         // when
-        User found = userRepository.findByName(user.getName());
+        AppUser found = AppUserRepository.findByName(AppUser.getName());
 
         // then
         assertNotNull(found.getId());
-        assertEquals(found.getName(), user.getName());
-        assertEquals(found.getUsername(), user.getUsername());
-        assertEquals(found.getToken(), user.getToken());
-        assertEquals(found.getStatus(), user.getStatus());
+        assertEquals(found.getName(), AppUser.getName());
+        assertEquals(found.getAppUsername(), AppUser.getAppUsername());
+        assertEquals(found.getToken(), AppUser.getToken());
+        assertEquals(found.getStatus(), AppUser.getStatus());
     }
 }

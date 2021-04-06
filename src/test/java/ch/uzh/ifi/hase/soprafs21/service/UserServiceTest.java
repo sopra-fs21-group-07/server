@@ -1,8 +1,9 @@
-package ch.uzh.ifi.hase.soprafs21.service;
+package sopra.service;
 
-import ch.uzh.ifi.hase.soprafs21.constant.UserStatus;
-import ch.uzh.ifi.hase.soprafs21.entity.User;
-import ch.uzh.ifi.hase.soprafs21.repository.UserRepository;
+import sopra.appuser.AppUserService;
+import sopra.appuser.AppUserStatus;
+import sopra.appuser.AppUser;
+import sopra.appuser.AppUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,69 +14,69 @@ import org.springframework.web.server.ResponseStatusException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserServiceTest {
+public class AppUserServiceTest {
 
     @Mock
-    private UserRepository userRepository;
+    private AppUserRepository AppUserRepository;
 
     @InjectMocks
-    private UserService userService;
+    private AppUserService AppUserService;
 
-    private User testUser;
+    private AppUser testAppUser;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
 
         // given
-        testUser = new User();
-        testUser.setId(1L);
-        testUser.setName("testName");
-        testUser.setUsername("testUsername");
+        testAppUser = new AppUser();
+        testAppUser.setId(1L);
+        testAppUser.setName("testName");
+        testAppUser.setAppUsername("testAppUsername");
 
-        // when -> any object is being save in the userRepository -> return the dummy testUser
-        Mockito.when(userRepository.save(Mockito.any())).thenReturn(testUser);
+        // when -> any object is being save in the AppUserRepository -> return the dummy testAppUser
+        Mockito.when(AppUserRepository.save(Mockito.any())).thenReturn(testAppUser);
     }
 
     @Test
-    public void createUser_validInputs_success() {
-        // when -> any object is being save in the userRepository -> return the dummy testUser
-        User createdUser = userService.createUser(testUser);
+    public void createAppUser_validInputs_success() {
+        // when -> any object is being save in the AppUserRepository -> return the dummy testAppUser
+        AppUser createdAppUser = AppUserService.createAppUser(testAppUser);
 
         // then
-        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any());
+        Mockito.verify(AppUserRepository, Mockito.times(1)).save(Mockito.any());
 
-        assertEquals(testUser.getId(), createdUser.getId());
-        assertEquals(testUser.getName(), createdUser.getName());
-        assertEquals(testUser.getUsername(), createdUser.getUsername());
-        assertNotNull(createdUser.getToken());
-        assertEquals(UserStatus.OFFLINE, createdUser.getStatus());
+        assertEquals(testAppUser.getId(), createdAppUser.getId());
+        assertEquals(testAppUser.getName(), createdAppUser.getName());
+        assertEquals(testAppUser.getAppUsername(), createdAppUser.getAppUsername());
+        assertNotNull(createdAppUser.getToken());
+        assertEquals(AppUserStatus.OFFLINE, createdAppUser.getStatus());
     }
 
     @Test
-    public void createUser_duplicateName_throwsException() {
-        // given -> a first user has already been created
-        userService.createUser(testUser);
+    public void createAppUser_duplicateName_throwsException() {
+        // given -> a first AppUser has already been created
+        AppUserService.createAppUser(testAppUser);
 
-        // when -> setup additional mocks for UserRepository
-        Mockito.when(userRepository.findByName(Mockito.any())).thenReturn(testUser);
-        Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(null);
+        // when -> setup additional mocks for AppUserRepository
+        Mockito.when(AppUserRepository.findByName(Mockito.any())).thenReturn(testAppUser);
+        Mockito.when(AppUserRepository.findByAppUsername(Mockito.any())).thenReturn(null);
 
-        // then -> attempt to create second user with same user -> check that an error is thrown
-        assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
+        // then -> attempt to create second AppUser with same AppUser -> check that an error is thrown
+        assertThrows(ResponseStatusException.class, () -> AppUserService.createAppUser(testAppUser));
     }
 
     @Test
-    public void createUser_duplicateInputs_throwsException() {
-        // given -> a first user has already been created
-        userService.createUser(testUser);
+    public void createAppUser_duplicateInputs_throwsException() {
+        // given -> a first AppUser has already been created
+        AppUserService.createAppUser(testAppUser);
 
-        // when -> setup additional mocks for UserRepository
-        Mockito.when(userRepository.findByName(Mockito.any())).thenReturn(testUser);
-        Mockito.when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
+        // when -> setup additional mocks for AppUserRepository
+        Mockito.when(AppUserRepository.findByName(Mockito.any())).thenReturn(testAppUser);
+        Mockito.when(AppUserRepository.findByAppUsername(Mockito.any())).thenReturn(testAppUser);
 
-        // then -> attempt to create second user with same user -> check that an error is thrown
-        assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
+        // then -> attempt to create second AppUser with same AppUser -> check that an error is thrown
+        assertThrows(ResponseStatusException.class, () -> AppUserService.createAppUser(testAppUser));
     }
 
 

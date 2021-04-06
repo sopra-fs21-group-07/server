@@ -1,4 +1,4 @@
-package ch.uzh.ifi.hase.soprafs21;
+package sopra;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
