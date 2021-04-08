@@ -22,6 +22,14 @@ public class Tour {
     @Column(nullable = false, unique = true)
     private String token;
 
+    //Tells number of total members from the beginning
+    @Column(nullable = false)
+    private int member;
+
+    //Count the number of empty slots member - participants = emtpy slots
+    @Column(nullable = false)
+    private int emptySlots;
+
     public Long getId() {
         return id;
     }
@@ -44,6 +52,22 @@ public class Tour {
 
     public void setSummit(String summit) {
         this.summit = summit;
+    }
+
+    public int getMember() {
+        return member;
+    }
+
+    public void setMember(int member) {
+        this.member = member;
+    }
+
+    public int getEmptySlots() {
+        return emptySlots;
+    }
+
+    public void setEmptySlots(int emptySlots) {
+        this.emptySlots = emptySlots;
     }
 
     public String getToken() {

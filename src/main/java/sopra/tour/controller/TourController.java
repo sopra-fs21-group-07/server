@@ -39,6 +39,14 @@ public class TourController {
         return tourGetDTOs;
     }
 
+    @GetMapping("/tours/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public TourGetDTO getOneTour(@PathVariable String id) {
+        // fetch all tours in the internal representation
+        return DTOMapperTour.INSTANCE.convertEntityToTourGetDTO(tourService.getTourById(Long.parseLong(id)));
+    }
+
     @PostMapping("/tours")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
@@ -51,6 +59,19 @@ public class TourController {
 
         // convert internal representation of tour back to API
         return DTOMapperTour.INSTANCE.convertEntityToTourGetDTO(createdTour);
+    }
+
+    @PutMapping("/tours/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseBody
+    public String addMemberToTour(@PathVariable String id, @RequestBody String emptySlots){
+        //Search with ID for the tour in the repository
+        Tour addMemberTour = tourService.getTourById(Integer.parseInt(id));
+
+        //Check whether there are empty slots and add them to the tour
+        emptySlots = tourService.add(addMemberTour);
+
+        return emptySlots;
     }
 }
 

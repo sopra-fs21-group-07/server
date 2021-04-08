@@ -8,5 +8,5 @@ import sopra.tour.entity.Tour;
 public interface TourRepository extends JpaRepository<Tour, Long> {
     Tour findByName(String name);
 
-    Tour findById(String username);
+    Tour findById(long id);
 }

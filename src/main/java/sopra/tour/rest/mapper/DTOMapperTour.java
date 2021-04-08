@@ -20,10 +20,14 @@ public interface DTOMapperTour {
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "summit", target = "summit")
+    @Mapping(source = "member", target = "member")
+    @Mapping(source = "member", target = "emptySlots")
     Tour convertTourPostDTOtoEntity(TourPostDTO tourPostDTO);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "summit", target = "summit")
+    @Mapping(source = "member", target = "member")
+    @Mapping(source = "emptySlots", target = "emptySlots")
     TourGetDTO convertEntityToTourGetDTO(Tour tour);
 }
