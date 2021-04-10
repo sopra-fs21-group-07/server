@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import sopra.appuser.AppUserRepository;
 import sopra.registration.token.ConfirmationToken;
+import sopra.registration.token.ConfirmationTokenRepository;
 import sopra.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,7 @@ public class AppUserService implements UserDetailsService {
             "user with email %s not found";
 
     private final AppUserRepository appUserRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
@@ -80,5 +82,103 @@ public class AppUserService implements UserDetailsService {
     }
     public List<AppUser> getAppUsers() {
         return appUserRepository.findAll();
+    }
+
+    public void editUsername(String token, String username){
+        if (this.confirmationTokenRepository.findByToken(token).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This token does not exist");
+        }
+        else{
+            ConfirmationToken confirmationToken = this.confirmationTokenRepository.findByToken(token).get();
+            long id = confirmationToken.getId();
+            if (this.appUserRepository.findById(id).isEmpty()){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "This id is not taken in the database");
+            }
+            AppUser user = this.appUserRepository.findById(id).get();
+            user.setUsername(username);
+            appUserRepository.flush();
+        }
+    }
+
+    public void editFirstName(String token, String firstName){
+        if (this.confirmationTokenRepository.findByToken(token).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This token does not exist");
+        }
+        else{
+            ConfirmationToken confirmationToken = this.confirmationTokenRepository.findByToken(token).get();
+            long id = confirmationToken.getId();
+            if (this.appUserRepository.findById(id).isEmpty()){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "This id is not taken in the database");
+            }
+            AppUser user = this.appUserRepository.findById(id).get();
+            user.setFirstName(firstName);
+            appUserRepository.flush();
+        }
+    }
+
+    public void editLastName(String token, String lastName){
+        if (this.confirmationTokenRepository.findByToken(token).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This token does not exist");
+        }
+        else{
+            ConfirmationToken confirmationToken = this.confirmationTokenRepository.findByToken(token).get();
+            long id = confirmationToken.getId();
+            if (this.appUserRepository.findById(id).isEmpty()){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "This id is not taken in the database");
+            }
+            AppUser user = this.appUserRepository.findById(id).get();
+            user.setLastName(lastName);
+            appUserRepository.flush();
+        }
+    }
+
+    public void editAge(String token, int age){
+        if (this.confirmationTokenRepository.findByToken(token).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This token does not exist");
+        }
+        else{
+            ConfirmationToken confirmationToken = this.confirmationTokenRepository.findByToken(token).get();
+            long id = confirmationToken.getId();
+            if (this.appUserRepository.findById(id).isEmpty()){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "This id is not taken in the database");
+            }
+            AppUser user = this.appUserRepository.findById(id).get();
+            user.setAge(age);
+            appUserRepository.flush();
+        }
+    }
+
+    public void editRegion(String token, String region){
+        if (this.confirmationTokenRepository.findByToken(token).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This token does not exist");
+        }
+        else{
+            ConfirmationToken confirmationToken = this.confirmationTokenRepository.findByToken(token).get();
+            long id = confirmationToken.getId();
+            if (this.appUserRepository.findById(id).isEmpty()){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "This id is not taken in the database");
+            }
+            AppUser user = this.appUserRepository.findById(id).get();
+            user.setRegion(region);
+            appUserRepository.flush();
+        }
+    }
+
+    public void editPassword(String token, String password){
+        if (this.confirmationTokenRepository.findByToken(token).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This token does not exist");
+        }
+        else{
+            ConfirmationToken confirmationToken = this.confirmationTokenRepository.findByToken(token).get();
+            long id = confirmationToken.getId();
+            if (this.appUserRepository.findById(id).isEmpty()){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "This id is not taken in the database");
+            }
+            AppUser user = this.appUserRepository.findById(id).get();
+            String encodedPassword = bCryptPasswordEncoder
+                    .encode(password);
+            user.setPassword(encodedPassword);
+            appUserRepository.flush();
+        }
     }
 }
