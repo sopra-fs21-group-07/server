@@ -49,6 +49,19 @@ public class TourService {
         return newTour;
     }
 
+    public Tour getTourById(long id){
+        return tourRepository.findById(id);
+    }
+
+    public String add(Tour addMemberToTour, Tour inputUser){
+        int emptySlots = addMemberToTour.getEmptySlots();
+        if (emptySlots > 0){
+            addMemberToTour.setEmptySlots(emptySlots - 1);
+            addMemberToTour.setEmailMember(inputUser.getEmailMember());
+        }
+        return Integer.toString(addMemberToTour.getEmptySlots());
+    }
+
     /**
      * This is a helper method that will check the uniqueness criteria of the Tourname and the name
      * defined in the Tour entity. The method will do nothing if the input is unique and throw an error otherwise.
