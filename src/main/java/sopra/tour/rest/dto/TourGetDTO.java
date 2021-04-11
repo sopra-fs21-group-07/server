@@ -5,7 +5,7 @@ public class TourGetDTO {
     private Long id;
     private String name;
     private String summit;
-    private int member;
+    private String emailMember;
     private int emptySlots;
 
     public String getSummit() {
@@ -32,13 +32,13 @@ public class TourGetDTO {
         this.id = id;
     }
 
-    public int getMember() {
-        return member;
+    public String getEmailMember() {
+        return emailMember;
     }
 
-    public void setMember(int member) {
-        this.member = member;
-        setEmptySlots(member);
+    public void setEmailMember(String emailMember) {
+        this.emailMember = emailMember;
+        setEmptySlots(getEmptySlots());
     }
 
     public int getEmptySlots() {

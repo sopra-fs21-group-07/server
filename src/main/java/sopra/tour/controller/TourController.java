@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import sopra.tour.entity.Tour;
 import sopra.tour.rest.dto.TourGetDTO;
 import sopra.tour.rest.dto.TourPostDTO;
+import sopra.tour.rest.dto.TourPutDTO;
 import sopra.tour.rest.mapper.DTOMapperTour;
 import sopra.tour.service.TourService;
 
@@ -64,14 +65,17 @@ public class TourController {
     @PutMapping("/tours/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
-    public String addMemberToTour(@PathVariable String id, @RequestBody String emptySlots){
+    public TourGetDTO addMemberToTour(@PathVariable String id, @RequestBody TourPutDTO tourPutDTO){
+        // convert API tour to internal representation
+        Tour inputTour= DTOMapperTour.INSTANCE.convertTourPutDTOtoEntity(tourPutDTO);
+
         //Search with ID for the tour in the repository
         Tour addMemberTour = tourService.getTourById(Integer.parseInt(id));
 
         //Check whether there are empty slots and add them to the tour
-        emptySlots = tourService.add(addMemberTour);
+        tourService.add(addMemberTour, inputTour);
 
-        return emptySlots;
+        return DTOMapperTour.INSTANCE.convertEntityToTourGetDTO(addMemberTour);
     }
 }
 

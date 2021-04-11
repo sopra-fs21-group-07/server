@@ -5,6 +5,7 @@ import sopra.tour.rest.dto.TourGetDTO;
 import sopra.tour.rest.dto.TourPostDTO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import sopra.tour.rest.dto.TourPutDTO;
 
 /**
  * DTOMapper
@@ -20,14 +21,17 @@ public interface DTOMapperTour {
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "summit", target = "summit")
-    @Mapping(source = "member", target = "member")
-    @Mapping(source = "member", target = "emptySlots")
+    @Mapping(source = "emailMember", target = "emailMember")
     Tour convertTourPostDTOtoEntity(TourPostDTO tourPostDTO);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "summit", target = "summit")
-    @Mapping(source = "member", target = "member")
+    @Mapping(source = "emailMember", target = "emailMember")
     @Mapping(source = "emptySlots", target = "emptySlots")
     TourGetDTO convertEntityToTourGetDTO(Tour tour);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "emailMember", target="emailMember")
+    Tour convertTourPutDTOtoEntity(TourPutDTO tourPutDTO);
 }

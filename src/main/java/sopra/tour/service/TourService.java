@@ -53,10 +53,11 @@ public class TourService {
         return tourRepository.findById(id);
     }
 
-    public String add(Tour addMemberToTour){
+    public String add(Tour addMemberToTour, Tour inputUser){
         int emptySlots = addMemberToTour.getEmptySlots();
         if (emptySlots > 0){
             addMemberToTour.setEmptySlots(emptySlots - 1);
+            addMemberToTour.setEmailMember(inputUser.getEmailMember());
         }
         return Integer.toString(addMemberToTour.getEmptySlots());
     }

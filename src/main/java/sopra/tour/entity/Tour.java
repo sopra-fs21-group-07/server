@@ -23,8 +23,8 @@ public class Tour {
     private String token;
 
     //Tells number of total members from the beginning
-    @Column(nullable = false)
-    private int member;
+    @Column(nullable = true)
+    private String emailMember;
 
     //Count the number of empty slots member - participants = emtpy slots
     @Column(nullable = false)
@@ -54,12 +54,12 @@ public class Tour {
         this.summit = summit;
     }
 
-    public int getMember() {
-        return member;
+    public String getEmailMember() {
+        return emailMember;
     }
 
-    public void setMember(int member) {
-        this.member = member;
+    public void setEmailMember(String emailMember) {
+        this.emailMember = emailMember;
     }
 
     public int getEmptySlots() {
