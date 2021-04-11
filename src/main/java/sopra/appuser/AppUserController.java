@@ -20,6 +20,7 @@ public class AppUserController {
         this.AppUserService = AppUserService;
     }
 
+    //can be deleted!
     @GetMapping(path = "/appUsers")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -34,6 +35,44 @@ public class AppUserController {
         }
         return AppUserGetDTOs;
     }
+
+    @PutMapping(path = "/appUsers/{token}/editUsername")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void editUsername(@PathVariable String token, @RequestBody String username){
+        AppUserService.editUsername(token, username);
+    }
+
+    @PutMapping(path = "/appUsers/{token}/editFirstName")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void editFirstName(@PathVariable String token, @RequestBody String firstName){
+        AppUserService.editFirstName(token, firstName);
+    }
+
+    @PutMapping(path = "/appUsers/{token}/editLastName")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void editLastName(@PathVariable String token, @RequestBody String lastName){
+        AppUserService.editLastName(token, lastName);
+    }
+
+    @PutMapping(path = "/appUsers/{token}/editAge")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void editAge(@PathVariable String token, @RequestBody int age){
+        AppUserService.editAge(token, age);
+    }
+
+    @PutMapping(path = "/appUsers/{token}/editRegion")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void editRegion(@PathVariable String token, @RequestBody String region){
+        AppUserService.editRegion(token, region);
+    }
+
+    @PutMapping(path = "/appUsers/{token}/editPassword")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void editPassword(@PathVariable String token, @RequestBody String password){
+        AppUserService.editPassword(token, password);
+    }
+
+
 
     /**@PostMapping("/AppUsers")
     @ResponseStatus(HttpStatus.CREATED)

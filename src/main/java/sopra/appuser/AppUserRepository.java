@@ -15,6 +15,7 @@ public interface AppUserRepository
 
     Optional<AppUser> findByEmail(String email);
     Optional<AppUser> findByUsername(String username);
+    Optional<AppUser> findById(long id);
 
     @Transactional
     @Modifying
