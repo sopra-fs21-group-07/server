@@ -26,6 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/tours/**").permitAll()
+                .antMatchers("/nameGeoMapAdmin/**").permitAll()
                 .antMatchers("/appUsers/**").permitAll()
                 .antMatchers("/registration/**")
                 .permitAll()

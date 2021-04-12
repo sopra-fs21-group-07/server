@@ -2,51 +2,50 @@ package sopra.mapAPI.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import sopra.mapAPI.entity.Summit;
+import sopra.mapAPI.rest.dto.MapFoundGetDTO;
+import sopra.mapAPI.rest.dto.MapSearchPostDTO;
+import sopra.mapAPI.rest.mapper.DTOMapperMapAPI;
 import sopra.mapAPI.service.MapApiService;
-import sopra.tour.entity.Tour;
-import sopra.tour.rest.dto.TourPostDTO;
-import sopra.tour.rest.mapper.DTOMapperTour;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class APIController {
-    private MapApiService mapApiService;
+    private MapApiService mapApiService = null;
 
     APIController() {
-        MapApiService mapApiService = new MapApiService();
+        mapApiService = new MapApiService();
     }
 
-    @GetMapping("/namegeomapadmin")
+    @GetMapping("/nameGeoMapAdmin")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Summit getAllTours() {
+    public List<Summit> getAllTours() {
         // fetch all tours in the internal representation
-        Summit summit = mapApiService.getKoordinate();
+        List<Summit> summit = mapApiService.getCoordinate("Gitschen");
 
         return summit;
     }
 
-    @PostMapping("/namegeomapadmin")
+    @PostMapping("/nameGeoMapAdmin")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public Summit createTour(@RequestBody TourPostDTO tourPostDTO) {
+    public List<MapFoundGetDTO> createTour(@RequestBody MapSearchPostDTO mapSearchPostDTO) {
+        // Create List for return value
+        List<MapFoundGetDTO> foundSummits = new ArrayList();
         // convert API tour to internal representation
-        Tour tourInput = DTOMapperTour.INSTANCE.convertTourPostDTOtoEntity(tourPostDTO);
+        Summit userInput = DTOMapperMapAPI.INSTANCE.convertMapSearchToSearchText(mapSearchPostDTO);
 
         // create tour
-        Tour createdTour = tourService.createTour(tourInput);
+        List<Summit> summits = mapApiService.getCoordinate(userInput.getName());
+
+        for (Summit summit : summits){
+            foundSummits.add(DTOMapperMapAPI.INSTANCE.convertEntityToTourGetDTO(summit));
+        }
 
         // convert internal representation of tour back to API
-        return DTOMapperTour.INSTANCE.convertEntityToTourGetDTO(createdTour);
-    }
-
-    public void getKoordinate(){
-        final String uri = "https://api3.geo.admin.ch/rest/services/api/MapServer/find?layer=ch.swisstopo.vec200-names-namedlocation&searchText=Matterhorn&searchField=objname1";
-
-        RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(uri, String.class);
-
-        System.out.println(result);
+        return foundSummits;
     }
 }
