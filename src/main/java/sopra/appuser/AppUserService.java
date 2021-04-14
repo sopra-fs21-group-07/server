@@ -84,6 +84,21 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.findAll();
     }
 
+    public AppUser getAppUser(String token) {
+        if (this.confirmationTokenRepository.findByToken(token).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This token does not exist");
+        }
+        else {
+            ConfirmationToken confirmationToken = this.confirmationTokenRepository.findByToken(token).get();
+            long id = confirmationToken.getId();
+            if (this.appUserRepository.findById(id).isEmpty()){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "This id is not taken in the database");
+            }
+            AppUser user = this.appUserRepository.findById(id).get();
+            return user;
+        }
+    }
+
     public void editUsername(String token, String username){
         if (this.confirmationTokenRepository.findByToken(token).isEmpty()){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "This token does not exist");

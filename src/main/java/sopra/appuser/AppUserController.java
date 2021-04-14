@@ -36,6 +36,14 @@ public class AppUserController {
         return AppUserGetDTOs;
     }
 
+    @GetMapping(path = "/appUsers/{token}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public AppUserGetDTO getUser(@PathVariable String token) {
+        AppUser appUser = AppUserService.getAppUser(token);
+        return AppUserMapper.INSTANCE.convertAppUsertoAppUserGetDTO(appUser);
+    }
+
     @PutMapping(path = "/appUsers/{token}/editUsername")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void editUsername(@PathVariable String token, @RequestBody String username){
