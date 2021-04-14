@@ -1,5 +1,9 @@
 package sopra.mapAPI.rest.dto;
 
+/**
+ * Converter class from frontend to backend
+ * @Autor: Beat Furrer
+ */
 public class MapSearchPostDTO {
     private String userInput;
 

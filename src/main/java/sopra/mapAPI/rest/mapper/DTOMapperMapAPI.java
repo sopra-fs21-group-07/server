@@ -11,11 +11,14 @@ import sopra.mapAPI.rest.dto.MapSearchPostDTO;
 public interface DTOMapperMapAPI {
     DTOMapperMapAPI INSTANCE = Mappers.getMapper(DTOMapperMapAPI.class);
 
+    //Never use
     @Mapping(source = "userInput", target = "name")
     Summit convertMapSearchToSearchText(MapSearchPostDTO searchText);
 
-    //@Mapping(source = "id", target = "id")
+    //Information back tot the frontend
     @Mapping(source = "name", target = "name")
     @Mapping(source = "altitude", target = "altitude")
+    @Mapping(source = "x", target="x")
+    @Mapping(source="y", target="y")
     MapFoundGetDTO convertEntityToTourGetDTO(Summit summit);
 }

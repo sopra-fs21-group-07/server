@@ -28,6 +28,11 @@ public class ApiConverter {
         return uri;
     }
 
+    /**
+     * Set the API for geo.admin.ch together
+     * @param searchName : searchText field
+     * @return uri for the REST API
+     */
     private String getGeoAdminRequest(String searchName){
         return (GeoAdminApi.URLMapServer.value +
                 GeoAdminApi.findRequest.value +

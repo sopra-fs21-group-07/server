@@ -24,7 +24,7 @@ public class APIController {
     @ResponseBody
     public List<Summit> getAllTours() {
         // fetch all tours in the internal representation
-        List<Summit> summit = mapApiService.getCoordinate("Gitschen");
+        List<Summit> summit = mapApiService.getSummitInformation("Gitschen");
 
         return summit;
     }
@@ -39,7 +39,7 @@ public class APIController {
         Summit userInput = DTOMapperMapAPI.INSTANCE.convertMapSearchToSearchText(mapSearchPostDTO);
 
         // create tour
-        List<Summit> summits = mapApiService.getCoordinate(userInput.getName());
+        List<Summit> summits = mapApiService.getSummitInformation(userInput.getName());
 
         for (Summit summit : summits){
             foundSummits.add(DTOMapperMapAPI.INSTANCE.convertEntityToTourGetDTO(summit));
