@@ -1,2 +1,6 @@
-package sopra.userauthentication.model;public enum UserStatus {
+package sopra.userauthentication.model;
+
+public enum UserStatus {
+    ONLINE,
+    OFFLINE
 }
