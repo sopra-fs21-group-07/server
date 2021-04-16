@@ -1,9 +1,9 @@
 package sopra.service;
 
-import sopra.appuser.AppUserService;
+/*import sopra.appuser.AppUserService;
 import sopra.appuser.AppUserStatus;
 import sopra.appuser.AppUser;
-import sopra.appuser.AppUserRepository;
+import sopra.appuser.AppUserRepository;*/
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,15 +14,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AppUserServiceTest {
+//class AppUserServiceTest {
 
-    @Mock
-    private AppUserRepository AppUserRepository;
+    //@Mock
+    //private AppUserRepository AppUserRepository;
 
-    @InjectMocks
-    private AppUserService AppUserService;
+    //@InjectMocks
+    //private AppUserService AppUserService;
 
-    private AppUser testAppUser;
+    //private AppUser testAppUser;
 
    /*@BeforeEach
     public void setup() {
@@ -78,6 +78,6 @@ class AppUserServiceTest {
         // then -> attempt to create second AppUser with same AppUser -> check that an error is thrown
         assertThrows(ResponseStatusException.class, () -> AppUserService.createAppUser(testAppUser));
     }
-    */
 
-}
+
+}*/
