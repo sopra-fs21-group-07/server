@@ -21,10 +21,10 @@ public class User {
     @GeneratedValue(strategy = IDENTITY)
     private Long userId;
 
-    @NotBlank(message = "Last name is required")
+
     private String firstName;
 
-    @NotBlank(message = "First name is required")
+
     private String lastName;
 
     @Email
