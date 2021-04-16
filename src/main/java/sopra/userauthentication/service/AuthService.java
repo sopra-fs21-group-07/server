@@ -51,7 +51,7 @@ public class AuthService {
         user.setLastName(registerRequest.getLastName());
         user.setCreated(Instant.now());
         user.setEnabled(false);
-        user.setUserStatus(UserStatus.OFFLINE);
+        //user.setUserStatus(UserStatus.OFFLINE);
 
         userRepository.save(user);
 
