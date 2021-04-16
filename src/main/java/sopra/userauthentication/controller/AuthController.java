@@ -4,12 +4,14 @@ import org.springframework.http.HttpStatus;
 import sopra.userauthentication.dto.*;
 import sopra.userauthentication.mapper.UserMapper;
 import sopra.userauthentication.model.User;
+import sopra.userauthentication.security.JwtProvider;
 import sopra.userauthentication.service.AuthService;
 import sopra.userauthentication.service.RefreshTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sopra.userauthentication.service.UserDetailsServiceImpl;
+import sopra.userauthentication.service.UserService;
 
 import javax.validation.Valid;
 
@@ -22,9 +24,11 @@ public class AuthController {
 
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserService userService;
+    private final JwtProvider jwtProvider;
 
     @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
         authService.signup(registerRequest);
         return new ResponseEntity<>("User Registration Successful",
@@ -32,22 +36,26 @@ public class AuthController {
     }
 
     @GetMapping("accountVerification/{token}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> verifyAccount(@PathVariable String token) {
         authService.verifyAccount(token);
         return new ResponseEntity<>("Account Activated Successfully", OK);
     }
 
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.CREATED)
     public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 
     @PostMapping("/refresh/token")
+    @ResponseStatus(HttpStatus.CREATED)
     public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         return authService.refreshToken(refreshTokenRequest);
     }
 
     @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
         return ResponseEntity.status(OK).body("Refresh Token Deleted Successfully!!");
@@ -57,7 +65,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public GetUser getUser(@PathVariable String username) {
-        User user = userDetailsService.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
         return UserMapper.INSTANCE.convertUsertoGetUser(user);
     }
 }
