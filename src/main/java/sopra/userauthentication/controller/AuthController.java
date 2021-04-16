@@ -1,14 +1,17 @@
 package sopra.userauthentication.controller;
 
-import sopra.userauthentication.dto.AuthenticationResponse;
-import sopra.userauthentication.dto.LoginRequest;
-import sopra.userauthentication.dto.RefreshTokenRequest;
-import sopra.userauthentication.dto.RegisterRequest;
+import org.springframework.http.HttpStatus;
+import sopra.userauthentication.dto.*;
+import sopra.userauthentication.mapper.UserMapper;
+import sopra.userauthentication.model.User;
+import sopra.userauthentication.security.JwtProvider;
 import sopra.userauthentication.service.AuthService;
 import sopra.userauthentication.service.RefreshTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sopra.userauthentication.service.UserDetailsServiceImpl;
+import sopra.userauthentication.service.UserService;
 
 import javax.validation.Valid;
 
@@ -21,8 +24,11 @@ public class AuthController {
 
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
+    private final UserService userService;
+    private final JwtProvider jwtProvider;
 
     @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
         authService.signup(registerRequest);
         return new ResponseEntity<>("User Registration Successful",
@@ -30,24 +36,36 @@ public class AuthController {
     }
 
     @GetMapping("accountVerification/{token}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> verifyAccount(@PathVariable String token) {
         authService.verifyAccount(token);
         return new ResponseEntity<>("Account Activated Successfully", OK);
     }
 
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.CREATED)
     public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 
     @PostMapping("/refresh/token")
+    @ResponseStatus(HttpStatus.CREATED)
     public AuthenticationResponse refreshTokens(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         return authService.refreshToken(refreshTokenRequest);
     }
 
     @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
         return ResponseEntity.status(OK).body("Refresh Token Deleted Successfully!!");
+    }
+
+    @GetMapping(path = "/profilePage/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public GetUser getUser(@PathVariable String username) {
+        User user = userService.getUserByUsername(username);
+        return UserMapper.INSTANCE.convertUsertoGetUser(user);
     }
 }

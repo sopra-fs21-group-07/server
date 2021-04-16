@@ -21,10 +21,8 @@ public class User {
     @GeneratedValue(strategy = IDENTITY)
     private Long userId;
 
-
     private String firstName;
-
-
+    
     private String lastName;
 
     @Email

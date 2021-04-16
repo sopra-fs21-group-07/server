@@ -38,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/tours/**").permitAll()
                 .antMatchers("/nameGeoMapAdmin/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/edit/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/subreddit")
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/posts/")
@@ -57,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest()
                 .authenticated();
+       httpSecurity.headers().frameOptions().disable();
         httpSecurity.addFilterBefore(jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class);
 

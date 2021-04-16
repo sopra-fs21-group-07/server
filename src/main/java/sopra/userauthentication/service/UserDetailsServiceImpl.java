@@ -1,5 +1,7 @@
 package sopra.userauthentication.service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import sopra.userauthentication.model.User;
 import sopra.userauthentication.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -38,4 +40,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private Collection<? extends GrantedAuthority> getAuthorities(String role) {
         return singletonList(new SimpleGrantedAuthority(role));
     }
+
 }
