@@ -1,5 +1,7 @@
 package sopra.userauthentication.service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import sopra.userauthentication.model.User;
 import sopra.userauthentication.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -37,5 +39,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private Collection<? extends GrantedAuthority> getAuthorities(String role) {
         return singletonList(new SimpleGrantedAuthority(role));
+    }
+
+    public User getUserByUsername(String username){
+        if (this.userRepository.findByUsername(username).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username does not exist");
+        }
+        else{
+            User user = this.userRepository.findByUsername(username).get();
+            return user;
+        }
     }
 }
