@@ -11,6 +11,6 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    @Mapping(source = "email", target = "email")
+    @Mapping(source = "username", target = "username")
     GetUser convertUsertoGetUser(User user);
 }
