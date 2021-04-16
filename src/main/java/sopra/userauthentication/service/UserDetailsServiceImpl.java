@@ -41,13 +41,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return singletonList(new SimpleGrantedAuthority(role));
     }
 
-    public User getUserByUsername(String username){
-        if (this.userRepository.findByUsername(username).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username does not exist");
-        }
-        else{
-            User user = this.userRepository.findByUsername(username).get();
-            return user;
-        }
-    }
 }

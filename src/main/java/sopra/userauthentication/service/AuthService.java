@@ -7,6 +7,7 @@ import sopra.userauthentication.dto.RegisterRequest;
 import sopra.userauthentication.exceptions.MessageException;
 import sopra.userauthentication.model.NotificationEmail;
 import sopra.userauthentication.model.User;
+import sopra.userauthentication.model.UserStatus;
 import sopra.userauthentication.model.VerificationToken;
 import sopra.userauthentication.repository.UserRepository;
 import sopra.userauthentication.repository.VerificationTokenRepository;
@@ -50,6 +51,7 @@ public class AuthService {
         user.setLastName(registerRequest.getLastName());
         user.setCreated(Instant.now());
         user.setEnabled(false);
+        user.setUserStatus(UserStatus.OFFLINE);
 
         userRepository.save(user);
 
