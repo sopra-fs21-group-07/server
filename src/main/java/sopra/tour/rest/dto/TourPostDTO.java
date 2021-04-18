@@ -5,6 +5,7 @@ public class TourPostDTO {
     private String summit;
     private String emailMember;
     private int emptySlots;
+    private int altitude;
 
     public String getEmailMember() {
         return emailMember;
@@ -36,5 +37,13 @@ public class TourPostDTO {
 
     public void setEmptySlots(int emptySlots) {
         this.emptySlots = emptySlots;
+    }
+
+    public int getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(int altitude) {
+        this.altitude = altitude;
     }
 }

@@ -21,6 +21,7 @@ public interface DTOMapperTour {
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "summit", target = "summit")
+    @Mapping(source = "altitude", target = "altitude")
     @Mapping(source = "emailMember", target = "emailMember")
     Tour convertTourPostDTOtoEntity(TourPostDTO tourPostDTO);
 
