@@ -1,6 +1,10 @@
 package sopra.mapAPI.service;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import sopra.mapAPI.entity.Summit;
 
 import java.util.ArrayList;
@@ -30,6 +34,31 @@ public class MapApiService {
         return extractSummit(result);
     }
 
+    public void updateGistGithub(String contentKML){
+        final String uri = "https://api.github.com/gists/d0367bda086c97514a541ebd1911ba38?_method=patch";
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = restTemplate.headForHeaders(uri);
+        headers.set("Authorization", "token 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");
+        String body = "{\"files\": {\"sopra07\": {\"content\": \""+contentKML+"\"}}}";
+        HttpEntity<String> entity = new HttpEntity<>(body, headers);
+        restTemplate.postForObject(uri, entity, String.class);
+    }
+
+    public int[] getSummitCoordinates(String summitName, int altitude){
+        int[]  coordinate = new int[2];
+        String baseErrorMessage = "%s. Therefore, the Tour could not be created!";
+        for (Summit el : getSummitInformation(summitName)) {
+            if (el.getAltitude() == altitude) {
+                coordinate[0] = el.getX();
+                coordinate[1] = el.getY();
+            }
+        }
+        if (coordinate[0] == 0 && coordinate[0] == 0)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "Summit not found"));
+        return coordinate;
+    }
+
     /**
      * Extract from the API response the summit name, altitute and x & y coordinates.
      * The input is an String array which is splitted up in every fieldName of the API response.
@@ -54,7 +83,7 @@ public class MapApiService {
                 summit = new Summit();
             }
         }
-        //System.out.println(apiObject);
+
         return result2;
     }
 
