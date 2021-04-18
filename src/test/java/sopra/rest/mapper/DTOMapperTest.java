@@ -1,7 +1,7 @@
 package sopra.rest.mapper;
 
-import sopra.appuser.AppUserStatus;
-import sopra.appuser.AppUser;
+//import sopra.appuser.AppUserStatus;
+//import sopra.appuser.AppUser;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

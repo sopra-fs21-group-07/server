@@ -1,9 +1,9 @@
 package sopra.controller;
 
-import sopra.appuser.AppUserController;
+/*import sopra.appuser.AppUserController;
 import sopra.appuser.AppUserStatus;
 import sopra.appuser.AppUser;
-import sopra.appuser.AppUserService;
+import sopra.appuser.AppUserService;*/
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -33,14 +33,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * This is a WebMvcTest which allows to test the AppUserController i.e. GET/POST request without actually sending them over the network.
  * This tests if the AppUserController works.
  */
-@WebMvcTest(AppUserController.class)
+/*@WebMvcTest(AppUserController.class)
 public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private AppUserService AppUserService;
+    private AppUserService AppUserService;*/
 
     /*@Test
     public void givenAppUsers_whenGetAppUsers_thenReturnJsonArray() throws Exception {
@@ -102,7 +102,7 @@ public class UserControllerTest {
      * @param object
      * @return string
      */
-    private String asJsonString(final Object object) {
+    /*private String asJsonString(final Object object) {
         try {
             return new ObjectMapper().writeValueAsString(object);
         }
@@ -110,4 +110,4 @@ public class UserControllerTest {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("The request body could not be created.%s", e.toString()));
         }
     }
-}
+}*/

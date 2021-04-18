@@ -1,8 +1,8 @@
 package sopra.repository;
 
-import sopra.appuser.AppUserRepository;
+/*import sopra.appuser.AppUserRepository;
 import sopra.appuser.AppUserStatus;
-import sopra.appuser.AppUser;
+import sopra.appuser.AppUser;*/
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,8 +17,8 @@ class AppUserRepositoryIntegrationTest {
     @Autowired
     private TestEntityManager entityManager;
 
-    @Autowired
-    private AppUserRepository AppUserRepository;
+    //@Autowired
+    //private AppUserRepository AppUserRepository;
 
     @Test
     public void findByName_success() {
