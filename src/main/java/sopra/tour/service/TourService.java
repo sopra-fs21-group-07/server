@@ -39,7 +39,7 @@ public class TourService {
         return this.tourRepository.findAll();
     }
 
-    public Tour createTour(Tour newTour) {
+    public Tour createTour(Tour newTour) throws Exception {
         newTour.setToken(UUID.randomUUID().toString());
         int[] coordinates = mapApiService.getSummitCoordinates(newTour.getSummit(), newTour.getAltitude());
         newTour.setCoordinate_LV03(coordinates);
