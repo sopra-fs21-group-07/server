@@ -39,7 +39,7 @@ public class MapApiService {
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = restTemplate.headForHeaders(uri);
-        headers.set("Authorization", "token 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");
+        headers.set("Authorization", "token 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");
         String body = "{\"files\": {\"sopra07\": {\"content\": \""+contentKML+"\"}}}";
         HttpEntity<String> entity = new HttpEntity<>(body, headers);
         restTemplate.postForObject(uri, entity, String.class);

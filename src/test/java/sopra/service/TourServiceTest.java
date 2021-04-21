@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class TourServiceTest {
 
-    /*@Qualifier("tourRepository")
+    @Qualifier("tourRepository")
     @Autowired
     private TourRepository tourRepository;
 
@@ -75,5 +75,5 @@ public class TourServiceTest {
         assertEquals(testTour.getEast_WGS(), 8.68135, 0.0001);
         assertEquals(testTour.getNorth_WGS(), 46.73690, 0.0001);
         assertNotNull(createdTour.getToken());
-    }*/
+    }
 }
