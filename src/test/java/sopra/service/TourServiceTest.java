@@ -34,7 +34,7 @@ public class TourServiceTest {
     }
 
     @Test
-    public void CheckTourCreation() {
+    public void CheckTourCreation() throws Exception {
         // given
         assertNull(tourRepository.findByName("testAppUsername"));
 
@@ -55,7 +55,7 @@ public class TourServiceTest {
     }
 
     @Test
-    public void CheckCoordinateCalculation() {
+    public void CheckCoordinateCalculation() throws Exception {
         // given
         assertNull(tourRepository.findByName("testAppUsername"));
 
