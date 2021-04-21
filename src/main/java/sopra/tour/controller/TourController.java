@@ -51,7 +51,7 @@ public class TourController {
     @PostMapping("/tours")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public TourGetDTO createTour(@RequestBody TourPostDTO tourPostDTO) {
+    public TourGetDTO createTour(@RequestBody TourPostDTO tourPostDTO) throws Exception {
         // convert API tour to internal representation
         Tour tourInput = DTOMapperTour.INSTANCE.convertTourPostDTOtoEntity(tourPostDTO);
 

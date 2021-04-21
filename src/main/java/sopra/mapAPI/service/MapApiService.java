@@ -34,12 +34,15 @@ public class MapApiService {
         return extractSummit(result);
     }
 
-    public void updateGistGithub(String contentKML){
+    public void updateGistGithub(String contentKML) throws Exception {
         final String uri = "https://api.github.com/gists/d0367bda086c97514a541ebd1911ba38?_method=patch";
-
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = restTemplate.headForHeaders(uri);
-        headers.set("Authorization", "token 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");
+        try{
+            headers.set("Authorization", "token " + System.getenv("GIST_TOKEN"));
+        } catch (Exception error){
+            throw new Exception("Environment variable not found! Please add it to your local machine. Name: GIST_TOKEN");
+        }
         String body = "{\"files\": {\"sopra07\": {\"content\": \""+contentKML+"\"}}}";
         HttpEntity<String> entity = new HttpEntity<>(body, headers);
         restTemplate.postForObject(uri, entity, String.class);
