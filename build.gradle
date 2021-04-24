@@ -24,6 +24,7 @@ configurations {
 }
 
 repositories {
+    maven { url 'http://clojars.org/repo' }
     mavenCentral()
 }
 
@@ -32,7 +33,9 @@ springBoot {
 }
 
 dependencies {
+    implementation group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.3.0'
     implementation 'org.mapstruct:mapstruct:1.3.1.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.3.1.Final'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.3.1.Final'
 
