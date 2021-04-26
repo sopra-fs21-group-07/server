@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+//most important for Chat
 public class ChatServer extends WebSocketServer {
 
     private final static Logger logger = LogManager.getLogger(ChatServer.class);
