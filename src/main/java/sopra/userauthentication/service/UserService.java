@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
+import sopra.userauthentication.dto.editRequests.PutFirstName;
 import sopra.userauthentication.model.User;
 import sopra.userauthentication.repository.UserRepository;
 
