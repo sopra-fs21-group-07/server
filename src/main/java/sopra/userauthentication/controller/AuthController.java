@@ -15,6 +15,7 @@ import sopra.userauthentication.service.UserService;
 
 import javax.validation.Valid;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -32,7 +33,7 @@ public class AuthController {
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
         authService.signup(registerRequest);
         return new ResponseEntity<>("User Registration Successful",
-                OK);
+                CREATED);
     }
 
     @GetMapping("accountVerification/{token}")
