@@ -19,6 +19,7 @@ import sopra.tour.rest.dto.TourPutDTO;
 public interface DTOMapperTour {
     DTOMapperTour INSTANCE = Mappers.getMapper(DTOMapperTour.class);
 
+    @Mapping(source = "type", target = "type")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "summit", target = "summit")
     @Mapping(source = "altitude", target = "altitude")
@@ -26,6 +27,7 @@ public interface DTOMapperTour {
     Tour convertTourPostDTOtoEntity(TourPostDTO tourPostDTO);
 
     @Mapping(source = "id", target = "id")
+    @Mapping(source = "type", target = "type")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "summit", target = "summit")
     @Mapping(source = "emailMember", target = "emailMember")

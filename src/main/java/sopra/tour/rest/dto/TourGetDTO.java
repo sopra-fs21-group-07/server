@@ -1,12 +1,23 @@
 package sopra.tour.rest.dto;
 
+import sopra.tour.TourType;
+
 public class TourGetDTO {
 
+    private TourType type;
     private Long id;
     private String name;
     private String summit;
     private String emailMember;
     private int emptySlots;
+
+    public TourType getType() {
+        return type;
+    }
+
+    public void setType(TourType type) {
+        this.type = type;
+    }
 
     public String getSummit() {
         return summit;

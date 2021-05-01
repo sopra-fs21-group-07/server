@@ -1,5 +1,7 @@
 package sopra.tour.entity;
 
+import sopra.tour.TourType;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,10 @@ public class Tour {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private TourType type;
 
     @Column(nullable = false)
     private String name;
@@ -55,6 +61,14 @@ public class Tour {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public TourType getType() {
+        return type;
+    }
+
+    public void setType(TourType type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -130,4 +144,6 @@ public class Tour {
     public double getEast_WGS() {
         return East_WGS;
     }
+
+
 }
