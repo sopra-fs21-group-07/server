@@ -77,6 +77,9 @@ public class TourService {
             addMemberToTour.setEmptySlots(emptySlots - 1);
             addMemberToTour.setEmailMember(inputUser.getEmailMember());
         }
+        else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, String.format("This tour is full. Please choose another one!"));
+        }
         return Integer.toString(addMemberToTour.getEmptySlots());
     }
 
