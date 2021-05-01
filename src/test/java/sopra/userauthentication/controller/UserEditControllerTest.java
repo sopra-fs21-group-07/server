@@ -19,8 +19,8 @@ import sopra.userauthentication.dto.editRequests.*;
 import sopra.userauthentication.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @SpringBootTest
@@ -169,4 +169,133 @@ class UserEditControllerTest {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("The request body could not be created.%s", e.toString()));
         }
     }
+
+    @Test
+    void editUsernameFail() throws Exception {
+        PutUsername putUsername = new PutUsername();
+        putUsername.setUsername("max456");
+
+        doThrow(new ResponseStatusException(HttpStatus.CONFLICT)).when(userService).editUsername(Mockito.anyString(), Mockito.anyString());
+
+        MockHttpServletRequestBuilder putRequest = put("/edit/username/max123")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(putUsername));
+
+        // then
+        MvcResult result = mockMvc.perform(putRequest).andReturn();
+
+        // test the http status of the response
+        assertEquals(HttpStatus.CONFLICT.value(), result.getResponse().getStatus());
+
+        // test the http method ()
+        assertEquals(HttpMethod.PUT.name(), result.getRequest().getMethod());
+    }
+
+    @Test
+    void editFirstNameFail() throws Exception {
+        PutFirstName putFirstName = new PutFirstName();
+        putFirstName.setFirstName("Max");
+
+        doThrow(new ResponseStatusException(HttpStatus.CONFLICT)).when(userService).editFirstName(Mockito.anyString(), Mockito.anyString());
+
+        MockHttpServletRequestBuilder putRequest = put("/edit/firstName/max123")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(putFirstName));
+
+
+        MvcResult result = mockMvc.perform(putRequest).andReturn();
+
+        // test the http status of the response
+        assertEquals(HttpStatus.CONFLICT.value(), result.getResponse().getStatus());
+
+        // test the http method ()
+        assertEquals(HttpMethod.PUT.name(), result.getRequest().getMethod());
+    }
+
+    @Test
+    void editLastNameFail() throws Exception {
+        PutLastName putLastName = new PutLastName();
+        putLastName.setLastName("Muster");
+
+        doThrow(new ResponseStatusException(HttpStatus.CONFLICT)).when(userService).editLastName(Mockito.anyString(), Mockito.anyString());
+
+        MockHttpServletRequestBuilder putRequest = put("/edit/lastName/max123")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(putLastName));
+
+
+        MvcResult result = mockMvc.perform(putRequest).andReturn();
+
+        // test the http status of the response
+        assertEquals(HttpStatus.CONFLICT.value(), result.getResponse().getStatus());
+
+        // test the http method ()
+        assertEquals(HttpMethod.PUT.name(), result.getRequest().getMethod());
+    }
+
+    @Test
+    void editAgeFail() throws Exception {
+        PutAge putAge = new PutAge();
+        putAge.setAge(30);
+
+        doThrow(new ResponseStatusException(HttpStatus.CONFLICT)).when(userService).editAge(Mockito.anyString(), Mockito.anyInt());
+
+        MockHttpServletRequestBuilder putRequest = put("/edit/age/max123")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(putAge));
+
+
+        MvcResult result = mockMvc.perform(putRequest).andReturn();
+
+        // test the http status of the response
+        assertEquals(HttpStatus.CONFLICT.value(), result.getResponse().getStatus());
+
+        // test the http method ()
+        assertEquals(HttpMethod.PUT.name(), result.getRequest().getMethod());
+    }
+
+    @Test
+    void editRegionFail() throws Exception {
+        PutRegion putRegion = new PutRegion();
+        putRegion.setRegion("Genf");
+
+        doThrow(new ResponseStatusException(HttpStatus.CONFLICT)).when(userService).editRegion(Mockito.anyString(), Mockito.anyString());
+
+
+        MockHttpServletRequestBuilder putRequest = put("/edit/region/max123")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(putRegion));
+
+
+        MvcResult result = mockMvc.perform(putRequest).andReturn();
+
+        // test the http status of the response
+        assertEquals(HttpStatus.CONFLICT.value(), result.getResponse().getStatus());
+
+        // test the http method ()
+        assertEquals(HttpMethod.PUT.name(), result.getRequest().getMethod());
+    }
+
+    @Test
+    void editPasswordFail() throws Exception {
+        PutPassword putPassword = new PutPassword();
+        putPassword.setPassword("pw1234");
+
+        doThrow(new ResponseStatusException(HttpStatus.CONFLICT)).when(userService).editPassword(Mockito.anyString(), Mockito.anyString());
+
+        MockHttpServletRequestBuilder putRequest = put("/edit/password/max123")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(putPassword));
+
+
+        MvcResult result = mockMvc.perform(putRequest).andReturn();
+
+        // test the http status of the response
+        assertEquals(HttpStatus.CONFLICT.value(), result.getResponse().getStatus());
+
+        // test the http method ()
+        assertEquals(HttpMethod.PUT.name(), result.getRequest().getMethod());
+    }
+
+
 }
