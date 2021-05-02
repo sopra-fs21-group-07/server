@@ -3,6 +3,7 @@ package sopra.config;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -36,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/tours/**").permitAll()
+                .antMatchers("/tours").permitAll()
                 .antMatchers("/nameGeoMapAdmin/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/edit/**").permitAll()
