@@ -4,12 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
-import sopra.userauthentication.dto.editRequests.PutFirstName;
 import sopra.userauthentication.model.User;
 import sopra.userauthentication.repository.UserRepository;
 
@@ -18,20 +13,20 @@ import sopra.userauthentication.repository.UserRepository;
 public class UserService {
     private UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private static final String error = "This username does not exist";
 
     public User getUserByUsername(String username){
-        if (this.userRepository.findByUsername(username).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username does not exist");
+        if (!this.userRepository.findByUsername(username).isPresent()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
-            User user = this.userRepository.findByUsername(username).get();
-            return user;
+            return this.userRepository.findByUsername(username).get();
         }
     }
 
     public void editUsername(String username, String newUsername){
         if (this.userRepository.findByUsername(username).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username does not exist");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
             User user = this.userRepository.findByUsername(username).get();
@@ -42,7 +37,7 @@ public class UserService {
 
     public void editFirstName(String username, String firstName){
         if (this.userRepository.findByUsername(username).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username does not exist");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
             User user = this.userRepository.findByUsername(username).get();
@@ -53,7 +48,7 @@ public class UserService {
 
     public void editLastName(String username, String lastName){
         if (this.userRepository.findByUsername(username).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username does not exist");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
             User user = this.userRepository.findByUsername(username).get();
@@ -64,7 +59,7 @@ public class UserService {
 
     public void editAge(String username, int age){
         if (this.userRepository.findByUsername(username).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username does not exist");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
             User user = this.userRepository.findByUsername(username).get();
@@ -75,7 +70,7 @@ public class UserService {
 
     public void editRegion(String username, String region){
         if (this.userRepository.findByUsername(username).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username does not exist");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
             User user = this.userRepository.findByUsername(username).get();
@@ -86,7 +81,7 @@ public class UserService {
 
     public void editPassword(String username, String password){
         if (this.userRepository.findByUsername(username).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "This username does not exist");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
             User user = this.userRepository.findByUsername(username).get();
