@@ -30,6 +30,7 @@ class UserServiceTest {
 
     private User testUser;
 
+    @Mock
     private PasswordEncoder passwordEncoder;
 
     @BeforeEach
@@ -120,11 +121,11 @@ class UserServiceTest {
 
     @Test
     void editPassword() {
-        //Mockito.when(this.userRepository.findByUsername(Mockito.anyString())).thenReturn(java.util.Optional.ofNullable(testUser));
-        //userService.editPassword("max123", "123456789");
+        Mockito.when(this.userRepository.findByUsername(Mockito.anyString())).thenReturn(java.util.Optional.ofNullable(testUser));
+        userService.editPassword("max123", "123456789");
 
-        //Mockito.verify(userRepository, Mockito.times(2)).findByUsername(Mockito.anyString());
-        //Mockito.verify(userRepository, Mockito.times(1)).flush();
+        Mockito.verify(userRepository, Mockito.times(2)).findByUsername(Mockito.anyString());
+        Mockito.verify(userRepository, Mockito.times(1)).flush();
     }
 
     @Test
