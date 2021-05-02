@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sopra.mapAPI.service.MapApiService;
 import sopra.tour.entity.Tour;
 import sopra.tour.repository.TourRepository;
@@ -28,6 +29,15 @@ public class TourService {
     private MapApiService mapApiService = null;
 
     private final TourRepository tourRepository;
+    private String currentURL = null;
+
+    public String getCurrentURL() {
+        return currentURL;
+    }
+
+    public void setCurrentURL(String currentURL) {
+        this.currentURL = currentURL;
+    }
 
     @Autowired
     public TourService(@Qualifier("tourRepository") TourRepository tourRepository) {
@@ -54,6 +64,7 @@ public class TourService {
         mapApiService.updateGistGithub(createKMLFile(getTours()));
 
         log.debug("Created Information for Tour: {}", newTour);
+
         return newTour;
     }
 
@@ -107,6 +118,19 @@ public class TourService {
         }
     }
 
+    private String getCurrentUrl(long tourId){
+        final String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+        if (baseUrl.contains("localhost")){
+            return "http://localhost:3000/confirmTour/"+tourId;
+        }
+        if (baseUrl.contains("server")) {
+            return "https://sopra-fs21-group-07-client.herokuapp.com/confirmTour/" + tourId;
+        }
+        else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Main URL is unknown"));
+        }
+    }
+
     public String createKMLFile(List<Tour> tours) {
         String datapath = "C:\\Users\\elbeato\\Downloads";
         String kmlstart = "<kml xmlns=\"http://www.opengis.net/kml/2.2\" xmlns:gx=\"http://www.google.com/kml/ext/2.2\" " +
@@ -125,8 +149,7 @@ public class TourService {
                     "</ExtendedData>" +
                     "<name>"+tour.getName()+"</name>" +
                     "<description>Link: &lt;a target=\"_blank\" " +
-                    "href=\"https://www.kite-uri.ch\"&gt; Tour details...&lt;/a&gt;&lt;img " +
-                    "src=\"https://github.com/sopra-fs21-group-07/client/blob/main/src/components/Tour/dummyPics/Homer2.jpeg\" " +
+                    "href="+getCurrentUrl(tour.getId())+"&gt; Tour details: "+ tour.getName()+"&lt;/a&gt;&lt;" +
                     "style=\"max-height:200px;\"/&gt;</description>" +
                     "<Style>" +
                     "<IconStyle>" +
