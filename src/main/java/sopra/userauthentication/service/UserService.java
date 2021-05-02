@@ -16,7 +16,7 @@ public class UserService {
     private static final String error = "This username does not exist";
 
     public User getUserByUsername(String username){
-        if (!this.userRepository.findByUsername(username).isPresent()){
+        if (this.userRepository.findByUsername(username).isEmpty()){
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
