@@ -1,4 +1,4 @@
-/*package sopra.userauthentication.service;
+package sopra.userauthentication.service;
 
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +21,41 @@ import static org.mockito.Mockito.when;
 import static javax.mail.Message.RecipientType;
 
 public class MailServiceTest {
-        @Autowired
+
+    @InjectMocks
+    private MailService mailService;
+    @Autowired
+    private JavaMailSender javaMailSender;
+    @Autowired
+    private MimeMessage mimeMessage;
+    @Autowired
+    private NotificationEmail notificationEmail;
+
+    @BeforeEach
+    public void setup() {
+        mimeMessage = new MimeMessage((Session)null);
+        javaMailSender = mock(JavaMailSender.class);
+        when(javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
+        mailService = new MailService(javaMailSender);
+    }
+
+
+    @Test
+    void sendMailTest(){
+        NotificationEmail notificationEmail = new NotificationEmail();
+        notificationEmail.setBody("asd");
+        notificationEmail.setSubject("qwe");
+        notificationEmail.setRecipient("yxc");
+
+        mailService.sendMail(notificationEmail);
+    }
+
+
+
+
+
+
+        /*@Autowired
         private MailService mailService;
         @Autowired
         private JavaMailSender javaMailSender;
@@ -45,6 +79,8 @@ public class MailServiceTest {
 
             mailService.sendMail(notificationEmail);
             assertEquals(recipient, "test");
-        }
+        }*/
 
-}*/
+
+
+}
