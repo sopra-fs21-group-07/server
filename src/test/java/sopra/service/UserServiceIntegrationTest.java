@@ -3,9 +3,9 @@ package sopra.service;
 /*import sopra.appuser.AppUserService;
 import sopra.appuser.AppUserStatus;
 import sopra.appuser.AppUser;
-import sopra.appuser.AppUserRepository;*/
+import sopra.appuser.AppUserRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Test;*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
