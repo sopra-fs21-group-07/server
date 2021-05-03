@@ -98,4 +98,47 @@ public class TourServiceTest {
 
         assertEquals(testKML, createKMLFile);
     }
+
+    @Test
+    public void CheckAddTeamMember() throws Exception {
+        Tour testTour = new Tour();
+        testTour.setId((long)1);
+        testTour.setName("testName");
+        testTour.setSummit("Bristen");
+        testTour.setAltitude(3073);
+        testTour.setEmptySlots(1);
+
+        String returnUserinput = tourService.add(testTour, testTour);
+
+        assertEquals("0", returnUserinput);
+    }
+
+    @Test
+    public void CheckReturnAllTours() throws Exception {
+        List<Tour> tours = tourService.getTours();
+
+        assertEquals(true, tours.isEmpty());
+    }
+
+    /*@Test
+    public void CheckReturnGetTourById() throws Exception {
+        // given
+        assertNull(tourRepository.findByName("testAppUsername"));
+
+        Tour testTour = new Tour();
+        testTour.setName("testName");
+        testTour.setSummit("Bristen");
+        testTour.setAltitude(3073);
+        tourService.createTour(testTour);
+
+        // when
+        Tour returnTour = tourService.getTourById((long) 0);
+
+        // then
+        assertEquals(testTour.getId(), returnTour.getId());
+        assertEquals(testTour.getName(), returnTour.getName());
+        assertEquals(testTour.getSummit(), returnTour.getSummit());
+        assertEquals(testTour.getAltitude(), returnTour.getAltitude());
+        assertNotNull(returnTour.getToken());
+    }*/
 }
