@@ -33,7 +33,7 @@ public interface DTOMapperTour {
     @Mapping(source = "summit", target = "summit")
     @Mapping(source = "emailMember", target = "emailMember")
     @Mapping(source = "emptySlots", target = "emptySlots")
-    //@Mapping(source = "tourPictureKey", target = "tourPictureKey")
+    @Mapping(source = "tourPictureKey", target = "tourPictureKey")
     TourGetDTO convertEntityToTourGetDTO(Tour tour);
 
     @Mapping(source = "id", target = "id")
