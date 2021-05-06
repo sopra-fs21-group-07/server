@@ -77,5 +77,6 @@ public class TourController {
 
         return DTOMapperTour.INSTANCE.convertEntityToTourGetDTO(addMemberTour);
     }
+
 }
 

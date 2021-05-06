@@ -9,6 +9,7 @@ public class TourPostDTO {
     private String emailMember;
     private int emptySlots;
     private int altitude;
+    private String tourPictureKey;
 
     public TourType getType() {
         return type;
@@ -57,4 +58,15 @@ public class TourPostDTO {
     public void setAltitude(int altitude) {
         this.altitude = altitude;
     }
+
+    public String getTourPictureKey() {
+        return tourPictureKey;
+    }
+
+    public void setTourPictureKey(String tourPictureKey ) {
+        this.tourPictureKey = tourPictureKey;
+    }
+
+
+
 }

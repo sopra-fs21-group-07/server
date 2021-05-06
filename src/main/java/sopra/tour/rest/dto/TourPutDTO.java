@@ -4,6 +4,7 @@ public class TourPutDTO {
 
     private Long id;
     private String emailMember;
+    //private String tourPictureKey;
 
     public String getEmailMember() {
         return emailMember;
@@ -20,4 +21,13 @@ public class TourPutDTO {
     public void setId(Long id) {
         this.id = id;
     }
+/*
+    public String getTourPictureKey() {
+        return tourPictureKey;
+    }
+
+    public void setTourPictureKey(String tourPictureKey ) {
+        this.tourPictureKey = tourPictureKey;
+    }
+*/
 }

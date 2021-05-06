@@ -54,6 +54,9 @@ public class Tour {
     //Longitude
     private double East_WGS;
 
+    @Column(nullable = true)
+    //Longitude
+    private String TourPictureKey;
 
     public Long getId() {
         return id;
@@ -145,5 +148,8 @@ public class Tour {
         return East_WGS;
     }
 
+    public String getTourPictureKey() { return TourPictureKey; }
+
+    public void setTourPictureKey(String tourPictureKey) { TourPictureKey = tourPictureKey; }
 
 }

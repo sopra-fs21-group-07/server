@@ -10,6 +10,7 @@ public class TourGetDTO {
     private String summit;
     private String emailMember;
     private int emptySlots;
+    //private String tourPictureKey;
 
     public TourType getType() {
         return type;
@@ -59,5 +60,16 @@ public class TourGetDTO {
     public void setEmptySlots(int emptySlots) {
         this.emptySlots = emptySlots;
     }
+
+    /*
+    public String getTourPictureKey() {
+        return tourPictureKey;
+    }
+
+    public void setTourPictureKey(String tourPictureKey ) {
+        this.tourPictureKey = tourPictureKey;
+    }
+
+     */
 }
 
