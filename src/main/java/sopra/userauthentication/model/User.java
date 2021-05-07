@@ -25,10 +25,12 @@ public class User {
     
     private String lastName;
 
+    @Column(unique = true)
     @Email
     @NotEmpty(message = "Email is required")
     private String email;
 
+    @Column(unique = true)
     @NotBlank(message = "Username is required")
     private String username;
 
