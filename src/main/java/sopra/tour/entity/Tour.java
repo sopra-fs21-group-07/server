@@ -3,6 +3,7 @@ package sopra.tour.entity;
 import sopra.tour.TourType;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 @Table(name = "TOUR")
@@ -57,6 +58,9 @@ public class Tour {
     @Column(nullable = true)
     //Longitude
     private String TourPictureKey;
+
+    @Column(nullable = false)
+    private Date date;
 
     public Long getId() {
         return id;
@@ -151,5 +155,9 @@ public class Tour {
     public String getTourPictureKey() { return TourPictureKey; }
 
     public void setTourPictureKey(String tourPictureKey) { TourPictureKey = tourPictureKey; }
+
+    public Date getDate(){return date;}
+
+    public void setDate(Date date){this.date = date;}
 
 }

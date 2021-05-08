@@ -25,6 +25,7 @@ public interface DTOMapperTour {
     @Mapping(source = "altitude", target = "altitude")
     @Mapping(source = "emailMember", target = "emailMember")
     @Mapping(source = "tourPictureKey", target = "tourPictureKey")
+    @Mapping(source = "date", target = "date")
     Tour convertTourPostDTOtoEntity(TourPostDTO tourPostDTO);
 
     @Mapping(source = "id", target = "id")
@@ -34,10 +35,12 @@ public interface DTOMapperTour {
     @Mapping(source = "emailMember", target = "emailMember")
     @Mapping(source = "emptySlots", target = "emptySlots")
     @Mapping(source = "tourPictureKey", target = "tourPictureKey")
+    @Mapping(source = "date", target = "date")
     TourGetDTO convertEntityToTourGetDTO(Tour tour);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "emailMember", target="emailMember")
     //@Mapping(source = "tourPictureKey", target = "tourPictureKey")
+    //@Mapping(source = "date", target="date")
     Tour convertTourPutDTOtoEntity(TourPutDTO tourPutDTO);
 }

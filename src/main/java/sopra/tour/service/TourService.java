@@ -15,6 +15,10 @@ import sopra.tour.repository.TourRepository;
 
 import java.util.List;
 import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.time.format.FormatStyle;
 
 /**
  * Tour Service
@@ -66,6 +70,16 @@ public class TourService {
         log.debug("Created Information for Tour: {}", newTour);
 
         return newTour;
+    }
+
+    /**convert Date into string of correct format
+     *@param date
+     *@return string
+     */
+    private String formatDate(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'+0000'");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return simpleDateFormat.format(date);
     }
 
     private double[] convertCoordinatesLV03TOWGS(int[] coordinates) {

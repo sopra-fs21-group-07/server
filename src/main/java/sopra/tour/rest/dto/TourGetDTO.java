@@ -1,6 +1,7 @@
 package sopra.tour.rest.dto;
 
 import sopra.tour.TourType;
+import java.util.*;
 
 public class TourGetDTO {
 
@@ -11,6 +12,7 @@ public class TourGetDTO {
     private String emailMember;
     private int emptySlots;
     private String tourPictureKey;
+    private Date date;
 
     public TourType getType() {
         return type;
@@ -69,6 +71,10 @@ public class TourGetDTO {
     public void setTourPictureKey(String tourPictureKey ) {
         this.tourPictureKey = tourPictureKey;
     }
+
+    public Date getDate(){return date;}
+
+    public void setDate(Date date){this.date = date;}
 
 
 }

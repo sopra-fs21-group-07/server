@@ -1,6 +1,7 @@
 package sopra.tour.rest.dto;
 
 import sopra.tour.TourType;
+import java.util.*;
 
 public class TourPostDTO {
     private TourType type;
@@ -10,6 +11,7 @@ public class TourPostDTO {
     private int emptySlots;
     private int altitude;
     private String tourPictureKey;
+    private Date date;
 
     public TourType getType() {
         return type;
@@ -66,6 +68,10 @@ public class TourPostDTO {
     public void setTourPictureKey(String tourPictureKey ) {
         this.tourPictureKey = tourPictureKey;
     }
+
+    public Date getDate(){return date;}
+
+    public void setDate(Date date){this.date = date;}
 
 
 
