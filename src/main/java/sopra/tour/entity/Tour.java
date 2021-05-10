@@ -3,7 +3,7 @@ package sopra.tour.entity;
 import sopra.tour.TourType;
 
 import javax.persistence.*;
-import java.util.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "TOUR")
@@ -19,10 +19,10 @@ public class Tour {
     @Column(nullable = true)
     private TourType type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String summit;
 
     @Column(nullable = false, unique = true)
@@ -39,28 +39,12 @@ public class Tour {
     @Column(nullable = false)
     private int altitude;
 
-    @Column(nullable = false)
-    //200'000er lowvalue
-    private int x_LV03;
-
-    @Column(nullable = false)
-    //600'000er highvalue
-    private int y_LV03;
-
-    @Column(nullable = false)
-    //latitude
-    private double North_WGS;
-
-    @Column(nullable = false)
-    //Longitude
-    private double East_WGS;
-
     @Column(nullable = true)
     //Longitude
     private String TourPictureKey;
 
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date;
 
     public Long getId() {
         return id;
@@ -94,6 +78,14 @@ public class Tour {
         this.summit = summit;
     }
 
+    public int getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(int altitude) {
+        this.altitude = altitude;
+    }
+
     public String getEmailMember() {
         return emailMember;
     }
@@ -118,46 +110,12 @@ public class Tour {
         this.token = token;
     }
 
-    public int getAltitude() {
-        return altitude;
-    }
-
-    public void setAltitude(int altitude) {
-        this.altitude = altitude;
-    }
-
-    public void setCoordinate_LV03(int[] coordinates) {
-        this.x_LV03 = coordinates[1];
-        this.y_LV03 = coordinates[0];
-    }
-
-    public void setCoordinate_WGS(double[] coordinates) {
-        this.North_WGS = coordinates[1];
-        this.East_WGS = coordinates[0];
-    }
-
-    public int getX_LV03() {
-        return x_LV03;
-    }
-
-    public int getY_LV03() {
-        return y_LV03;
-    }
-
-    public double getNorth_WGS() {
-        return North_WGS;
-    }
-
-    public double getEast_WGS() {
-        return East_WGS;
-    }
-
     public String getTourPictureKey() { return TourPictureKey; }
 
     public void setTourPictureKey(String tourPictureKey) { TourPictureKey = tourPictureKey; }
 
-    public Date getDate(){return date;}
+    public LocalDate getDate(){return date;}
 
-    public void setDate(Date date){this.date = date;}
+    public void setDate(LocalDate date){this.date = date;}
 
 }

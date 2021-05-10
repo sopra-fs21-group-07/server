@@ -10,15 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sopra.mapAPI.service.MapApiService;
+import sopra.tour.entity.Summit;
 import sopra.tour.entity.Tour;
+import sopra.tour.repository.SummitRepository;
 import sopra.tour.repository.TourRepository;
 
-import java.util.List;
-import java.util.UUID;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.time.format.FormatStyle;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+import java.util.UUID;
 
 /**
  * Tour Service
@@ -33,6 +34,7 @@ public class TourService {
     private MapApiService mapApiService = null;
 
     private final TourRepository tourRepository;
+    private final SummitRepository summitRepository;
     private String currentURL = null;
 
     public String getCurrentURL() {
@@ -44,9 +46,11 @@ public class TourService {
     }
 
     @Autowired
-    public TourService(@Qualifier("tourRepository") TourRepository tourRepository) {
+    public TourService(@Qualifier("tourRepository") TourRepository tourRepository,
+                       @Qualifier("summitRepository") SummitRepository summitRepository) {
         this.tourRepository = tourRepository;
         this.mapApiService = new MapApiService();
+        this.summitRepository = summitRepository;
     }
 
     public List<Tour> getTours() {
@@ -55,10 +59,8 @@ public class TourService {
 
     public Tour createTour(Tour newTour) throws Exception {
         newTour.setToken(UUID.randomUUID().toString());
-        int[] coordinates = mapApiService.getSummitCoordinates(newTour.getSummit(), newTour.getAltitude());
-        newTour.setCoordinate_LV03(coordinates);
-        newTour.setCoordinate_WGS(convertCoordinatesLV03TOWGS(coordinates));
 
+        createSummit(newTour.getSummit(), newTour.getAltitude());
         checkIfTourExists(newTour);
 
         // saves the given entity but data is only persisted in the database once flush() is called
@@ -70,6 +72,23 @@ public class TourService {
         log.debug("Created Information for Tour: {}", newTour);
 
         return newTour;
+    }
+
+    private void createSummit(String name, int altitude) {
+        Summit newSummit = new Summit();
+        if (summitRepository.findByName(name).equals(null)){
+            //add summit to repo
+            int[] coordinates = mapApiService.getSummitCoordinates(name, altitude);
+            newSummit.setName(name);
+            newSummit.setAltitude(altitude);
+            newSummit.setCoordinate_LV03(coordinates);
+            newSummit.setCoordinate_WGS(convertCoordinatesLV03TOWGS(coordinates));
+            newSummit = summitRepository.save(newSummit);
+            summitRepository.flush();
+        }
+        else{
+            log.debug("Summit already exists, no new tuple in the repository.");
+        }
     }
 
     /**convert Date into string of correct format
@@ -117,15 +136,11 @@ public class TourService {
      * @see Tour
      */
     private void checkIfTourExists(Tour TourToBeCreated) {
-        Tour TourByTourname = tourRepository.findByName(TourToBeCreated.getName());
         Tour TourByName = tourRepository.findByName(TourToBeCreated.getName());
 
         String baseErrorMessage = "The %s provided %s not unique. Therefore, the Tour could not be created!";
-        if (TourByTourname != null && TourByName != null) {
+        if ( TourByName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "tourname and the name", "are"));
-        }
-        else if (TourByTourname != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "tourname", "is"));
         }
         else if (TourByName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
@@ -152,11 +167,12 @@ public class TourService {
                 "xsi:schemaLocation=\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\">" +
                 "<Document><name>Zeichnung</name>";
         String kmlend = "</Document></kml>";
-
+        Summit summit = new Summit();
         String content = new String();
 
         content += kmlstart;
         for (Tour tour : tours) {
+            summit = summitRepository.findByName(tour.getSummit());
             content += "<Placemark id=\"marker_"+tour.getId()+"\">" +
                     "<ExtendedData>" +
                     "<Data name=\"type\"><value>marker</value></Data>" +

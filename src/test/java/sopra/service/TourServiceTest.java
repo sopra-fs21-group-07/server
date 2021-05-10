@@ -9,6 +9,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import sopra.tour.entity.Tour;
 import sopra.tour.repository.TourRepository;
 import sopra.tour.service.TourService;
+import java.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +43,10 @@ public class TourServiceTest {
         assertNull(tourRepository.findByName("testAppUsername"));
 
         Tour testTour = new Tour();
-        testTour.setName("testName");
+        testTour.setName("testName1");
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
+        testTour.setDate(LocalDate.now());
 
         // when
         Tour createdTour = tourService.createTour(testTour);
@@ -63,9 +65,10 @@ public class TourServiceTest {
         assertNull(tourRepository.findByName("testAppUsername"));
 
         Tour testTour = new Tour();
-        testTour.setName("testName");
+        testTour.setName("testName2");
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
+        testTour.setDate(LocalDate.now());
 
         // when
         Tour createdTour = tourService.createTour(testTour);
@@ -103,10 +106,11 @@ public class TourServiceTest {
     public void CheckAddTeamMember() throws Exception {
         Tour testTour = new Tour();
         testTour.setId((long)1);
-        testTour.setName("testName");
+        testTour.setName("testName4");
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
         testTour.setEmptySlots(1);
+        testTour.setDate(LocalDate.now());
 
         String returnUserinput = tourService.add(testTour, testTour);
 
