@@ -37,6 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/tours/**").permitAll()
+                .antMatchers("/pastTours/**").permitAll()
+                .antMatchers("/pastTours").permitAll()
                 .antMatchers("/tours").permitAll()
                 .antMatchers("/nameGeoMapAdmin/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()

@@ -5,20 +5,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sopra.mapAPI.service.MapApiService;
+import sopra.pastTour.entity.PastTour;
+import sopra.pastTour.service.PastTourService;
 import sopra.tour.entity.Tour;
 import sopra.tour.repository.TourRepository;
 
-import java.util.List;
-import java.util.UUID;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.time.format.FormatStyle;
 
 /**
  * Tour Service
@@ -34,6 +33,7 @@ public class TourService {
 
     private final TourRepository tourRepository;
     private String currentURL = null;
+    private final PastTourService pastTourService;
 
     public String getCurrentURL() {
         return currentURL;
@@ -43,14 +43,33 @@ public class TourService {
         this.currentURL = currentURL;
     }
 
+    // Every 30min check and clean the tour repo
+    // (cron = sec, min, hour, day, month, weekday)
+    @Scheduled(cron = "* */2 * * * ?")
+    public void clearToursOlderThenToday() throws Exception {
+        Iterable<Tour> tours = this.tourRepository.findAllValid();
+        PastTour pastTour = new PastTour();
+        for (Tour t : tours){
+            this.tourRepository.deleteById(t.getId());
+            pastTour.setName(t.getName());
+            pastTour.setType(t.getType());
+            pastTourService.createPastTour(pastTour);
+        }
+    }
+
     @Autowired
-    public TourService(@Qualifier("tourRepository") TourRepository tourRepository) {
+    public TourService(@Qualifier("tourRepository") TourRepository tourRepository, PastTourService pastTourService) {
         this.tourRepository = tourRepository;
+        this.pastTourService = pastTourService;
         this.mapApiService = new MapApiService();
     }
 
     public List<Tour> getTours() {
         return this.tourRepository.findAll();
+    }
+
+    private void removeOldTours(){
+
     }
 
     public Tour createTour(Tour newTour) throws Exception {
