@@ -56,7 +56,6 @@ public class Tour {
     private double East_WGS;
 
     @Column(nullable = true)
-    //Longitude
     private String TourPictureKey;
 
     @Column(nullable = false)

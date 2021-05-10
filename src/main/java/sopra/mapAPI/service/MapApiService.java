@@ -87,7 +87,6 @@ public class MapApiService {
                 summit = new Summit();
             }
         }
-
         return result2;
     }
 

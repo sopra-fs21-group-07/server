@@ -24,7 +24,6 @@ public class ApiConverter {
      * @return URL for find request on GeoAdmin Map
      */
     public String getUri() {
-        System.out.println(uri);
         return uri;
     }
 
