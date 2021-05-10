@@ -11,6 +11,7 @@ import sopra.tour.repository.TourRepository;
 import sopra.tour.service.TourService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,6 +46,7 @@ public class TourServiceTest {
         testTour.setName("testName");
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
+        testTour.setDate(new Date());
 
         // when
         Tour createdTour = tourService.createTour(testTour);
@@ -66,6 +68,7 @@ public class TourServiceTest {
         testTour.setName("testName");
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
+        testTour.setDate(new Date());
 
         // when
         Tour createdTour = tourService.createTour(testTour);
