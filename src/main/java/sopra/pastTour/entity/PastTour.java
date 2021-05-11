@@ -2,6 +2,7 @@ package sopra.pastTour.entity;
 
 import sopra.tour.TourType;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "PASTTOUR")
@@ -13,12 +14,15 @@ public class PastTour {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String summit;
 
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = true)
     private TourType type;
+
+    @Column(nullable = false)
+    private Date date;
 
     public Long getId() {
         return id;
@@ -28,12 +32,12 @@ public class PastTour {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSummit() {
+        return summit;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSummit(String summit) {
+        this.summit = summit;
     }
 
     public TourType getType() {
@@ -42,5 +46,13 @@ public class PastTour {
 
     public void setType(TourType type) {
         this.type = type;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

@@ -6,6 +6,6 @@ import sopra.pastTour.entity.PastTour;
 
 @Repository("pastTourRepository")
 public interface PastTourRepository extends JpaRepository<PastTour, Long> {
-    PastTour findByName(String name);
+    PastTour findBySummit(String summit);
     PastTour findById(long id);
 }

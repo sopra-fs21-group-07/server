@@ -2,11 +2,14 @@ package sopra.pastTour.rest.dto;
 
 import sopra.tour.TourType;
 
+import java.util.Date;
+
 public class PastTourGetDTO {
 
     private TourType type;
     private Long id;
-    private String name;
+    private String summit;
+    private Date date;
 
     public TourType getType() {
         return type;
@@ -24,12 +27,20 @@ public class PastTourGetDTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSummit() {
+        return summit;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSummit(String summit) {
+        this.summit = summit;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
 
