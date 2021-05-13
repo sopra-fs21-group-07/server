@@ -40,7 +40,6 @@ public class Tour {
     private int altitude;
 
     @Column(nullable = true)
-    //Longitude
     private String TourPictureKey;
 
     @Column(nullable = false)

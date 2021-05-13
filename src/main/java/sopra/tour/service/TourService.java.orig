@@ -11,15 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sopra.mapAPI.service.MapApiService;
+<<<<<<< HEAD
+import sopra.tour.entity.Summit;
+=======
 import sopra.pastTour.entity.PastTour;
 import sopra.pastTour.service.PastTourService;
+>>>>>>> main
 import sopra.tour.entity.Tour;
 import sopra.tour.repository.SummitRepository;
 import sopra.tour.repository.TourRepository;
 
+<<<<<<< HEAD
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
+import java.util.UUID;
+=======
+import java.util.*;
+>>>>>>> main
 
 /**
  * Tour Service
@@ -62,8 +72,12 @@ public class TourService {
     }
 
     @Autowired
-    public TourService(@Qualifier("tourRepository") TourRepository tourRepository, PastTourService pastTourService) {
+<<<<<<< HEAD
+    public TourService(@Qualifier("tourRepository") TourRepository tourRepository,
                        @Qualifier("summitRepository") SummitRepository summitRepository) {
+=======
+    public TourService(@Qualifier("tourRepository") TourRepository tourRepository, PastTourService pastTourService) {
+>>>>>>> main
         this.tourRepository = tourRepository;
         this.pastTourService = pastTourService;
         this.mapApiService = new MapApiService();
@@ -95,6 +109,7 @@ public class TourService {
         return newTour;
     }
 
+<<<<<<< HEAD
     private void createSummit(String name, int altitude) {
         Summit newSummit = new Summit();
         if (summitRepository.findByName(name).equals(null)){
@@ -112,6 +127,18 @@ public class TourService {
         }
     }
 
+    /**convert Date into string of correct format
+     *@param date
+     *@return string
+     */
+    private String formatDate(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'+0000'");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return simpleDateFormat.format(date);
+    }
+
+=======
+>>>>>>> main
     private double[] convertCoordinatesLV03TOWGS(int[] coordinates) {
         double east = 0.0; //longitude
         double north = 0.0; //latitude
