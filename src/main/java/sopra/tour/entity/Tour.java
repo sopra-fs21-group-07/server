@@ -1,18 +1,26 @@
 package sopra.tour.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import sopra.tour.TourType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "TOUR")
 public class Tour {
 
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
