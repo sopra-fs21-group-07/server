@@ -3,7 +3,9 @@ package sopra.tour.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import sopra.tour.entity.Tour;
+import sopra.tour.entity.TourMember;
 import sopra.tour.rest.dto.TourGetDTO;
+import sopra.tour.rest.dto.TourMembersGetDTO;
 import sopra.tour.rest.dto.TourPostDTO;
 import sopra.tour.rest.dto.TourPutDTO;
 import sopra.tour.rest.mapper.DTOMapperTour;
@@ -76,6 +78,21 @@ public class TourController {
         tourService.add(addMemberTour, inputTour);
 
         return DTOMapperTour.INSTANCE.convertEntityToTourGetDTO(addMemberTour);
+    }
+
+    @GetMapping("/tourMembers")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<TourMembersGetDTO> getAllTourMembers() {
+        // fetch all tours in the internal representation
+        List<TourMember> tourMembers = tourService.getTourMembers();
+        List<TourMembersGetDTO> tourMembersGetDTO = new ArrayList<>();
+
+        // convert each tour to the API representation
+        for (TourMember tourMember : tourMembers) {
+            tourMembersGetDTO.add(DTOMapperTour.INSTANCE.convertEntityToTourMembersGetDTO(tourMember));
+        }
+        return tourMembersGetDTO;
     }
 
 }

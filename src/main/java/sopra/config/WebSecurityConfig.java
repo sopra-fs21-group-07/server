@@ -39,6 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/tours/**").permitAll()
                 .antMatchers("/pastTours/**").permitAll()
                 .antMatchers("/pastTours").permitAll()
+                .antMatchers("/tourMembers").permitAll()
+                .antMatchers("/tourMembers/**").permitAll()
                 .antMatchers("/tours").permitAll()
                 .antMatchers("/nameGeoMapAdmin/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
