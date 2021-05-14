@@ -13,13 +13,16 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sopra.mapAPI.service.MapApiService;
 import sopra.pastTour.entity.PastTour;
 import sopra.pastTour.service.PastTourService;
+import sopra.tour.entity.Summit;
 import sopra.tour.entity.Tour;
+import sopra.tour.entity.TourMember;
 import sopra.tour.repository.SummitRepository;
+import sopra.tour.repository.TourMembersRepository;
 import sopra.tour.repository.TourRepository;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Tour Service
@@ -35,6 +38,7 @@ public class TourService {
 
     private final TourRepository tourRepository;
     private final SummitRepository summitRepository;
+    private final TourMembersRepository tourMembersRepository;
     private String currentURL = null;
     private final PastTourService pastTourService;
 
@@ -55,19 +59,21 @@ public class TourService {
         for (Tour t : tours){
             this.tourRepository.deleteById(t.getId());
             pastTour.setSummit(t.getSummit());
-            pastTour.setDate(t.getDate());
+            pastTour.setDate(new Date());
             pastTour.setType(t.getType());
             pastTourService.createPastTour(pastTour);
         }
     }
 
     @Autowired
-    public TourService(@Qualifier("tourRepository") TourRepository tourRepository, PastTourService pastTourService) {
-                       @Qualifier("summitRepository") SummitRepository summitRepository) {
+    public TourService(@Qualifier("tourRepository") TourRepository tourRepository, PastTourService pastTourService,
+                       @Qualifier("summitRepository") SummitRepository summitRepository,
+                       @Qualifier("tourMembersRepository") TourMembersRepository tourMembersRepository) {
         this.tourRepository = tourRepository;
         this.pastTourService = pastTourService;
         this.mapApiService = new MapApiService();
         this.summitRepository = summitRepository;
+        this.tourMembersRepository = tourMembersRepository;
     }
 
     public List<Tour> getTours() {
@@ -94,10 +100,22 @@ public class TourService {
 
         return newTour;
     }
+    private void createNewMember(String email, String name, long id){
+        TourMember tourMember = new TourMember();
+        tourMember.setId(id);
+        tourMember.setName(email);
+        tourMember.setTourName(name);
 
-    private void createSummit(String name, int altitude) {
-        Summit newSummit = new Summit();
-        if (summitRepository.findByName(name).equals(null)){
+        tourMembersRepository.save(tourMember);
+        tourMembersRepository.flush();
+    }
+
+
+    private Long createSummit(String name, int altitude) {
+        Summit repoSummit = summitRepository.findByName(name);
+
+        if (repoSummit == null) {
+            Summit newSummit = new Summit();
             //add summit to repo
             int[] coordinates = mapApiService.getSummitCoordinates(name, altitude);
             newSummit.setName(name);
@@ -106,10 +124,12 @@ public class TourService {
             newSummit.setCoordinate_WGS(convertCoordinatesLV03TOWGS(coordinates));
             newSummit = summitRepository.save(newSummit);
             summitRepository.flush();
+            return newSummit.getId();
         }
-        else{
+        else {
             log.debug("Summit already exists, no new tuple in the repository.");
         }
+        return summitRepository.findByName(name).getId();
     }
 
     private double[] convertCoordinatesLV03TOWGS(int[] coordinates) {
@@ -131,6 +151,7 @@ public class TourService {
         if (emptySlots > 0){
             addMemberToTour.setEmptySlots(emptySlots - 1);
             addMemberToTour.setEmailMember(inputUser.getEmailMember());
+            createNewMember(inputUser.getEmailMember(), addMemberToTour.getName(), addMemberToTour.getId());
         }
         else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, String.format("This tour is full. Please choose another one!"));
@@ -208,7 +229,7 @@ public class TourService {
                     "<Point>" +
                     "<tessellate>1</tessellate>" +
                     "<altitudeMode>clampToGround</altitudeMode>" +
-                    "<coordinates>"+tour.getEast_WGS()+","+tour.getNorth_WGS()+","+tour.getAltitude()+"</coordinates>" +
+                    "<coordinates>"+summit.getEast_WGS()+","+summit.getNorth_WGS()+","+tour.getAltitude()+"</coordinates>" +
                     "</Point>" +
                     "</Placemark>";
         }

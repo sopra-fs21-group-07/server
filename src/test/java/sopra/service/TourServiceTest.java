@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
+import sopra.tour.entity.Summit;
 import sopra.tour.entity.Tour;
 import sopra.tour.repository.TourRepository;
 import sopra.tour.service.TourService;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +47,7 @@ public class TourServiceTest {
         testTour.setName("testName1");
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
-        testTour.setDate(new Date());
+        testTour.setDate(LocalDate.now());
 
         // when
         Tour createdTour = tourService.createTour(testTour);
@@ -69,18 +69,20 @@ public class TourServiceTest {
         testTour.setName("testName2");
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
-        testTour.setDate(new Date());
+        testTour.setDate(LocalDate.now());
+
+        Summit testSummit = new Summit();
 
         // when
         Tour createdTour = tourService.createTour(testTour);
 
         // then
         assertEquals(testTour.getSummit(), createdTour.getSummit());
-        assertEquals(testTour.getY_LV03(), 694976);
-        assertEquals(testTour.getX_LV03(), 176940);
-        System.out.print("Test: " + testTour.getEast_WGS() + " / " + testTour.getNorth_WGS());
-        assertEquals(testTour.getEast_WGS(), 8.68135, 0.0001);
-        assertEquals(testTour.getNorth_WGS(), 46.73690, 0.0001);
+        assertEquals(testSummit.getY_LV03(), 694976);
+        assertEquals(testSummit.getX_LV03(), 176940);
+        System.out.print("Test: " + testSummit.getEast_WGS() + " / " + testSummit.getNorth_WGS());
+        assertEquals(testSummit.getEast_WGS(), 8.68135, 0.0001);
+        assertEquals(testSummit.getNorth_WGS(), 46.73690, 0.0001);
         assertNotNull(createdTour.getToken());
     }
 

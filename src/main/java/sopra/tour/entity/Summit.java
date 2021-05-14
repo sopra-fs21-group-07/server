@@ -1,12 +1,16 @@
 package sopra.tour.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "SUMMIT")
 public class Summit {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -29,6 +33,14 @@ public class Summit {
     @Column(nullable = false)
     //Longitude
     private double East_WGS;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
