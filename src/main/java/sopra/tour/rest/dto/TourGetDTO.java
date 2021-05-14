@@ -14,6 +14,8 @@ public class TourGetDTO {
     private String tourPictureKey;
     private Date date;
 
+    private String creatorUsername;
+
     public TourType getType() {
         return type;
     }
@@ -75,6 +77,14 @@ public class TourGetDTO {
     public Date getDate(){return date;}
 
     public void setDate(Date date){this.date = date;}
+
+    public String getCreatorUsername() {
+        return creatorUsername;
+    }
+
+    public void setCreatorUsername(String creatorUsername) {
+        this.creatorUsername = creatorUsername;
+    }
 
 
 }

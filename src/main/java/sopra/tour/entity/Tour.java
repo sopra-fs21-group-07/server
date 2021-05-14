@@ -50,6 +50,9 @@ public class Tour {
     @Column(nullable = false)
     private LocalDate date;
 
+    @Column(nullable = false)
+    private String creatorUsername;
+
     public Long getId() {
         return id;
     }
@@ -121,5 +124,13 @@ public class Tour {
     public LocalDate getDate(){return date;}
 
     public void setDate(LocalDate date){this.date = date;}
+
+    public String getCreatorUsername() {
+        return creatorUsername;
+    }
+
+    public void setCreatorUsername(String creatorUsername) {
+        this.creatorUsername = creatorUsername;
+    }
 
 }

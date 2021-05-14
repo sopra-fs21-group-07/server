@@ -29,6 +29,7 @@ public interface DTOMapperTour {
     @Mapping(source = "emailMember", target = "emailMember")
     @Mapping(source = "tourPictureKey", target = "tourPictureKey")
     @Mapping(source = "date", target = "date")
+    @Mapping(source = "creatorUsername", target = "creatorUsername")
     Tour convertTourPostDTOtoEntity(TourPostDTO tourPostDTO);
 
     @Mapping(source = "id", target = "id")
