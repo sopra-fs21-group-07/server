@@ -10,9 +10,6 @@ import java.time.LocalDate;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "TOUR")
 public class Tour {
