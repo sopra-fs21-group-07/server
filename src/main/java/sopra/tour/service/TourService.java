@@ -42,14 +42,6 @@ public class TourService {
     private String currentURL = null;
     private final PastTourService pastTourService;
 
-    public String getCurrentURL() {
-        return currentURL;
-    }
-
-    public void setCurrentURL(String currentURL) {
-        this.currentURL = currentURL;
-    }
-
     // Every 30min check and clean the tour repo
     // (cron = sec, min, hour, day, month, weekday)
     @Scheduled(cron = "* */2 * * * ?")
@@ -80,10 +72,6 @@ public class TourService {
         return this.tourRepository.findAll();
     }
 
-    private void removeOldTours(){
-
-    }
-
     public Tour createTour(Tour newTour) throws Exception {
         newTour.setToken(UUID.randomUUID().toString());
 
@@ -94,12 +82,21 @@ public class TourService {
         newTour = tourRepository.save(newTour);
         tourRepository.flush();
 
-        mapApiService.updateGistGithub(createKMLFile(getTours()));
+        mapApiService.updateGistGithub(createKMLFile(getTours(), getSummits()));
 
         log.debug("Created Information for Tour: {}", newTour);
 
         return newTour;
     }
+
+    private List<Summit> getSummits() {
+        return summitRepository.findAll();
+    }
+
+    public List<TourMember> getTourMembers(){
+        return tourMembersRepository.findAll();
+    }
+
     private void createNewMember(String email, String name, long id){
         TourMember tourMember = new TourMember();
         tourMember.setId(id);
@@ -192,19 +189,23 @@ public class TourService {
         }
     }
 
-    public String createKMLFile(List<Tour> tours) {
+    public String createKMLFile(List<Tour> tours, List<Summit> summits) {
         String datapath = "C:\\Users\\elbeato\\Downloads";
         String kmlstart = "<kml xmlns=\"http://www.opengis.net/kml/2.2\" xmlns:gx=\"http://www.google.com/kml/ext/2.2\" " +
                 "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
                 "xsi:schemaLocation=\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\">" +
                 "<Document><name>Zeichnung</name>";
         String kmlend = "</Document></kml>";
-        Summit summit = new Summit();
         String content = new String();
+        Summit summit = new Summit();
 
         content += kmlstart;
+
         for (Tour tour : tours) {
-            summit = summitRepository.findByName(tour.getSummit());
+            for (Summit s : summits){
+                if (s.getName().equals(tour.getSummit()))
+                    summit = s;
+            }
             content += "<Placemark id=\"marker_"+tour.getId()+"\">" +
                     "<ExtendedData>" +
                     "<Data name=\"type\"><value>marker</value></Data>" +

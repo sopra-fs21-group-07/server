@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 import sopra.tour.entity.Summit;
 import sopra.tour.entity.Tour;
+import sopra.tour.repository.SummitRepository;
+import sopra.tour.repository.TourMembersRepository;
 import sopra.tour.repository.TourRepository;
 import sopra.tour.service.TourService;
 
@@ -30,12 +32,21 @@ public class TourServiceTest {
     @Autowired
     private TourRepository tourRepository;
 
+    @Qualifier("summitRepository")
+    @Autowired
+    private SummitRepository summitRepository;
+
+    @Qualifier("tourMembersRepository")
+    @Autowired
+    private TourMembersRepository tourMembersRepository;
+
     @Autowired
     private TourService tourService;
 
     @BeforeEach
     public void setup() {
         tourRepository.deleteAll();
+        summitRepository.deleteAll();
     }
 
     @Test
@@ -72,6 +83,8 @@ public class TourServiceTest {
         testTour.setDate(LocalDate.now());
 
         Summit testSummit = new Summit();
+        testSummit.setCoordinate_LV03(new int[]{694976, 176940});
+        testSummit.setCoordinate_WGS(new double[]{8.68135, 46.73690});
 
         // when
         Tour createdTour = tourService.createTour(testTour);
@@ -94,13 +107,27 @@ public class TourServiceTest {
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
 
-        List<Tour> tours = new ArrayList<>();
-        tours.add(testTour);
+        Summit testSummit = new Summit();
+        testSummit.setCoordinate_LV03(new int[]{694976, 176940});
+        testSummit.setCoordinate_WGS(new double[]{8.6, 46.7});
+        testSummit.setName("Bristen");
+        testSummit.setAltitude(3073);
 
-        String testKML = "<kml xmlns=\\\"http://www.opengis.net/kml/2.2\\\" xmlns:gx=\\\"http://www.google.com/kml/ext/2.2\\\" xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\" xsi:schemaLocation=\\\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\\\"><Document><name>Zeichnung</name><Placemark id=\\\"marker_1\\\"><ExtendedData><Data name=\\\"type\\\"><value>marker</value></Data></ExtendedData><name>testName</name><description>Link: &lt;a target=\\\"_blank\\\" href=http://localhost:3000/confirmTour/1&gt; Tour details: testName&lt;/a&gt;&lt;style=\\\"max-height:200px;\\\"/&gt;</description><Style><IconStyle><scale>0.75</scale><Icon><href>https://api3.geo.admin.ch/color/255,0,0/triangle-24@2x.png</href><gx:w>48</gx:w><gx:h>48</gx:h></Icon></IconStyle><LabelStyle><color>ff00ffff</color></LabelStyle></Style><Point><tessellate>1</tessellate><altitudeMode>clampToGround</altitudeMode><coordinates>0.0,0.0,3073</coordinates></Point></Placemark></Document></kml>";
+        List<Tour> tours = new ArrayList<>();
+        List<Summit> summits = new ArrayList<>();
+        tours.add(testTour);
+        summits.add(testSummit);
+
+        String testKML = "<kml xmlns=\\\"http://www.opengis.net/kml/2.2\\\" xmlns:gx=\\\"http://www.google.com/kml/ext/2.2\\\" xmlns:xsi=\\\"http://www.w3.org/200" +
+                "1/XMLSchema-instance\\\" xsi:schemaLocation=\\\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\\\"><Document><name>" +
+                "Zeichnung</name><Placemark id=\\\"marker_1\\\"><ExtendedData><Data name=\\\"type\\\"><value>marker</value></Data></ExtendedData><name>testName</name>" +
+                "<description>Link: &lt;a target=\\\"_blank\\\" href=http://localhost:3000/confirmTour/1&gt; Tour details: testName&lt;/a&gt;&lt;style=\\\"max-height:" +
+                "200px;\\\"/&gt;</description><Style><IconStyle><scale>0.75</scale><Icon><href>https://api3.geo.admin.ch/color/255,0,0/triangle-24@2x.png</href><gx:w>48" +
+                "</gx:w><gx:h>48</gx:h></Icon></IconStyle><LabelStyle><color>ff00ffff</color></LabelStyle></Style><Point><tessellate>1</tessellate><altitudeMode>clampToG" +
+                "round</altitudeMode><coordinates>8.6,46.7,3073</coordinates></Point></Placemark></Document></kml>";
 
         // when
-        String createKMLFile = tourService.createKMLFile(tours);
+        String createKMLFile = tourService.createKMLFile(tours, summits);
 
         assertEquals(testKML, createKMLFile);
     }
@@ -113,6 +140,7 @@ public class TourServiceTest {
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
         testTour.setEmptySlots(1);
+        testTour.setEmailMember("test@uzh.ch");
         testTour.setDate(LocalDate.now());
 
         String returnUserinput = tourService.add(testTour, testTour);
@@ -126,27 +154,4 @@ public class TourServiceTest {
 
         assertEquals(true, tours.isEmpty());
     }
-
-    /*@Test
-    public void CheckReturnGetTourById() throws Exception {
-        // given
-        assertNull(tourRepository.findByName("testAppUsername"));
-
-        Tour testTour = new Tour();
-        testTour.setName("testName");
-        testTour.setSummit("Bristen");
-        testTour.setAltitude(3073);
-        tourService.createTour(testTour);
-
-        // when
-        Tour returnTour = tourService.getTourById((long) 0);
-
-        // then
-        assertEquals(testTour.getId(), returnTour.getId());
-        assertEquals(testTour.getName(), returnTour.getName());
-        assertEquals(testTour.getSummit(), returnTour.getSummit());
-        assertEquals(testTour.getAltitude(), returnTour.getAltitude());
-        assertNotNull(returnTour.getToken());
-    }*/
-
 }

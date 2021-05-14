@@ -1,10 +1,13 @@
 package sopra.tour.rest.mapper;
 
-import sopra.tour.entity.Tour;
-import sopra.tour.rest.dto.TourGetDTO;
-import sopra.tour.rest.dto.TourPostDTO;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import sopra.tour.entity.Tour;
+import sopra.tour.entity.TourMember;
+import sopra.tour.rest.dto.TourGetDTO;
+import sopra.tour.rest.dto.TourMembersGetDTO;
+import sopra.tour.rest.dto.TourPostDTO;
 import sopra.tour.rest.dto.TourPutDTO;
 
 /**
@@ -37,6 +40,11 @@ public interface DTOMapperTour {
     @Mapping(source = "tourPictureKey", target = "tourPictureKey")
     @Mapping(source = "date", target = "date")
     TourGetDTO convertEntityToTourGetDTO(Tour tour);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "tourName", target = "tourName")
+    TourMembersGetDTO convertEntityToTourMembersGetDTO(TourMember member);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "emailMember", target="emailMember")
