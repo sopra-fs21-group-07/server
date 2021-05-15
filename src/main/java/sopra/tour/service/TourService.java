@@ -20,6 +20,7 @@ import sopra.tour.repository.SummitRepository;
 import sopra.tour.repository.TourMembersRepository;
 import sopra.tour.repository.TourRepository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -41,6 +42,7 @@ public class TourService {
     private final TourMembersRepository tourMembersRepository;
     private String currentURL = null;
     private final PastTourService pastTourService;
+    private static final String error = "This username does not exist";
 
     // Every 30min check and clean the tour repo
     // (cron = sec, min, hour, day, month, weekday)
@@ -236,6 +238,41 @@ public class TourService {
         }
         content += kmlend;
         return content.replace("\"", "\\\"");
+    }
+
+    //EDIT functions
+    public void editName(Long id, String name){
+        if(tourRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
+        }
+        else{
+            Tour tour = this.tourRepository.findById(id).get();
+            tour.setName(name);
+            tourRepository.flush();
+        }
+    }
+
+    public void editEmptySlots(Long id, int emptySlots){
+        if(tourRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
+        }
+        else{
+            Tour tour = this.tourRepository.findById(id).get();
+            tour.setEmptySlots(emptySlots);
+            tourRepository.flush();
+        }
+    }
+
+    //Perhaps this doesnt work 
+    public void editDate(Long id, LocalDate date){
+        if(tourRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
+        }
+        else{
+            Tour tour = this.tourRepository.findById(id).get();
+            tour.setDate(date);
+            tourRepository.flush();
+        }
     }
 }
 
