@@ -14,12 +14,13 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 @Slf4j
+public
 class MailService {
 
     private final JavaMailSender mailSender;
 
     @Async
-    void sendMail(NotificationEmail notificationEmail) {
+    public void sendMail(NotificationEmail notificationEmail) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom("springreddit@email.com");
