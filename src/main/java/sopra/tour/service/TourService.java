@@ -281,7 +281,7 @@ public class TourService {
         }
         else {
             this.tourRepository.deleteById(id);
-            //tourRepository.flush();
+            tourRepository.flush();
         }
     }
 
