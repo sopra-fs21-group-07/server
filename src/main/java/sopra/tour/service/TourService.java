@@ -274,5 +274,15 @@ public class TourService {
             tourRepository.flush();
         }
     }
+
+        public void deleteTour(Long id){
+            if(tourRepository.findById(id).isEmpty()){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, error);
+            }
+            else{
+                this.tourRepository.deleteById(id);
+                //tourRepository.flush();
+            }
+        }
 }
 

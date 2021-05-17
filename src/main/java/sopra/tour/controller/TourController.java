@@ -8,6 +8,7 @@ import sopra.tour.rest.dto.TourGetDTO;
 import sopra.tour.rest.dto.TourMembersGetDTO;
 import sopra.tour.rest.dto.TourPostDTO;
 import sopra.tour.rest.dto.TourPutDTO;
+import sopra.tour.rest.dto.editRequests.PutName;
 import sopra.tour.rest.mapper.DTOMapperTour;
 import sopra.tour.service.TourService;
 
@@ -93,6 +94,12 @@ public class TourController {
             tourMembersGetDTO.add(DTOMapperTour.INSTANCE.convertEntityToTourMembersGetDTO(tourMember));
         }
         return tourMembersGetDTO;
+    }
+
+    @DeleteMapping("/tours/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTour(@PathVariable long id) {
+        tourService.deleteTour(id);
     }
 
 }
