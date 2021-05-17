@@ -102,7 +102,7 @@ public class TourService {
     private void createNewMember(String email, String name, long id) {
         TourMember tourMember = new TourMember();
         tourMember.setId(id);
-        tourMember.setName(email);
+        tourMember.setUsername(email);
         tourMember.setTourName(name);
 
         tourMembersRepository.save(tourMember);
