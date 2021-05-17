@@ -60,6 +60,7 @@ public class AuthService {
                 user.getEmail(), "Thank you for signing up to Mountain Experience, " +
                 "please click on the below url to activate your account : " +
                 "http://sopra-fs21-group-07-server.herokuapp.com/api/auth/accountVerification/" + token));
+        //say thank you for signing up, you recieved an registration email, please confirm your address.
     }
 
     @Transactional(readOnly = true)

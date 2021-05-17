@@ -6,7 +6,8 @@ import sopra.tour.entity.TourMember;
 
 @Repository("tourMembersRepository")
 public interface TourMembersRepository extends JpaRepository<TourMember, Long> {
-    TourMember findByName(String name);
+    TourMember findByUseremail(String useremail);
     TourMember findById(long id);
     TourMember findByTourName(String tourname);
+    TourMember findByUsername(String username);
 }

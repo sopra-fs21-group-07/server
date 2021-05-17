@@ -13,7 +13,7 @@ public class TourMember {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String useremail;
 
     @Column(nullable = false)
     private String tourName;
@@ -26,12 +26,12 @@ public class TourMember {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUseremail() {
+        return useremail;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUseremail(String name) {
+        this.useremail = name;
     }
 
     public String getTourName() {

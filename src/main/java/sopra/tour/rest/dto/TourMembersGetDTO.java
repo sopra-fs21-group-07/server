@@ -2,8 +2,9 @@ package sopra.tour.rest.dto;
 
 public class TourMembersGetDTO {
     private Long id;
-    private String name;
+    private String useremail;
     private String tourName;
+    private String username;
 
     public Long getId() {
         return id;
@@ -13,12 +14,12 @@ public class TourMembersGetDTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUseremail() {
+        return useremail;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUseremail(String useremail) {
+        this.useremail = useremail;
     }
 
     public String getTourName() {
@@ -28,4 +29,9 @@ public class TourMembersGetDTO {
     public void setTourName(String tourName) {
         this.tourName = tourName;
     }
+
+    public String getUsername(){return username;}
+
+    public void setUsername(String username) { this.username = username;}
+
 }

@@ -43,8 +43,9 @@ public interface DTOMapperTour {
     TourGetDTO convertEntityToTourGetDTO(Tour tour);
 
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
+    @Mapping(source = "useremail", target = "useremail")
     @Mapping(source = "tourName", target = "tourName")
+    @Mapping(source = "username", target = "username")
     TourMembersGetDTO convertEntityToTourMembersGetDTO(TourMember member);
 
     @Mapping(source = "id", target = "id")

@@ -50,7 +50,7 @@ public class TourService {
     public void clearToursOlderThenToday() throws Exception {
         Iterable<Tour> tours = this.tourRepository.findAllValid();
         PastTour pastTour = new PastTour();
-        for (Tour t : tours){
+        for (Tour t : tours) {
             this.tourRepository.deleteById(t.getId());
             pastTour.setSummit(t.getSummit());
             pastTour.setDate(new Date());
@@ -95,11 +95,11 @@ public class TourService {
         return summitRepository.findAll();
     }
 
-    public List<TourMember> getTourMembers(){
+    public List<TourMember> getTourMembers() {
         return tourMembersRepository.findAll();
     }
 
-    private void createNewMember(String email, String name, long id){
+    private void createNewMember(String email, String name, long id) {
         TourMember tourMember = new TourMember();
         tourMember.setId(id);
         tourMember.setName(email);
@@ -134,20 +134,20 @@ public class TourService {
     private double[] convertCoordinatesLV03TOWGS(int[] coordinates) {
         double east = 0.0; //longitude
         double north = 0.0; //latitude
-        double y = ((double)coordinates[0] - 600000.0)/1000000.0;
-        double x = ((double)coordinates[1] - 200000.0)/1000000.0;
-        east = (2.6779094 + 4.728982 * y + 0.791484 * y * x + 0.1306 * y * x * x - 0.0436 * Math.pow(y, 3)) *100/36;
-        north = (16.9023892 + 3.238272 * x - 0.270978 * y * y - 0.002528 * x * x - 0.0447 * y * y * x - 0.014 * Math.pow(x, 3))*100/36;
+        double y = ((double) coordinates[0] - 600000.0) / 1000000.0;
+        double x = ((double) coordinates[1] - 200000.0) / 1000000.0;
+        east = (2.6779094 + 4.728982 * y + 0.791484 * y * x + 0.1306 * y * x * x - 0.0436 * Math.pow(y, 3)) * 100 / 36;
+        north = (16.9023892 + 3.238272 * x - 0.270978 * y * y - 0.002528 * x * x - 0.0447 * y * y * x - 0.014 * Math.pow(x, 3)) * 100 / 36;
         return new double[]{east, north};
     }
 
-    public Tour getTourById(long id){
+    public Tour getTourById(long id) {
         return tourRepository.findById(id);
     }
 
-    public String add(Tour addMemberToTour, Tour inputUser){
+    public String add(Tour addMemberToTour, Tour inputUser) {
         int emptySlots = addMemberToTour.getEmptySlots();
-        if (emptySlots > 0){
+        if (emptySlots > 0) {
             addMemberToTour.setEmptySlots(emptySlots - 1);
             addMemberToTour.setEmailMember(inputUser.getEmailMember());
             createNewMember(inputUser.getEmailMember(), addMemberToTour.getName(), addMemberToTour.getId());
@@ -170,7 +170,7 @@ public class TourService {
         Tour TourByName = tourRepository.findByName(TourToBeCreated.getName());
 
         String baseErrorMessage = "The %s provided %s not unique. Therefore, the Tour could not be created!";
-        if ( TourByName != null) {
+        if (TourByName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "tourname and the name", "are"));
         }
         else if (TourByName != null) {
@@ -178,15 +178,15 @@ public class TourService {
         }
     }
 
-    private String getCurrentUrl(long tourId){
+    private String getCurrentUrl(long tourId) {
         final String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-        if (baseUrl.contains("localhost")){
-            return "http://localhost:3000/confirmTour/"+tourId;
+        if (baseUrl.contains("localhost")) {
+            return "http://localhost:3000/confirmTour/" + tourId;
         }
         if (baseUrl.contains("server")) {
             return "https://sopra-fs21-group-07-client.herokuapp.com/confirmTour/" + tourId;
         }
-        else{
+        else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Main URL is unknown"));
         }
     }
@@ -204,17 +204,17 @@ public class TourService {
         content += kmlstart;
 
         for (Tour tour : tours) {
-            for (Summit s : summits){
+            for (Summit s : summits) {
                 if (s.getName().equals(tour.getSummit()))
                     summit = s;
             }
-            content += "<Placemark id=\"marker_"+tour.getId()+"\">" +
+            content += "<Placemark id=\"marker_" + tour.getId() + "\">" +
                     "<ExtendedData>" +
                     "<Data name=\"type\"><value>marker</value></Data>" +
                     "</ExtendedData>" +
-                    "<name>"+tour.getName()+"</name>" +
+                    "<name>" + tour.getName() + "</name>" +
                     "<description>Link: &lt;a target=\"_blank\" " +
-                    "href="+getCurrentUrl(tour.getId())+"&gt; Tour details: "+ tour.getName()+"&lt;/a&gt;&lt;" +
+                    "href=" + getCurrentUrl(tour.getId()) + "&gt; Tour details: " + tour.getName() + "&lt;/a&gt;&lt;" +
                     "style=\"max-height:200px;\"/&gt;</description>" +
                     "<Style>" +
                     "<IconStyle>" +
@@ -232,7 +232,7 @@ public class TourService {
                     "<Point>" +
                     "<tessellate>1</tessellate>" +
                     "<altitudeMode>clampToGround</altitudeMode>" +
-                    "<coordinates>"+summit.getEast_WGS()+","+summit.getNorth_WGS()+","+tour.getAltitude()+"</coordinates>" +
+                    "<coordinates>" + summit.getEast_WGS() + "," + summit.getNorth_WGS() + "," + tour.getAltitude() + "</coordinates>" +
                     "</Point>" +
                     "</Placemark>";
         }
@@ -241,22 +241,22 @@ public class TourService {
     }
 
     //EDIT functions
-    public void editName(Long id, String name){
-        if(tourRepository.findById(id).isEmpty()){
+    public void editName(Long id, String name) {
+        if (tourRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
-        else{
+        else {
             Tour tour = this.tourRepository.findById(id).get();
             tour.setName(name);
             tourRepository.flush();
         }
     }
 
-    public void editEmptySlots(Long id, int emptySlots){
-        if(tourRepository.findById(id).isEmpty()){
+    public void editEmptySlots(Long id, int emptySlots) {
+        if (tourRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
-        else{
+        else {
             Tour tour = this.tourRepository.findById(id).get();
             tour.setEmptySlots(emptySlots);
             tourRepository.flush();
@@ -264,25 +264,40 @@ public class TourService {
     }
 
     //Perhaps this doesnt work 
-    public void editDate(Long id, LocalDate date){
-        if(tourRepository.findById(id).isEmpty()){
+    public void editDate(Long id, LocalDate date) {
+        if (tourRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
-        else{
+        else {
             Tour tour = this.tourRepository.findById(id).get();
             tour.setDate(date);
             tourRepository.flush();
         }
     }
 
-        public void deleteTour(Long id){
-            if(tourRepository.findById(id).isEmpty()){
-                throw new ResponseStatusException(HttpStatus.CONFLICT, error);
-            }
-            else{
-                this.tourRepository.deleteById(id);
-                //tourRepository.flush();
-            }
+    public void deleteTour(Long id) {
+        if (tourRepository.findById(id).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
-}
+        else {
+            this.tourRepository.deleteById(id);
+            //tourRepository.flush();
+        }
+    }
 
+    public void cancleTour(Long tourID, String username) {
+        TourMember tourmember = this.tourMembersRepository.findByUsername(username);
+        if (tourmember.getUseremail().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not signed up for the tour yet.");
+        }
+        else {
+            Tour tour = this.tourRepository.findById(tourID).get();
+            tourMembersRepository.delete(tourmember);
+            tour.setEmptySlots(tour.getEmptySlots() + 1);
+            tourRepository.flush();
+            tourMembersRepository.flush();
+        }
+
+    }
+
+}
