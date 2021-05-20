@@ -48,13 +48,15 @@ public class TourServiceTest {
         tourRepository.deleteAll();
         summitRepository.deleteAll();
     }
-    /*
+
     @Test
     public void CheckTourCreation() throws Exception {
         // given
         assertNull(tourRepository.findByName("testAppUsername"));
 
         Tour testTour = new Tour();
+        testTour.setEmailMember("bla");
+        testTour.setCreatorUsername("bla");
         testTour.setName("testName1");
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
@@ -79,6 +81,8 @@ public class TourServiceTest {
         Tour testTour = new Tour();
         testTour.setName("testName2");
         testTour.setSummit("Bristen");
+        testTour.setEmailMember("bla");
+        testTour.setCreatorUsername("bla");
         testTour.setAltitude(3073);
         testTour.setDate(LocalDate.now());
 
@@ -104,6 +108,8 @@ public class TourServiceTest {
         Tour testTour = new Tour();
         testTour.setId((long)1);
         testTour.setName("testName");
+        testTour.setEmailMember("bla");
+        testTour.setCreatorUsername("bla");
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
 
@@ -131,12 +137,13 @@ public class TourServiceTest {
 
         assertEquals(testKML, createKMLFile);
     }
-
+    /*
     @Test
     public void CheckAddTeamMember() throws Exception {
         Tour testTour = new Tour();
         testTour.setId((long)1);
         testTour.setName("testName4");
+        testTour.setCreatorUsername("bla");
         testTour.setSummit("Bristen");
         testTour.setAltitude(3073);
         testTour.setEmptySlots(1);
@@ -146,12 +153,12 @@ public class TourServiceTest {
         String returnUserinput = tourService.add(testTour, testTour);
 
         assertEquals("0", returnUserinput);
-    }
+    }**/
 
     @Test
     public void CheckReturnAllTours() throws Exception {
         List<Tour> tours = tourService.getTours();
 
         assertEquals(true, tours.isEmpty());
-    }**/
+    }
 }
