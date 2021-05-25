@@ -73,7 +73,8 @@ public class TourController {
         Tour inputTour= DTOMapperTour.INSTANCE.convertTourPutDTOtoEntity(tourPutDTO);
 
         //Search with ID for the tour in the repository
-        Tour addMemberTour = tourService.getTourById(Integer.parseInt(id));
+        String s = id.replace("\n", "");
+        Tour addMemberTour = tourService.getTourById(Long.parseLong(s));
 
         //Check whether there are empty slots and add them to the tour
         tourService.add(addMemberTour, inputTour);

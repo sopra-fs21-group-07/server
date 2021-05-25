@@ -12,7 +12,7 @@ public class TourMember {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String useremail;
 
     @Column(nullable = false)
