@@ -37,7 +37,7 @@ public class TourService {
     private final Logger log = LoggerFactory.getLogger(TourService.class);
     private MapApiService mapApiService = null;
 
-    private final TourRepository tourRepository;
+    private TourRepository tourRepository;
     private final SummitRepository summitRepository;
     private final TourMembersRepository tourMembersRepository;
     private String currentURL = null;
@@ -142,7 +142,7 @@ public class TourService {
     }
 
     public Tour getTourById(long id) {
-        return tourRepository.findById(id);
+        return tourRepository.findById(id).get();
     }
 
     public String add(Tour addMemberToTour, Tour inputUser) {
@@ -242,7 +242,7 @@ public class TourService {
 
     //EDIT functions
     public void editName(Long id, String name) {
-        if (tourRepository.findById(id).isEmpty()) {
+        if (this.tourRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else {
@@ -259,18 +259,6 @@ public class TourService {
         else {
             Tour tour = this.tourRepository.findById(id).get();
             tour.setEmptySlots(emptySlots);
-            tourRepository.flush();
-        }
-    }
-
-    //Perhaps this doesnt work 
-    public void editDate(Long id, LocalDate date) {
-        if (tourRepository.findById(id).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, error);
-        }
-        else {
-            Tour tour = this.tourRepository.findById(id).get();
-            tour.setDate(date);
             tourRepository.flush();
         }
     }

@@ -2,10 +2,16 @@ package sopra.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.server.ResponseStatusException;
+import sopra.tour.TourType;
 import sopra.tour.entity.Summit;
 import sopra.tour.entity.Tour;
 import sopra.tour.repository.SummitRepository;
@@ -16,8 +22,10 @@ import sopra.tour.service.TourService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
 
 /**
  * Test class for the AppUserResource REST resource.
@@ -28,8 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class TourServiceTest {
 
-    @Qualifier("tourRepository")
-    @Autowired
+    @Mock
     private TourRepository tourRepository;
 
     @Qualifier("summitRepository")
@@ -43,10 +50,30 @@ public class TourServiceTest {
     @Autowired
     private TourService tourService;
 
+    @InjectMocks
+    private TourService tourServiceInjected;
+
+    private Tour testTour;
+
     @BeforeEach
     public void setup() {
         tourRepository.deleteAll();
         summitRepository.deleteAll();
+
+        MockitoAnnotations.openMocks(this);
+
+        testTour = new Tour();
+        testTour.setType(TourType.SKI_SNOWBOARD_TOUR);
+        testTour.setToken("bla");
+        testTour.setEmptySlots(5);
+        testTour.setTourPictureKey("bla");
+        testTour.setEmailMember("bla");
+        testTour.setCreatorUsername("bla");
+        testTour.setName("testName1");
+        testTour.setSummit("Bristen");
+        testTour.setId(1L);
+        testTour.setAltitude(3073);
+        testTour.setDate(LocalDate.now());
     }
 
     @Test
@@ -160,5 +187,61 @@ public class TourServiceTest {
         List<Tour> tours = tourService.getTours();
 
         assertEquals(true, tours.isEmpty());
+    }
+
+    @Test
+    public void getTourById(){
+        Mockito.when(tourRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.ofNullable(testTour));
+
+        Tour tour = tourServiceInjected.getTourById(1L);
+        Mockito.verify(tourRepository, Mockito.times(1)).findById(Mockito.anyLong());
+
+        assertEquals(testTour.getName(), tour.getName());
+        assertEquals(testTour.getSummit(), tour.getSummit());
+        assertEquals(testTour.getAltitude(), tour.getAltitude());
+        assertEquals(testTour.getId(), tour.getId());
+        assertEquals(testTour.getCreatorUsername(), tour.getCreatorUsername());
+    }
+
+    @Test
+    public void editName() {
+        Mockito.when(this.tourRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.ofNullable(testTour));
+        tourServiceInjected.editName(1L, "Säntis");
+
+        Mockito.verify(tourRepository, Mockito.times(2)).findById(Mockito.anyLong());
+        Mockito.verify(tourRepository, Mockito.times(1)).flush();
+
+
+        assertEquals("Säntis", testTour.getName());
+    }
+
+    @Test
+    public void editEmptySlots() {
+        Mockito.when(this.tourRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.ofNullable(testTour));
+        tourServiceInjected.editEmptySlots(1L, 99);
+
+        Mockito.verify(tourRepository, Mockito.times(2)).findById(Mockito.anyLong());
+        Mockito.verify(tourRepository, Mockito.times(1)).flush();
+
+
+        assertEquals(99, testTour.getEmptySlots());
+    }
+
+    @Test
+    public void deleteTour() {
+        Mockito.when(this.tourRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.ofNullable(testTour));
+        tourServiceInjected.deleteTour(1L);
+
+        Mockito.verify(tourRepository, Mockito.times(1)).findById(Mockito.anyLong());
+        Mockito.verify(tourRepository, Mockito.times(1)).deleteById(Mockito.anyLong());
+        Mockito.verify(tourRepository, Mockito.times(1)).flush();
+    }
+
+    @Test
+    void MethodsFail() {
+        Mockito.when(this.tourRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+        assertThrows(ResponseStatusException.class, () -> tourServiceInjected.editName(1L, "max"));
+        assertThrows(ResponseStatusException.class, () -> tourServiceInjected.editEmptySlots(1L, 66));
+        assertThrows(ResponseStatusException.class, () -> tourServiceInjected.deleteTour(1L));
     }
 }
