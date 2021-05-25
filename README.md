@@ -37,6 +37,8 @@ GitHub Projects,
 GitHub Actions,
 Map Geo Admin
 
+## High-level components
+
 - Tours [tour](https://github.com/sopra-fs21-group-07/server/tree/main/src/main/java/sopra/tour)
 - Map [mapAPI](https://github.com/sopra-fs21-group-07/server/tree/main/src/main/java/sopra/mapAPI)
 - User authentication [userauthentication](https://github.com/sopra-fs21-group-07/server/tree/main/src/main/java/sopra/userauthentication)
