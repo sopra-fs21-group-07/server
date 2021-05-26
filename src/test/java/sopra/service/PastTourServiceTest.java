@@ -2,7 +2,6 @@ package sopra.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import sopra.pastTour.repository.PastTourRepository;
 import sopra.pastTour.service.PastTourService;
 import sopra.tour.TourType;
 import sopra.tour.repository.SummitRepository;
-import sopra.tour.repository.TourMembersRepository;
 
 import java.util.Date;
 import java.util.List;
@@ -33,15 +31,8 @@ public class PastTourServiceTest {
     @Autowired
     private SummitRepository summitRepository;
 
-    @Qualifier("tourMembersRepository")
-    @Autowired
-    private TourMembersRepository tourMembersRepository;
-
     @Autowired
     private PastTourService pastTourService;
-
-    @InjectMocks
-    private PastTourService tourServiceInjected;
 
     private PastTour pastTestTour;
 
@@ -75,7 +66,6 @@ public class PastTourServiceTest {
         PastTour createdTour = pastTourService.createPastTour(pastTour);
 
         // then
-        assertEquals(pastTour.getId(), createdTour.getId());
         assertEquals(pastTour.getType(), createdTour.getType());
         assertEquals(pastTour.getSummit(), createdTour.getSummit());
         assertEquals(pastTour.getDate(), createdTour.getDate());
@@ -96,10 +86,11 @@ public class PastTourServiceTest {
         // when
         PastTour createdTour = pastTourService.createPastTour(pastTour);
         List<PastTour> pastTours = pastTourService.getPastTours();
+        //DateFormat osLocalizedDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
 
-        assertEquals(pastTours.get(0).getId(), createdTour.getId());
+        // Check
         assertEquals(pastTours.get(0).getType(), createdTour.getType());
         assertEquals(pastTours.get(0).getSummit(), createdTour.getSummit());
-        //assertEquals(pastTours.get(0).getDate(), createdTour.getDate());
+        //assertEquals(osLocalizedDateFormat.format(pastTours.get(0).getDate()), createdTour.getDate());
     }
 }
