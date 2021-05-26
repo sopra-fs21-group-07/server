@@ -16,7 +16,6 @@ public class PastTour {
     @Column(nullable = false)
     private String summit;
 
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = true)
     private TourType type;
