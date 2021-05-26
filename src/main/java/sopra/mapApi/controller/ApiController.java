@@ -1,21 +1,21 @@
-package sopra.mapAPI.controller;
+package sopra.mapApi.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import sopra.mapAPI.entity.Summit;
-import sopra.mapAPI.rest.dto.MapFoundGetDTO;
-import sopra.mapAPI.rest.dto.MapSearchPostDTO;
-import sopra.mapAPI.rest.mapper.DTOMapperMapAPI;
-import sopra.mapAPI.service.MapApiService;
+import sopra.mapApi.entity.Summit;
+import sopra.mapApi.rest.dto.MapFoundGetDTO;
+import sopra.mapApi.rest.dto.MapSearchPostDTO;
+import sopra.mapApi.rest.mapper.DTOMapperMapAPI;
+import sopra.mapApi.service.MapApiService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class APIController {
+public class ApiController {
     private MapApiService mapApiService = null;
 
-    APIController() {
+    ApiController() {
         mapApiService = new MapApiService();
     }
 
@@ -32,7 +32,7 @@ public class APIController {
     @ResponseBody
     public List<MapFoundGetDTO> createTour(@RequestBody MapSearchPostDTO mapSearchPostDTO) {
         // Create List for return value
-        List<MapFoundGetDTO> foundSummits = new ArrayList();
+        ArrayList foundSummits = new ArrayList();
         // convert API tour to internal representation
         Summit userInput = DTOMapperMapAPI.INSTANCE.convertMapSearchToSearchText(mapSearchPostDTO);
 

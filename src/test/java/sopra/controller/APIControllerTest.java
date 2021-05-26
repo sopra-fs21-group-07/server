@@ -14,10 +14,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.server.ResponseStatusException;
-import sopra.mapAPI.controller.APIController;
-import sopra.mapAPI.entity.Summit;
-import sopra.mapAPI.rest.dto.MapSearchPostDTO;
-import sopra.mapAPI.service.MapApiService;
+import sopra.mapApi.controller.ApiController;
+import sopra.mapApi.entity.Summit;
+import sopra.mapApi.rest.dto.MapSearchPostDTO;
+import sopra.mapApi.service.MapApiService;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class APIControllerTest {
 
     @Autowired
-    private APIController apiController;
+    private ApiController apiController;
 
     @Autowired
     private MockMvc mockMvc;

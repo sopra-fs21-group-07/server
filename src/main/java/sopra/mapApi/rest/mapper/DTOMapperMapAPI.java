@@ -1,11 +1,11 @@
-package sopra.mapAPI.rest.mapper;
+package sopra.mapApi.rest.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import sopra.mapAPI.entity.Summit;
-import sopra.mapAPI.rest.dto.MapFoundGetDTO;
-import sopra.mapAPI.rest.dto.MapSearchPostDTO;
+import sopra.mapApi.entity.Summit;
+import sopra.mapApi.rest.dto.MapFoundGetDTO;
+import sopra.mapApi.rest.dto.MapSearchPostDTO;
 
 @Mapper
 public interface DTOMapperMapAPI {

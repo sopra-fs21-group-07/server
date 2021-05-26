@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import sopra.mapAPI.service.MapApiService;
+import sopra.mapApi.service.MapApiService;
 import sopra.pastTour.entity.PastTour;
 import sopra.pastTour.service.PastTourService;
 import sopra.tour.entity.Summit;
@@ -20,9 +20,9 @@ import sopra.tour.repository.SummitRepository;
 import sopra.tour.repository.TourMembersRepository;
 import sopra.tour.repository.TourRepository;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -142,7 +142,8 @@ public class TourService {
     }
 
     public Tour getTourById(long id) {
-        return tourRepository.findById(id).get();
+        Optional<Tour> tour = tourRepository.findById(id);
+        return tour.get();
     }
 
     public String add(Tour addMemberToTour, Tour inputUser) {
@@ -173,18 +174,15 @@ public class TourService {
         if (TourByName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "tourname and the name", "are"));
         }
-        else if (TourByName != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
-        }
     }
 
     private String getCurrentUrl(long tourId) {
         final String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
         if (baseUrl.contains("localhost")) {
-            return "http://localhost:3000/confirmTour/" + tourId;
+            return "http://localhost:3000/tourProfilePage/" + tourId;
         }
         if (baseUrl.contains("server")) {
-            return "https://sopra-fs21-group-07-client.herokuapp.com/confirmTour/" + tourId;
+            return "https://sopra-fs21-group-07-client.herokuapp.com/tourProfilePage/" + tourId;
         }
         else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Main URL is unknown"));
@@ -257,7 +255,8 @@ public class TourService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else {
-            Tour tour = this.tourRepository.findById(id).get();
+            Optional<Tour> findTour = this.tourRepository.findById(id);
+            Tour tour = findTour.get();
             tour.setEmptySlots(emptySlots);
             tourRepository.flush();
         }

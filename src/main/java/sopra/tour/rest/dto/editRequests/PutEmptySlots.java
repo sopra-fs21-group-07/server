@@ -10,4 +10,12 @@ import lombok.NoArgsConstructor;
 public class PutEmptySlots {
 
     private int emptySlots;
+
+    public int getEmptySlots() {
+        return emptySlots;
+    }
+
+    public void setEmptySlots(int emptySlots) {
+        this.emptySlots = emptySlots;
+    }
 }

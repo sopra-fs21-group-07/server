@@ -1,11 +1,11 @@
-package sopra.mapAPI.service;
+package sopra.mapApi.service;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
-import sopra.mapAPI.entity.Summit;
+import sopra.mapApi.entity.Summit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +25,14 @@ public class MapApiService {
      */
     public List<Summit> getSummitInformation(String userInput)  {
 
-        ApiConverter apiConverter = new ApiConverter(userInput);
+        var apiConverter = new ApiConverter(userInput);
         final String uri = apiConverter.getUri();
+        String[] result = new String[0];
 
-        RestTemplate restTemplate = new RestTemplate();
-        String[] result = replaceUmlaute(restTemplate.getForObject(uri, String.class).split("\""));
-
+        var restTemplate = new RestTemplate();
+        if (restTemplate.getForObject(uri, String.class) != null) {
+            result = replaceUmlaute(restTemplate.getForObject(uri, String.class).split("\""));
+        }
         return extractSummit(result);
     }
 
@@ -58,7 +60,7 @@ public class MapApiService {
                 coordinate[1] = el.getY();
             }
         }
-        if (coordinate[0] == 0 && coordinate[0] == 0)
+        if (coordinate[0] == 0 || coordinate[1] == 0)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "Summit not found"));
         return coordinate;
     }

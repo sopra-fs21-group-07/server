@@ -1,6 +1,6 @@
-package sopra.mapAPI.service;
+package sopra.mapApi.service;
 
-import sopra.mapAPI.GeoAdminApi;
+import sopra.mapApi.GeoAdminApi;
 
 public class ApiConverter {
     /**
@@ -33,13 +33,13 @@ public class ApiConverter {
      * @return uri for the REST API
      */
     private String getGeoAdminRequest(String searchName){
-        return (GeoAdminApi.URLMapServer.value +
-                GeoAdminApi.findRequest.value +
-                GeoAdminApi.layerNames.value +
+        return (GeoAdminApi.URL_MAP_SERVER.value +
+                GeoAdminApi.FIND_REQUEST.value +
+                GeoAdminApi.LAYER_NAMES.value +
                 GeoAdminApi.AND.value +
-                GeoAdminApi.searchText.value +
+                GeoAdminApi.SEARCH_TEXT.value +
                 searchName +
                 GeoAdminApi.AND.value +
-                GeoAdminApi.searchField.value);
+                GeoAdminApi.SEARCH_FIELD.value);
     }
 }

@@ -1,4 +1,4 @@
-package sopra.mapAPI.rest.dto;
+package sopra.mapApi.rest.dto;
 
 /**
  * Converter class from frontend to backend

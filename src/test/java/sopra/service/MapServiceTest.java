@@ -3,8 +3,8 @@ package sopra.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
-import sopra.mapAPI.entity.Summit;
-import sopra.mapAPI.service.MapApiService;
+import sopra.mapApi.entity.Summit;
+import sopra.mapApi.service.MapApiService;
 
 import java.util.List;
 
