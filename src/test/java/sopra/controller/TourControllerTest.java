@@ -104,6 +104,33 @@ public class TourControllerTest {
         assertEquals("BIKE", TourType.BIKE.name());
     }
 
+    /*@Test
+    void updateTourById_success() throws Exception{
+        Tour tour = new Tour();
+        tour.setId(1L);
+        tour.setEmptySlots(2);
+        tour.setDate(LocalDate.now());
+        tour.setEmailMember("testUser@uzh.ch");
+        tour.setName("MyTestTour");
+        tour.setSummit("Bristen");
+        tour.setType(TourType.ALPIN);
+
+        Mockito.when(tourService.add(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn("Hello");
+        String json = "  \"type\": \"CLIMBING\",\n" +
+                "        \"id\": 1,\n" +
+                "        \"name\": \"myTour\",\n" +
+                "        \"summit\": \"Gemsstock\",\n" +
+                "        \"emailMember\": null,\n" +
+                "        \"emptySlots\": 2,\n" +
+                "        \"tourPictureKey\": \"sampleTourPicture\",\n" +
+                "        \"date\": 1622160000000,\n" +
+                "        \"creatorUsername\": \"elBeato\"";
+        mockMvc.perform(put("/tours/1").contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
+                .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
+                .andExpect((ResultMatcher) jsonPath("$.id", Matchers.equalTo(1)))
+                .andExpect((ResultMatcher) jsonPath("$.emailMember", Matchers.equalTo("MyTestTour")));;
+    }*/
+
     @Test
     void verifyPostRequest() throws Exception {
         TourPostDTO tourPostDTO = new TourPostDTO();

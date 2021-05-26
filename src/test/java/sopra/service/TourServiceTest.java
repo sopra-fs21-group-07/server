@@ -219,7 +219,7 @@ public class TourServiceTest {
         Mockito.when(this.tourRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.ofNullable(testTour));
         tourServiceInjected.editEmptySlots(1L, 99);
 
-        Mockito.verify(tourRepository, Mockito.times(3)).findById(Mockito.anyLong());
+        Mockito.verify(tourRepository, Mockito.times(2)).findById(Mockito.anyLong());
         Mockito.verify(tourRepository, Mockito.times(1)).flush();
 
 

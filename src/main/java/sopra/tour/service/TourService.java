@@ -254,12 +254,13 @@ public class TourService {
     }
 
     public void editEmptySlots(Long id, int emptySlots) {
+        Optional<Tour> foundTour = tourRepository.findById(id);
         if (tourRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else {
-            if (this.tourRepository.findById(id).isPresent()) {
-                Tour tour = this.tourRepository.findById(id).get();
+            if (foundTour.isPresent()) {
+                Tour tour = foundTour.get();
                 tour.setEmptySlots(emptySlots);
                 tourRepository.flush();
             }
@@ -277,13 +278,14 @@ public class TourService {
     }
 
     public void cancleTour(Long tourID, String username) {
+        Optional<Tour> foundTour = tourRepository.findById(tourID);
         TourMember tourmember = this.tourMembersRepository.findByUsername(username);
         if (tourmember.getUseremail().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not signed up for the tour yet.");
         }
         else {
-            if (this.tourRepository.findById(tourID).isPresent()) {
-                Tour tour = this.tourRepository.findById(tourID).get();
+            if (foundTour.isPresent()) {
+                Tour tour = foundTour.get();
                 tourMembersRepository.delete(tourmember);
                 tour.setEmptySlots(tour.getEmptySlots() + 1);
                 tourRepository.flush();
@@ -292,5 +294,4 @@ public class TourService {
         }
 
     }
-
 }
