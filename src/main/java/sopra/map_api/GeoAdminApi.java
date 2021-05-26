@@ -1,4 +1,4 @@
-package sopra.mapApi;
+package sopra.map_api;
 
 /**
  * Enum for concatenate the URL, static parts

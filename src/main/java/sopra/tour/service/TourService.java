@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import sopra.mapApi.service.MapApiService;
+import sopra.map_api.service.MapApiService;
 import sopra.pastTour.entity.PastTour;
 import sopra.pastTour.service.PastTourService;
 import sopra.tour.entity.Summit;
@@ -143,7 +143,10 @@ public class TourService {
 
     public Tour getTourById(long id) {
         Optional<Tour> tour = tourRepository.findById(id);
-        return tour.get();
+        if (tour.isPresent())
+            return tour.get();
+        else
+            return new Tour();
     }
 
     public String add(Tour addMemberToTour, Tour inputUser) {
@@ -255,10 +258,11 @@ public class TourService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else {
-            Optional<Tour> findTour = this.tourRepository.findById(id);
-            Tour tour = findTour.get();
-            tour.setEmptySlots(emptySlots);
-            tourRepository.flush();
+            if (this.tourRepository.findById(id).isPresent()) {
+                Tour tour = this.tourRepository.findById(id).get();
+                tour.setEmptySlots(emptySlots);
+                tourRepository.flush();
+            }
         }
     }
 
@@ -278,11 +282,13 @@ public class TourService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not signed up for the tour yet.");
         }
         else {
-            Tour tour = this.tourRepository.findById(tourID).get();
-            tourMembersRepository.delete(tourmember);
-            tour.setEmptySlots(tour.getEmptySlots() + 1);
-            tourRepository.flush();
-            tourMembersRepository.flush();
+            if (this.tourRepository.findById(tourID).isPresent()) {
+                Tour tour = this.tourRepository.findById(tourID).get();
+                tourMembersRepository.delete(tourmember);
+                tour.setEmptySlots(tour.getEmptySlots() + 1);
+                tourRepository.flush();
+                tourMembersRepository.flush();
+            }
         }
 
     }

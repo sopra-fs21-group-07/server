@@ -55,7 +55,7 @@ class UserServiceTest {
         Mockito.when(this.userRepository.findByUsername(Mockito.anyString())).thenReturn(java.util.Optional.ofNullable(testUser));
         User getUser = userService.getUserByUsername("max123");
 
-        Mockito.verify(userRepository, Mockito.times(2)).findByUsername(Mockito.anyString());
+        Mockito.verify(userRepository, Mockito.times(3)).findByUsername(Mockito.anyString());
 
         assertEquals(testUser.getUsername(), getUser.getUsername());
         assertEquals(testUser.getUserId(), getUser.getUserId());
@@ -68,7 +68,7 @@ class UserServiceTest {
         Mockito.when(this.userRepository.findByUsername(Mockito.anyString())).thenReturn(java.util.Optional.ofNullable(testUser));
         userService.editUsername("max123", "maxTest");
 
-        Mockito.verify(userRepository, Mockito.times(2)).findByUsername(Mockito.anyString());
+        Mockito.verify(userRepository, Mockito.times(3)).findByUsername(Mockito.anyString());
         Mockito.verify(userRepository, Mockito.times(1)).flush();
 
         assertEquals("maxTest", testUser.getUsername());
@@ -80,7 +80,7 @@ class UserServiceTest {
         Mockito.when(this.userRepository.findByUsername(Mockito.anyString())).thenReturn(java.util.Optional.ofNullable(testUser));
         userService.editFirstName("max123", "Test");
 
-        Mockito.verify(userRepository, Mockito.times(2)).findByUsername(Mockito.anyString());
+        Mockito.verify(userRepository, Mockito.times(3)).findByUsername(Mockito.anyString());
         Mockito.verify(userRepository, Mockito.times(1)).flush();
 
         assertEquals("Test", testUser.getFirstName());
@@ -91,7 +91,7 @@ class UserServiceTest {
         Mockito.when(this.userRepository.findByUsername(Mockito.anyString())).thenReturn(java.util.Optional.ofNullable(testUser));
         userService.editLastName("max123", "Test");
 
-        Mockito.verify(userRepository, Mockito.times(2)).findByUsername(Mockito.anyString());
+        Mockito.verify(userRepository, Mockito.times(3)).findByUsername(Mockito.anyString());
         Mockito.verify(userRepository, Mockito.times(1)).flush();
 
         assertEquals("Test", testUser.getLastName());
@@ -102,7 +102,7 @@ class UserServiceTest {
         Mockito.when(this.userRepository.findByUsername(Mockito.anyString())).thenReturn(java.util.Optional.ofNullable(testUser));
         userService.editAge("max123", 69);
 
-        Mockito.verify(userRepository, Mockito.times(2)).findByUsername(Mockito.anyString());
+        Mockito.verify(userRepository, Mockito.times(3)).findByUsername(Mockito.anyString());
         Mockito.verify(userRepository, Mockito.times(1)).flush();
 
         assertEquals(69, testUser.getAge());
@@ -113,7 +113,7 @@ class UserServiceTest {
         Mockito.when(this.userRepository.findByUsername(Mockito.anyString())).thenReturn(java.util.Optional.ofNullable(testUser));
         userService.editRegion("max123", "Lugano");
 
-        Mockito.verify(userRepository, Mockito.times(2)).findByUsername(Mockito.anyString());
+        Mockito.verify(userRepository, Mockito.times(3)).findByUsername(Mockito.anyString());
         Mockito.verify(userRepository, Mockito.times(1)).flush();
 
         assertEquals("Lugano", testUser.getRegion());
@@ -124,7 +124,7 @@ class UserServiceTest {
         Mockito.when(this.userRepository.findByUsername(Mockito.anyString())).thenReturn(java.util.Optional.ofNullable(testUser));
         userService.editPassword("max123", "123456789");
 
-        Mockito.verify(userRepository, Mockito.times(2)).findByUsername(Mockito.anyString());
+        Mockito.verify(userRepository, Mockito.times(3)).findByUsername(Mockito.anyString());
         Mockito.verify(userRepository, Mockito.times(1)).flush();
     }
 

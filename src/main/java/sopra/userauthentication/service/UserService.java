@@ -20,7 +20,10 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
-            return this.userRepository.findByUsername(username).get();
+            if (this.userRepository.findByUsername(username).isPresent())
+                return this.userRepository.findByUsername(username).get();
+            else
+                return new User();
         }
     }
 
@@ -29,9 +32,11 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
-            User user = this.userRepository.findByUsername(username).get();
-            user.setUsername(newUsername);
-            userRepository.flush();
+            if (this.userRepository.findByUsername(username).isPresent()) {
+                User user = this.userRepository.findByUsername(username).get();
+                user.setUsername(newUsername);
+                userRepository.flush();
+            }
         }
     }
 
@@ -40,9 +45,11 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
-            User user = this.userRepository.findByUsername(username).get();
-            user.setFirstName(firstName);
-            userRepository.flush();
+            if (this.userRepository.findByUsername(username).isPresent()) {
+                User user = this.userRepository.findByUsername(username).get();
+                user.setFirstName(firstName);
+                userRepository.flush();
+            }
         }
     }
 
@@ -51,9 +58,11 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
-            User user = this.userRepository.findByUsername(username).get();
-            user.setLastName(lastName);
-            userRepository.flush();
+            if (this.userRepository.findByUsername(username).isPresent()) {
+                User user = this.userRepository.findByUsername(username).get();
+                user.setLastName(lastName);
+                userRepository.flush();
+            }
         }
     }
 
@@ -62,9 +71,11 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
-            User user = this.userRepository.findByUsername(username).get();
-            user.setAge(age);
-            userRepository.flush();
+            if (this.userRepository.findByUsername(username).isPresent()) {
+                User user = this.userRepository.findByUsername(username).get();
+                user.setAge(age);
+                userRepository.flush();
+            }
         }
     }
 
@@ -73,9 +84,11 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
-            User user = this.userRepository.findByUsername(username).get();
-            user.setRegion(region);
-            userRepository.flush();
+            if (this.userRepository.findByUsername(username).isPresent()) {
+                User user = this.userRepository.findByUsername(username).get();
+                user.setRegion(region);
+                userRepository.flush();
+            }
         }
     }
 
@@ -84,9 +97,11 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
-            User user = this.userRepository.findByUsername(username).get();
-            user.setPassword(passwordEncoder.encode(password));
-            userRepository.flush();
+            if (this.userRepository.findByUsername(username).isPresent()) {
+                User user = this.userRepository.findByUsername(username).get();
+                user.setPassword(passwordEncoder.encode(password));
+                userRepository.flush();
+            }
         }
     }
 

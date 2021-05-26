@@ -1,6 +1,6 @@
-package sopra.mapApi.service;
+package sopra.map_api.service;
 
-import sopra.mapApi.GeoAdminApi;
+import sopra.map_api.GeoAdminApi;
 
 public class ApiConverter {
     /**

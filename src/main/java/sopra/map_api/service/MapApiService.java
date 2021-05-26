@@ -1,11 +1,11 @@
-package sopra.mapApi.service;
+package sopra.map_api.service;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
-import sopra.mapApi.entity.Summit;
+import sopra.map_api.entity.Summit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,10 @@ public class MapApiService {
         String[] result = new String[0];
 
         var restTemplate = new RestTemplate();
-        if (restTemplate.getForObject(uri, String.class) != null) {
-            result = replaceUmlaute(restTemplate.getForObject(uri, String.class).split("\""));
+        var apiResponse = restTemplate.getForObject(uri, String.class);
+        // Check on nullpointer exception
+        if (apiResponse != null) {
+            result = replaceUmlaute(apiResponse.split("\""));
         }
         return extractSummit(result);
     }

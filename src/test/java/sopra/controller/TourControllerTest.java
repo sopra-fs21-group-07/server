@@ -93,6 +93,18 @@ public class TourControllerTest {
     }
 
     @Test
+    void enumType_TourType() throws Exception {
+        assertEquals("SKI_SNOWBOARD_TOUR", TourType.SKI_SNOWBOARD_TOUR.name());
+        assertEquals("SNOWSHOE", TourType.SNOWSHOE.name());
+        assertEquals("FREERIDE", TourType.FREERIDE.name());
+        assertEquals("CLIMBING", TourType.CLIMBING.name());
+        assertEquals("ALPIN", TourType.ALPIN.name());
+        assertEquals("HIKING", TourType.HIKING.name());
+        assertEquals("CANYONING", TourType.CANYONING.name());
+        assertEquals("BIKE", TourType.BIKE.name());
+    }
+
+    @Test
     void verifyPostRequest() throws Exception {
         TourPostDTO tourPostDTO = new TourPostDTO();
         tourPostDTO.setAltitude(3073);

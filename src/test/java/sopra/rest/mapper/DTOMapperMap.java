@@ -1,10 +1,10 @@
 package sopra.rest.mapper;
 
 import org.junit.jupiter.api.Test;
-import sopra.mapApi.entity.Summit;
-import sopra.mapApi.rest.dto.MapFoundGetDTO;
-import sopra.mapApi.rest.dto.MapSearchPostDTO;
-import sopra.mapApi.rest.mapper.DTOMapperMapAPI;
+import sopra.map_api.entity.Summit;
+import sopra.map_api.rest.dto.MapFoundGetDTO;
+import sopra.map_api.rest.dto.MapSearchPostDTO;
+import sopra.map_api.rest.mapper.DTOMapperMapAPI;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

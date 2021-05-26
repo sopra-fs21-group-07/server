@@ -1,12 +1,12 @@
-package sopra.mapApi.controller;
+package sopra.map_api.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import sopra.mapApi.entity.Summit;
-import sopra.mapApi.rest.dto.MapFoundGetDTO;
-import sopra.mapApi.rest.dto.MapSearchPostDTO;
-import sopra.mapApi.rest.mapper.DTOMapperMapAPI;
-import sopra.mapApi.service.MapApiService;
+import sopra.map_api.entity.Summit;
+import sopra.map_api.rest.dto.MapFoundGetDTO;
+import sopra.map_api.rest.dto.MapSearchPostDTO;
+import sopra.map_api.rest.mapper.DTOMapperMapAPI;
+import sopra.map_api.service.MapApiService;
 
 import java.util.ArrayList;
 import java.util.List;

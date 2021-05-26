@@ -1,4 +1,4 @@
-package sopra.mapApi.entity;
+package sopra.map_api.entity;
 
 public class Summit {
     private String name;

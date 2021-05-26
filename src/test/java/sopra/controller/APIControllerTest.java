@@ -14,10 +14,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.server.ResponseStatusException;
-import sopra.mapApi.controller.ApiController;
-import sopra.mapApi.entity.Summit;
-import sopra.mapApi.rest.dto.MapSearchPostDTO;
-import sopra.mapApi.service.MapApiService;
+import sopra.map_api.controller.ApiController;
+import sopra.map_api.entity.Summit;
+import sopra.map_api.rest.dto.MapSearchPostDTO;
+import sopra.map_api.service.MapApiService;
 
 import java.util.List;
 
