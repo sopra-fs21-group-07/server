@@ -24,9 +24,7 @@ public class APIController {
     @ResponseBody
     public List<Summit> getAllTours() {
         // fetch all tours in the internal representation
-        List<Summit> summit = mapApiService.getSummitInformation("Gitschen");
-
-        return summit;
+        return mapApiService.getSummitInformation("Gitschen");
     }
 
     @PostMapping("/nameGeoMapAdmin")

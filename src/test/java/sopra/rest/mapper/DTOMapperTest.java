@@ -1,47 +1,48 @@
 package sopra.rest.mapper;
 
-//import sopra.appuser.AppUserStatus;
-//import sopra.appuser.AppUser;
 import org.junit.jupiter.api.Test;
+import sopra.tour.TourType;
+import sopra.tour.entity.TourMember;
+import sopra.tour.rest.dto.TourMembersGetDTO;
+import sopra.tour.rest.mapper.DTOMapperTour;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * DTOMapperTest
  * Tests if the mapping between the internal and the external/API representation works.
  */
 public class DTOMapperTest {
-    /*@Test
-    public void testCreateAppUser_fromAppUserPostDTO_toAppUser_success() {
-        // create AppUserPostDTO
-        AppUserPostDTO AppUserPostDTO = new AppUserPostDTO();
-        AppUserPostDTO.setName("name");
-        AppUserPostDTO.setAppUsername("AppUsername");
+    @Test
+    public void testGetTourMembers_fromTour_toTourMembersGetDTO_success() {
+        // create Tour
+        TourMember tourMember = new TourMember();
+        tourMember.setTourName("testTour");
+        tourMember.setId(1L);
+        tourMember.setUseremail("testuser@uzh.ch");
+        tourMember.setUsername("testUser01");
 
-        // MAP -> Create AppUser
-        AppUser AppUser = DTOMapper.INSTANCE.convertAppUserPostDTOtoEntity(AppUserPostDTO);
+        // MAP -> Create TourGetDTO
+        TourMembersGetDTO tourMembersGetDTO = DTOMapperTour.INSTANCE.convertEntityToTourMembersGetDTO(tourMember);
 
         // check content
-        assertEquals(AppUserPostDTO.getName(), AppUser.getPassword());
-        assertEquals(AppUserPostDTO.getAppUsername(), AppUser.getAppUsername());
+        assertEquals(tourMember.getId(), tourMembersGetDTO.getId());
+        assertEquals(tourMember.getTourName(), tourMembersGetDTO.getTourName());
+        assertEquals(tourMember.getUseremail(), tourMembersGetDTO.getUseremail());
+        assertEquals(tourMember.getUsername(), tourMembersGetDTO.getUsername());
     }
 
     @Test
-    public void testGetAppUser_fromAppUser_toAppUserGetDTO_success() {
-        // create AppUser
-        AppUser AppUser = new AppUser();
-        AppUser.setPassword("Firstname Lastname");
-        AppUser.setAppUsername("firstname@lastname");
-        AppUser.setStatus(AppUserStatus.OFFLINE);
-        AppUser.setToken("1");
-
-        // MAP -> Create AppUserGetDTO
-        AppUserGetDTO AppUserGetDTO = DTOMapper.INSTANCE.convertEntityToAppUserGetDTO(AppUser);
-
-        // check content
-        assertEquals(AppUser.getId(), AppUserGetDTO.getId());
-        assertEquals(AppUser.getPassword(), AppUserGetDTO.getPassword());
-        assertEquals(AppUser.getAppUsername(), AppUserGetDTO.getAppUsername());
-        assertEquals(AppUser.getStatus(), AppUserGetDTO.getStatus());
-    }*/
+    public void testPostSummit_fromSummitPostDTO_toSummit_success() {
+        // create Summit
+        assertNotNull(TourType.valueOf("ALPIN"));
+        assertNotNull(TourType.valueOf("SKI_SNOWBOARD_TOUR"));
+        assertNotNull(TourType.valueOf("SNOWSHOE"));
+        assertNotNull(TourType.valueOf("FREERIDE"));
+        assertNotNull(TourType.valueOf("CLIMBING"));
+        assertNotNull(TourType.valueOf("HIKING"));
+        assertNotNull(TourType.valueOf("CANYONING"));
+        assertNotNull(TourType.valueOf("BIKE"));
+    }
 }
