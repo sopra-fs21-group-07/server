@@ -3,7 +3,6 @@ package sopra.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,26 +20,15 @@ import sopra.tour.repository.TourRepository;
 import sopra.tour.rest.dto.TourGetDTO;
 import sopra.tour.rest.dto.TourPostDTO;
 import sopra.tour.service.TourService;
-import sopra.userauthentication.dto.AuthenticationResponse;
-import sopra.userauthentication.dto.LoginRequest;
-import sopra.userauthentication.dto.RefreshTokenRequest;
-import sopra.userauthentication.dto.RegisterRequest;
-import sopra.userauthentication.model.User;
-import sopra.userauthentication.service.AuthService;
-import sopra.userauthentication.service.RefreshTokenService;
-import sopra.userauthentication.service.UserService;
 
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 
 @SpringBootTest
@@ -80,6 +68,22 @@ public class TourControllerTest {
         MvcResult result = mockMvc.perform(postRequest).andReturn();
 
         verify(tourService,times(1)).getTours();
+
+        // test the http status of the response
+        assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
+
+        // test the http method ()
+        assertEquals(HttpMethod.GET.name(), result.getRequest().getMethod());
+    }
+
+    @Test
+    void verifyGetRequest_TourMember() throws Exception {
+        MockHttpServletRequestBuilder getRequest = get("/tourMembers")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(getRequest).andReturn();
+
+        verify(tourService,times(1)).getTourMembers();
 
         // test the http status of the response
         assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());

@@ -8,7 +8,6 @@ import sopra.tour.rest.dto.TourGetDTO;
 import sopra.tour.rest.dto.TourMembersGetDTO;
 import sopra.tour.rest.dto.TourPostDTO;
 import sopra.tour.rest.dto.TourPutDTO;
-import sopra.tour.rest.dto.editRequests.PutName;
 import sopra.tour.rest.mapper.DTOMapperTour;
 import sopra.tour.service.TourService;
 
@@ -56,10 +55,10 @@ public class TourController {
     @ResponseBody
     public TourGetDTO createTour(@RequestBody TourPostDTO tourPostDTO) throws Exception {
         // convert API tour to internal representation
-        Tour tourInput = DTOMapperTour.INSTANCE.convertTourPostDTOtoEntity(tourPostDTO);
+        var tourInput = DTOMapperTour.INSTANCE.convertTourPostDTOtoEntity(tourPostDTO);
 
         // create tour
-        Tour createdTour = tourService.createTour(tourInput);
+        var createdTour = tourService.createTour(tourInput);
 
         // convert internal representation of tour back to API
         return DTOMapperTour.INSTANCE.convertEntityToTourGetDTO(createdTour);
@@ -70,11 +69,11 @@ public class TourController {
     @ResponseBody
     public TourGetDTO addMemberToTour(@PathVariable String id, @RequestBody TourPutDTO tourPutDTO){
         // convert API tour to internal representation
-        Tour inputTour= DTOMapperTour.INSTANCE.convertTourPutDTOtoEntity(tourPutDTO);
+        var inputTour= DTOMapperTour.INSTANCE.convertTourPutDTOtoEntity(tourPutDTO);
 
         //Search with ID for the tour in the repository
         String s = id.replace("\n", "");
-        Tour addMemberTour = tourService.getTourById(Long.parseLong(s));
+        var addMemberTour = tourService.getTourById(Long.parseLong(s));
 
         //Check whether there are empty slots and add them to the tour
         tourService.add(addMemberTour, inputTour);

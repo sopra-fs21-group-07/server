@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doReturn;
 
 /**
  * Test class for the AppUserResource REST resource.
@@ -154,7 +153,7 @@ public class TourServiceTest {
         String testKML = "<kml xmlns=\\\"http://www.opengis.net/kml/2.2\\\" xmlns:gx=\\\"http://www.google.com/kml/ext/2.2\\\" xmlns:xsi=\\\"http://www.w3.org/200" +
                 "1/XMLSchema-instance\\\" xsi:schemaLocation=\\\"http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd\\\"><Document><name>" +
                 "Zeichnung</name><Placemark id=\\\"marker_1\\\"><ExtendedData><Data name=\\\"type\\\"><value>marker</value></Data></ExtendedData><name>testName</name>" +
-                "<description>Link: &lt;a target=\\\"_blank\\\" href=http://localhost:3000/confirmTour/1&gt; Tour details: testName&lt;/a&gt;&lt;style=\\\"max-height:" +
+                "<description>Link: &lt;a target=\\\"_blank\\\" href=http://localhost:3000/tourProfilePage/1&gt; Tour details: testName&lt;/a&gt;&lt;style=\\\"max-height:" +
                 "200px;\\\"/&gt;</description><Style><IconStyle><scale>0.75</scale><Icon><href>https://api3.geo.admin.ch/color/255,0,0/triangle-24@2x.png</href><gx:w>48" +
                 "</gx:w><gx:h>48</gx:h></Icon></IconStyle><LabelStyle><color>ff00ffff</color></LabelStyle></Style><Point><tessellate>1</tessellate><altitudeMode>clampToG" +
                 "round</altitudeMode><coordinates>8.6,46.7,3073</coordinates></Point></Placemark></Document></kml>";
