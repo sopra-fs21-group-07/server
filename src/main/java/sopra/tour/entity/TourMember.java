@@ -1,6 +1,8 @@
 package sopra.tour.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "TOURMEMBER")
@@ -18,6 +20,8 @@ public class TourMember {
     @Column(nullable = false)
     private String tourName;
 
+    //@Email --> is not working!!!
+    //@NotEmpty(message = "Email is required")
     @Column(nullable = false)
     private String username;
 
