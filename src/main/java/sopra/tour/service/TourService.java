@@ -277,7 +277,7 @@ public class TourService {
         }
     }
 
-    public void cancleTour(Long tourID, String username) {
+    public void cancelTour(Long tourID, String username) {
         Optional<Tour> foundTour = tourRepository.findById(tourID);
         TourMember tourmember = this.tourMembersRepository.findByUsername(username);
         if (tourmember.getUseremail().isEmpty()) {
@@ -294,4 +294,6 @@ public class TourService {
         }
 
     }
+
+
 }

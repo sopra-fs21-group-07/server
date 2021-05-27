@@ -102,5 +102,11 @@ public class TourController {
         tourService.deleteTour(id);
     }
 
+    @GetMapping("/tourMembers/{id}/{username}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelTour(@PathVariable String username, @PathVariable long id){
+        tourService.cancelTour(id,username);
+    }
+
 }
 
