@@ -1,9 +1,16 @@
 package sopra.tour.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "TOURMEMBER")
 public class TourMember {
@@ -22,7 +29,9 @@ public class TourMember {
 
     //@Email --> is not working!!!
     //@NotEmpty(message = "Email is required")
-    @Column(nullable = false)
+    @Column(unique = true)
+    @Email(message = "Please enter a correct email format")
+    @NotEmpty(message = "Email is required")
     private String username;
 
     public Long getId() {
