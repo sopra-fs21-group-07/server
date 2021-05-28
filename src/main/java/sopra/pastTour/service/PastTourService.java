@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sopra.pastTour.entity.PastTour;
 import sopra.pastTour.repository.PastTourRepository;
+import sopra.tour.entity.Tour;
 
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Tour Service
@@ -60,6 +63,14 @@ public class PastTourService {
         log.debug("Created Information for Tour: {}", pastTour);
 
         return pastTour;
+    }
+
+    public PastTour getPastTourById(long id) {
+        Optional<PastTour> tour = pastTourRepository.findById(id);
+        if (tour.isPresent())
+            return tour.get();
+        else
+            return new PastTour();
     }
 
 }

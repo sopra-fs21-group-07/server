@@ -1,14 +1,13 @@
 package sopra.pastTour.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sopra.pastTour.entity.PastTour;
 import sopra.pastTour.rest.dto.PastTourGetDTO;
 import sopra.pastTour.rest.mapper.DTOMapperPastTour;
 import sopra.pastTour.service.PastTourService;
+import sopra.tour.rest.dto.TourGetDTO;
+import sopra.tour.rest.mapper.DTOMapperTour;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +38,14 @@ public class PastTourController {
             pastTourGetDTO.add(DTOMapperPastTour.INSTANCE.convertEntityToTourGetDTO(pastTour));
         }
         return pastTourGetDTO;
+    }
+
+    @GetMapping("/pastTours/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public PastTourGetDTO getOneTour(@PathVariable String id) {
+        // fetch all tours in the internal representation
+        return DTOMapperPastTour.INSTANCE.convertEntityToTourGetDTO(pastTourService.getPastTourById(Long.parseLong(id)));
     }
 }
 
