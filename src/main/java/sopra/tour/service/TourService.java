@@ -279,14 +279,14 @@ public class TourService {
 
     public void cancelTour(Long tourID, String username) {
         Optional<Tour> foundTour = tourRepository.findById(tourID);
-        TourMember tourmember = this.tourMembersRepository.findByUsername(username);//do mösst no öppis anders sii...?
-        if (tourmember.getUsername().isEmpty()) {
+        Optional<TourMember> tourmember = this.tourMembersRepository.findByUsername(username);//do mösst no öppis anders sii...?
+        if (tourmember.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not signed up for the tour yet.");
         }
         else {
             if (foundTour.isPresent()) {
                 Tour tour = foundTour.get();
-                tourMembersRepository.delete(tourmember);
+                tourMembersRepository.delete(tourmember.get());
                 tour.setEmptySlots(tour.getEmptySlots() + 1);
                 tourRepository.flush();
                 tourMembersRepository.flush();
