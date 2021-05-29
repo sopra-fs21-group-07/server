@@ -53,7 +53,7 @@ public class TourService {
         for (Tour t : tours) {
             this.tourRepository.deleteById(t.getId());
             pastTour.setSummit(t.getSummit());
-            pastTour.setDate(new Date());
+            pastTour.setDate(t.getDate());
             pastTour.setType(t.getType());
             pastTourService.createPastTour(pastTour);
         }

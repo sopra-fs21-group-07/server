@@ -1,7 +1,9 @@
 package sopra.pastTour.entity;
 
+import org.apache.tomcat.jni.Local;
 import sopra.tour.TourType;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -21,7 +23,7 @@ public class PastTour {
     private TourType type;
 
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date;
 
     public Long getId() {
         return id;
@@ -47,11 +49,11 @@ public class PastTour {
         this.type = type;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }
