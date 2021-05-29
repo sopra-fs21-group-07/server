@@ -55,6 +55,8 @@ public class TourService {
             pastTour.setSummit(t.getSummit());
             pastTour.setDate(t.getDate());
             pastTour.setType(t.getType());
+            pastTour.setTourPictureKey(t.getTourPictureKey());
+            pastTour.setName(t.getName());
             pastTourService.createPastTour(pastTour);
         }
     }

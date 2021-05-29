@@ -25,6 +25,13 @@ public class PastTour {
     @Column(nullable = false)
     private LocalDate date;
 
+    @Column
+    private String tourPictureKey;
+
+    @Column(nullable = false)
+    private String name;
+
+
     public Long getId() {
         return id;
     }
@@ -56,4 +63,13 @@ public class PastTour {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public String getTourPictureKey(){return tourPictureKey;}
+
+    public void setTourPictureKey(String tourPictureKey){this.tourPictureKey = tourPictureKey;}
+
+    public String getName(){return name;}
+
+    public void setName(String name){this.name = name;}
+
 }

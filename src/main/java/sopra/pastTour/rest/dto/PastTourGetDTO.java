@@ -11,6 +11,8 @@ public class PastTourGetDTO {
     private Long id;
     private String summit;
     private LocalDate date;
+    private String tourPictureKey;
+    private String name;
 
     public TourType getType() {
         return type;
@@ -43,5 +45,14 @@ public class PastTourGetDTO {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+
+    public String getTourPictureKey(){return tourPictureKey;}
+
+    public void setTourPictureKey(String tourPictureKey){this.tourPictureKey= tourPictureKey;}
+
+    public String getName(){return name;}
+
+    public void setName(String name){this.name = name;}
 }
 
