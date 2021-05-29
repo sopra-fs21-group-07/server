@@ -30,7 +30,7 @@ public class TourMember {
 
     //@Email --> is not working!!!
     //@NotEmpty(message = "Email is required")
-    @Column(unique = true)
+    //@Column(unique = true)
     @Email(message = "Please enter a correct email format")
     @NotEmpty(message = "Email is required")
     private String username;
