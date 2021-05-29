@@ -280,7 +280,7 @@ public class TourService {
     public void cancelTour(Long tourID, String username) {
         Optional<Tour> foundTour = tourRepository.findById(tourID);
         Optional<TourMember> tourmember = this.tourMembersRepository.findByUsername(username);//do mösst no öppis anders sii...?
-        if (tourmember.isEmpty()) {
+        if (tourmember.isEmpty() || !tourmember.get().getTourName().equals(foundTour.get().getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not signed up for the tour yet.");
         }
         else {
