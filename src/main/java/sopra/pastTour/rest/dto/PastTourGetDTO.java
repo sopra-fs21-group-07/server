@@ -2,6 +2,7 @@ package sopra.pastTour.rest.dto;
 
 import sopra.tour.TourType;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class PastTourGetDTO {
@@ -9,7 +10,7 @@ public class PastTourGetDTO {
     private TourType type;
     private Long id;
     private String summit;
-    private Date date;
+    private LocalDate date;
 
     public TourType getType() {
         return type;
@@ -35,11 +36,11 @@ public class PastTourGetDTO {
         this.summit = summit;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }

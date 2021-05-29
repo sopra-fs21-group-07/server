@@ -14,6 +14,7 @@ import sopra.pastTour.service.PastTourService;
 import sopra.tour.TourType;
 import sopra.tour.repository.SummitRepository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class PastTourServiceTest {
         pastTestTour.setType(TourType.SKI_SNOWBOARD_TOUR);
         pastTestTour.setSummit("Bristen");
         pastTestTour.setId(1L);
-        pastTestTour.setDate(new Date());
+        pastTestTour.setDate(LocalDate.of(2021, 6, 8));
     }
 
     @Test
@@ -58,7 +59,7 @@ public class PastTourServiceTest {
         // create Tour
         PastTour pastTour = new PastTour();
         pastTour.setId((long) 1);
-        pastTour.setDate(new Date());
+        pastTour.setDate(LocalDate.of(2021, 6, 8));
         pastTour.setType(TourType.ALPIN);
         pastTour.setSummit("Bristen");
 
@@ -79,7 +80,7 @@ public class PastTourServiceTest {
         // create Tour
         PastTour pastTour = new PastTour();
         pastTour.setId((long) 1);
-        pastTour.setDate(new Date());
+        pastTour.setDate(LocalDate.of(2021, 6, 8));
         pastTour.setType(TourType.ALPIN);
         pastTour.setSummit("Bristen");
 

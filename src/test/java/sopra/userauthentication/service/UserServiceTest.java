@@ -68,7 +68,7 @@ class UserServiceTest {
         Mockito.when(this.userRepository.findByUsername(Mockito.anyString())).thenReturn(java.util.Optional.ofNullable(testUser));
         userService.editUsername("max123", "maxTest");
 
-        Mockito.verify(userRepository, Mockito.times(4)).findByUsername(Mockito.anyString());
+        Mockito.verify(userRepository, Mockito.times(3)).findByUsername(Mockito.anyString());
         Mockito.verify(userRepository, Mockito.times(1)).flush();
 
         assertEquals("maxTest", testUser.getUsername());

@@ -247,9 +247,13 @@ public class TourService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else {
+            if (this.tourRepository.findById(id).isPresent()){
             Tour tour = this.tourRepository.findById(id).get();
             tour.setName(name);
-            tourRepository.flush();
+            tourRepository.flush();}
+            else{
+                throw new ResponseStatusException(HttpStatus.CONFLICT, error);
+            }
         }
     }
 
@@ -280,18 +284,19 @@ public class TourService {
     public void cancelTour(Long tourID, String username) {
         Optional<Tour> foundTour = tourRepository.findById(tourID);
         Optional<TourMember> tourmember = this.tourMembersRepository.findByUsername(username);//do mösst no öppis anders sii...?
+        if (foundTour.isPresent()){
         if (tourmember.isEmpty() || !tourmember.get().getTourName().equals(foundTour.get().getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not signed up for the tour yet.");
         }
         else {
-            if (foundTour.isPresent()) {
-                Tour tour = foundTour.get();
-                tourMembersRepository.delete(tourmember.get());
-                tour.setEmptySlots(tour.getEmptySlots() + 1);
-                tourRepository.flush();
-                tourMembersRepository.flush();
-            }
+            Tour tour = foundTour.get();
+            tourMembersRepository.delete(tourmember.get());
+            tour.setEmptySlots(tour.getEmptySlots() + 1);
+            tourRepository.flush();
+            tourMembersRepository.flush();
+        }}
+        else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not signed up for the tour yet.");
         }
-
     }
 }
