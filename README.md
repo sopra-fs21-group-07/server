@@ -86,6 +86,7 @@ More Information about [Gradle Wrapper](https://docs.gradle.org/current/Userguid
 - Add a weather API
 - Add an avalanche API
 - Make a review page for tours (backend exists)
+- Fully implement Spring Security (currently CSRF is disabled, as we are still making unauth calls from Frontend)
 
 ## Acknowledgements
 
