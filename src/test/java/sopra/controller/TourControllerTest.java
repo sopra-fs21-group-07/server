@@ -27,8 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 
 @SpringBootTest
@@ -115,6 +114,17 @@ public class TourControllerTest {
         tour.setSummit("Bristen");
         tour.setType(TourType.ALPIN);
 
+        TourPostDTO tourPostDTO = new TourPostDTO();
+        tourPostDTO.setAltitude(3073);
+        tourPostDTO.setEmptySlots(10);
+        tourPostDTO.setName("MyTestTour");
+        tourPostDTO.setSummit("Bristen");
+        tourPostDTO.setType(TourType.ALPIN);
+
+        MockHttpServletRequestBuilder postRequest = post("/tours")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(tourPostDTO));
+
         Mockito.when(tourService.add(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn("Hello");
         String json = "  \"type\": \"CLIMBING\",\n" +
                 "        \"id\": 1,\n" +
@@ -125,10 +135,18 @@ public class TourControllerTest {
                 "        \"tourPictureKey\": \"sampleTourPicture\",\n" +
                 "        \"date\": 1622160000000,\n" +
                 "        \"creatorUsername\": \"elBeato\"";
+
+        mockMvc.perform(post("/tours").contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
+                .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect((ResultMatcher) jsonPath("$.id", Matchers.equalTo(1L)))
+                .andExpect((ResultMatcher) jsonPath("$.emailMember", Matchers.equalTo("MyTestTour")));
+
         mockMvc.perform(put("/tours/1").contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
                 .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
-                .andExpect((ResultMatcher) jsonPath("$.id", Matchers.equalTo(1)))
-                .andExpect((ResultMatcher) jsonPath("$.emailMember", Matchers.equalTo("MyTestTour")));;
+                .andDo(print())
+                .andExpect((ResultMatcher) jsonPath("$.[0].id", Matchers.equalTo(1L)))
+                .andExpect((ResultMatcher) jsonPath("$.[0].emailMember", Matchers.equalTo("MyTestTour")));
     }*/
 
     @Test
@@ -146,13 +164,63 @@ public class TourControllerTest {
 
         MvcResult result = mockMvc.perform(postRequest).andReturn();
 
-        //verify(tourService,times(1)).getTours();
-
         // test the http status of the response
         assertEquals(HttpStatus.CREATED.value(), result.getResponse().getStatus());
 
         // test the http method ()
         assertEquals(HttpMethod.POST.name(), result.getRequest().getMethod());
+    }
+
+    @Test
+    void verifyPutRequest() throws Exception {
+        TourPostDTO tourPostDTO = new TourPostDTO();
+        tourPostDTO.setAltitude(3073);
+        tourPostDTO.setEmptySlots(10);
+        tourPostDTO.setName("MyTestTour");
+        tourPostDTO.setSummit("Bristen");
+        tourPostDTO.setType(TourType.ALPIN);
+
+        MockHttpServletRequestBuilder postRequest = put("/tours/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(tourPostDTO));
+
+        MvcResult result = mockMvc.perform(postRequest).andReturn();
+
+        // test the http status of the response
+        assertEquals(HttpStatus.ACCEPTED.value(), result.getResponse().getStatus());
+
+        // test the http method ()
+        assertEquals(HttpMethod.PUT.name(), result.getRequest().getMethod());
+    }
+
+    @Test
+    void verifyDeleteRequest() throws Exception {
+        MockHttpServletRequestBuilder postRequest = delete("/tours/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(1L));
+
+        MvcResult result = mockMvc.perform(postRequest).andReturn();
+
+        // test the http status of the response
+        assertEquals(HttpStatus.NO_CONTENT.value(), result.getResponse().getStatus());
+
+        // test the http method ()
+        assertEquals(HttpMethod.DELETE.name(), result.getRequest().getMethod());
+    }
+
+    @Test
+    void verifyDeleteTourMemberRequest() throws Exception {
+        MockHttpServletRequestBuilder postRequest = delete("/tourMembers/1/testUser")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(1L));
+
+        MvcResult result = mockMvc.perform(postRequest).andReturn();
+
+        // test the http status of the response
+        assertEquals(HttpStatus.NO_CONTENT.value(), result.getResponse().getStatus());
+
+        // test the http method ()
+        assertEquals(HttpMethod.DELETE.name(), result.getRequest().getMethod());
     }
 
     private String asJsonString(final Object object) {

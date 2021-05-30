@@ -1,8 +1,5 @@
 package sopra.tour.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import sopra.tour.TourType;
 
 import javax.persistence.*;
@@ -106,7 +103,7 @@ public class Tour {
     }
 
     public void setEmptySlots(int emptySlots) {
-        this.emptySlots = emptySlots;
+        this.emptySlots = Math.abs(emptySlots);
     }
 
     public String getToken() {

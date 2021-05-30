@@ -14,7 +14,7 @@ import sopra.pastTour.service.PastTourService;
 import sopra.tour.TourType;
 import sopra.tour.repository.SummitRepository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,7 +47,40 @@ public class PastTourServiceTest {
         pastTestTour.setType(TourType.SKI_SNOWBOARD_TOUR);
         pastTestTour.setSummit("Bristen");
         pastTestTour.setId(1L);
-        pastTestTour.setDate(new Date());
+        pastTestTour.setDate(LocalDate.of(2021, 6, 8));
+    }
+
+    @Test
+    public void test_getPastTours() throws Exception {
+        // given
+        assertNull(pastTourRepository.findBySummit("testSummit"));
+
+        // create Tour
+        PastTour pastTour = new PastTour();
+        pastTour.setId((long) 99);
+        pastTour.setName("testTour");
+        pastTour.setDate(LocalDate.of(2021, 6, 8));
+        pastTour.setType(TourType.ALPIN);
+        pastTour.setSummit("Bristen");
+        pastTour.setTourPictureKey("picKey");
+
+        // when
+        PastTour createdTour = pastTourService.createPastTour(pastTour);
+
+        PastTour actualTour = pastTourService.getPastTourById(99);
+
+        // then
+        assertEquals(actualTour.getType(), null);
+        assertEquals(actualTour.getSummit(), null);
+        assertEquals(actualTour.getDate(), null);
+        assertEquals(actualTour.getName(), null);
+        assertEquals(actualTour.getTourPictureKey(), null);
+    }
+
+    @Test
+    public void test_getCurrentURL(){
+        pastTourService.setCurrentURL("myTestURL_Localhost");
+        assertEquals("myTestURL_Localhost", pastTourService.getCurrentURL());
     }
 
     @Test
@@ -58,9 +91,11 @@ public class PastTourServiceTest {
         // create Tour
         PastTour pastTour = new PastTour();
         pastTour.setId((long) 1);
-        pastTour.setDate(new Date());
+        pastTour.setName("testTour");
+        pastTour.setDate(LocalDate.of(2021, 6, 8));
         pastTour.setType(TourType.ALPIN);
         pastTour.setSummit("Bristen");
+        pastTour.setTourPictureKey("picKey");
 
         // when
         PastTour createdTour = pastTourService.createPastTour(pastTour);
@@ -69,6 +104,8 @@ public class PastTourServiceTest {
         assertEquals(pastTour.getType(), createdTour.getType());
         assertEquals(pastTour.getSummit(), createdTour.getSummit());
         assertEquals(pastTour.getDate(), createdTour.getDate());
+        assertEquals(pastTour.getName(), createdTour.getName());
+        assertEquals(pastTour.getTourPictureKey(), createdTour.getTourPictureKey());
     }
 
     @Test
@@ -79,9 +116,11 @@ public class PastTourServiceTest {
         // create Tour
         PastTour pastTour = new PastTour();
         pastTour.setId((long) 1);
-        pastTour.setDate(new Date());
+        pastTour.setName("testTour");
+        pastTour.setDate(LocalDate.of(2021, 6, 8));
         pastTour.setType(TourType.ALPIN);
         pastTour.setSummit("Bristen");
+        pastTour.setTourPictureKey("picKey");
 
         // when
         PastTour createdTour = pastTourService.createPastTour(pastTour);
@@ -92,5 +131,7 @@ public class PastTourServiceTest {
         assertEquals(pastTours.get(0).getType(), createdTour.getType());
         assertEquals(pastTours.get(0).getSummit(), createdTour.getSummit());
         //assertEquals(osLocalizedDateFormat.format(pastTours.get(0).getDate()), createdTour.getDate());
+        assertEquals(pastTour.getName(), createdTour.getName());
+        assertEquals(pastTour.getTourPictureKey(), createdTour.getTourPictureKey());
     }
 }

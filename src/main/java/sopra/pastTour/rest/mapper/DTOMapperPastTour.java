@@ -22,5 +22,7 @@ public interface DTOMapperPastTour {
     @Mapping(source = "type", target = "type")
     @Mapping(source = "summit", target = "summit")
     @Mapping(source = "date", target = "date")
+    @Mapping(source = "tourPictureKey", target = "tourPictureKey")
+    @Mapping(source = "name", target = "name")
     PastTourGetDTO convertEntityToTourGetDTO(PastTour pastTour);
 }

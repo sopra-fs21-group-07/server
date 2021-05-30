@@ -20,7 +20,6 @@ import sopra.tour.repository.SummitRepository;
 import sopra.tour.repository.TourMembersRepository;
 import sopra.tour.repository.TourRepository;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -53,8 +52,10 @@ public class TourService {
         for (Tour t : tours) {
             this.tourRepository.deleteById(t.getId());
             pastTour.setSummit(t.getSummit());
-            pastTour.setDate(new Date());
+            pastTour.setDate(t.getDate());
             pastTour.setType(t.getType());
+            pastTour.setTourPictureKey(t.getTourPictureKey());
+            pastTour.setName(t.getName());
             pastTourService.createPastTour(pastTour);
         }
     }
@@ -243,13 +244,19 @@ public class TourService {
 
     //EDIT functions
     public void editName(Long id, String name) {
+        Optional<Tour> foundTour = tourRepository.findById(id);
         if (this.tourRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else {
-            Tour tour = this.tourRepository.findById(id).get();
-            tour.setName(name);
-            tourRepository.flush();
+            if (foundTour.isPresent()){
+                Tour tour = foundTour.get();
+                tour.setName(name);
+                tourRepository.flush();
+            }
+            else{
+                throw new ResponseStatusException(HttpStatus.CONFLICT, error);
+            }
         }
     }
 
@@ -277,21 +284,22 @@ public class TourService {
         }
     }
 
-    public void cancleTour(Long tourID, String username) {
+    public void cancelTour(Long tourID, String username) {
         Optional<Tour> foundTour = tourRepository.findById(tourID);
-        TourMember tourmember = this.tourMembersRepository.findByUsername(username);
-        if (tourmember.getUseremail().isEmpty()) {
+        Optional<TourMember> tourmember = this.tourMembersRepository.findByUsername(username);//do mösst no öppis anders sii...?
+        if (foundTour.isPresent()){
+        if (tourmember.isEmpty() || !tourmember.get().getTourName().equals(foundTour.get().getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not signed up for the tour yet.");
         }
         else {
-            if (foundTour.isPresent()) {
-                Tour tour = foundTour.get();
-                tourMembersRepository.delete(tourmember);
-                tour.setEmptySlots(tour.getEmptySlots() + 1);
-                tourRepository.flush();
-                tourMembersRepository.flush();
-            }
+            Tour tour = foundTour.get();
+            tourMembersRepository.delete(tourmember.get());
+            tour.setEmptySlots(tour.getEmptySlots() + 1);
+            tourRepository.flush();
+            tourMembersRepository.flush();
+        }}
+        else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not signed up for the tour yet.");
         }
-
     }
 }

@@ -36,8 +36,8 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else{
-            if (this.userRepository.findByUsername(username).isPresent()) {
-                User user = this.userRepository.findByUsername(username).get();
+            if (foundUser.isPresent()) {
+                User user = foundUser.get();
                 user.setUsername(newUsername);
                 userRepository.flush();
             }

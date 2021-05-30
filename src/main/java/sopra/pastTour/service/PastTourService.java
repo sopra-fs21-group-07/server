@@ -4,14 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sopra.pastTour.entity.PastTour;
 import sopra.pastTour.repository.PastTourRepository;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Tour Service
@@ -35,14 +34,6 @@ public class PastTourService {
         this.currentURL = currentURL;
     }
 
-    // Every 30min check and clean the tour repo
-    // (cron = sec, min, hour, day, month, weekday)
-    @Scheduled(cron = "* */30 * * * ?")
-    public void clearToursOlderThenToday() {
-        LocalDate today = LocalDate.now();
-
-    }
-
     @Autowired
     public PastTourService(@Qualifier("pastTourRepository") PastTourRepository pastTourRepository) {
         this.pastTourRepository = pastTourRepository;
@@ -60,6 +51,14 @@ public class PastTourService {
         log.debug("Created Information for Tour: {}", pastTour);
 
         return pastTour;
+    }
+
+    public PastTour getPastTourById(long id) {
+        Optional<PastTour> tour = pastTourRepository.findById(id);
+        if (tour.isPresent())
+            return tour.get();
+        else
+            return new PastTour();
     }
 
 }

@@ -6,6 +6,7 @@ import sopra.pastTour.rest.dto.PastTourGetDTO;
 import sopra.pastTour.rest.mapper.DTOMapperPastTour;
 import sopra.tour.TourType;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +18,7 @@ public class DTOMapperTourPastTest {
         // create Tour
         PastTour pastTour = new PastTour();
         pastTour.setId((long) 1);
-        pastTour.setDate(new Date());
+        pastTour.setDate(LocalDate.of(2021, 6, 8));
         pastTour.setType(TourType.ALPIN);
         pastTour.setSummit("Bristen");
 
