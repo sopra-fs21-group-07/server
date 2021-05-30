@@ -1,5 +1,7 @@
 package sopra.userauthentication.controller;
 
+import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import sopra.userauthentication.dto.*;
 import sopra.userauthentication.mapper.UserMapper;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import sopra.userauthentication.service.UserDetailsServiceImpl;
 import sopra.userauthentication.service.UserService;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -31,9 +34,24 @@ public class AuthController {
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
-        authService.signup(registerRequest);
-        return new ResponseEntity<>("User Registration Successful",
-                CREATED);
+        try {
+            authService.signup(registerRequest);
+            return new ResponseEntity<>("User Registration Successful",
+                    CREATED);
+        }
+        catch(ConstraintViolationException e){
+            StringBuilder message = new StringBuilder();
+            var constraintViolations = e.getConstraintViolations();
+            for (var violation : constraintViolations){
+                message.append(violation.getMessage().concat(";"));
+            }
+            return new ResponseEntity<>(String.format("User Registration not successful, %s",message.toString()), HttpStatus.PRECONDITION_FAILED);
+        }
+        catch(DataIntegrityViolationException f){
+
+            return new ResponseEntity<>("User Registration not successful, email or username is already in use", HttpStatus.PRECONDITION_FAILED);
+
+        }
     }
 
     @GetMapping("accountVerification/{token}")
