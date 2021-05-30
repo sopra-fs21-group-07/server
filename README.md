@@ -1,6 +1,6 @@
 # SoPra RESTful Service Group 07 FS21
 ## Information about the Project: 
-Link for testing our Application:
+Link under which server is running:
 https://sopra-fs21-group-07-server.herokuapp.com/
 <br>Link for reviewing API Calls:
 https://sopra-fs21-group-07-server.herokuapp.com/swagger-ui.html#/
