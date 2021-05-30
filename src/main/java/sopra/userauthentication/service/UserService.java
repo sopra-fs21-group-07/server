@@ -37,7 +37,7 @@ public class UserService {
         }
         else{
             if (foundUser.isPresent()) {
-                User user = this.userRepository.findByUsername(username).get();
+                User user = foundUser.get();
                 user.setUsername(newUsername);
                 userRepository.flush();
             }
