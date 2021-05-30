@@ -20,7 +20,6 @@ import sopra.tour.repository.SummitRepository;
 import sopra.tour.repository.TourMembersRepository;
 import sopra.tour.repository.TourRepository;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -245,14 +244,16 @@ public class TourService {
 
     //EDIT functions
     public void editName(Long id, String name) {
+        Optional<Tour> foundTour = tourRepository.findById(id);
         if (this.tourRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, error);
         }
         else {
-            if (this.tourRepository.findById(id).isPresent()){
-            Tour tour = this.tourRepository.findById(id).get();
-            tour.setName(name);
-            tourRepository.flush();}
+            if (foundTour.isPresent()){
+                Tour tour = foundTour.get();
+                tour.setName(name);
+                tourRepository.flush();
+            }
             else{
                 throw new ResponseStatusException(HttpStatus.CONFLICT, error);
             }

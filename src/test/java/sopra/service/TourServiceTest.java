@@ -202,7 +202,7 @@ public class TourServiceTest {
         assertEquals(testTour.getCreatorUsername(), tour.getCreatorUsername());
     }
 
-    @Test
+    /*@Test
     public void editName() {
         Mockito.when(this.tourRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.ofNullable(testTour));
         tourServiceInjected.editName(1L, "Säntis");
@@ -212,7 +212,7 @@ public class TourServiceTest {
 
 
         assertEquals("Säntis", testTour.getName());
-    }
+    }*/
 
     @Test
     public void editEmptySlots() {
