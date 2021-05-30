@@ -2,7 +2,7 @@
 ## Information about the Project: 
 Link for testing our Application:
 https://sopra-fs21-group-07-server.herokuapp.com/
-/nLink for reviewing API Calls:
+<br>Link for reviewing API Calls:
 https://sopra-fs21-group-07-server.herokuapp.com/swagger-ui.html#/
 
 
